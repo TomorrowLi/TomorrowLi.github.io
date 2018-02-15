@@ -229,6 +229,239 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/15/python-student/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TomorrowLi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TomorrowLi's Blogs">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/15/python-student/" itemprop="url">今日头条上的美女图片进行爬取</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-15T11:29:38+08:00">
+                2018-02-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>欢迎来到<a href="https://www.python.org/" target="_blank" rel="external">python</a>!学习 这是你人生旅途的第一课，非常重要。 </p>
+<p>###代码演示：<br>    import json<br>    import re<br>    import urllib.request<br>    from hashlib import md5</p>
+<pre><code>import MySQLdb
+import os
+import requests
+from urllib.parse import urlencode
+
+from bs4 import BeautifulSoup
+from requests.exceptions import RequestException
+from config import *
+from multiprocessing import Pool
+def get_page_index(offset, keyword):
+    data = {
+        &apos;offset&apos;: offset,
+        &apos;format&apos;: &apos;json&apos;,
+        &apos;keyword&apos;: keyword,
+        &apos;autoload&apos;: &apos;true&apos;,
+        &apos;count&apos;: &apos;20&apos;,
+        &apos;cur_tab&apos;: 3,
+        &apos;from&apos;:&apos;gallery&apos;
+    }
+    url = &apos;https://www.toutiao.com/search_content/?&apos; + urlencode(data)
+    try:
+        header = {
+            &apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36&apos;
+        }
+        response = requests.get(url,headers=header)
+        if response.status_code == 200:
+            return response.text
+        return None
+    except:
+        print(&apos;请求索引失败&apos;)
+        return None
+
+
+def prase_get_index(html):
+    data = json.loads(html)
+    if data and &apos;data&apos; in data.keys():
+        for item in data.get(&apos;data&apos;):
+            yield item.get(&apos;article_url&apos;)
+
+
+def prase_page_urlli(html):
+    soup = BeautifulSoup(html, &apos;lxml&apos;)
+    title = soup.select(&apos;title&apos;)[0].get_text()
+    print(title)
+    images_pattern= re.compile(&apos;gallery: JSON.parse\((.*?)\)&apos;,re.S)
+    result=re.search(images_pattern,html)
+    if result:
+        data=json.loads(result.group(1))
+        data=eval(data)
+        if data and &apos;sub_images&apos;in data.keys():
+            sub_images=data.get(&apos;sub_images&apos;)
+            image=[item.get(&apos;url&apos;).replace(&apos;\\&apos;,&apos;&apos;) for item in sub_images]
+            for images_page in image:
+                dowload_image(images_page)
+
+            return{
+                &apos;title&apos;:title,
+                &apos;image&apos;:image
+            }
+def get_page_urlli(url):
+    try:
+        header = {
+            &apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36&apos;
+        }
+        response = requests.get(url,headers=header)
+        if response.status_code == 200:
+            return response.text
+        return None
+    except:
+        print(&apos;请求失败&apos;,url)
+        return None
+def dowload_image(url):
+    print(&quot;正在下载&quot;,url)
+    try:
+        header = {
+            &apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36&apos;
+        }
+        response = requests.get(url,headers=header)
+        if response.status_code == 200:
+            save_image(response.content)
+        return None
+    except:
+        print(&apos;请求图片出错&apos;,url)
+        return None
+def save_image(content):
+    file_path=&apos;{0}/{1}.{2}&apos;.format(os.getcwd(),md5(content).hexdigest(),&apos;jpg&apos;)
+    if not os.path.exists(file_path):
+        with open(file_path,&apos;wb&apos;) as f:
+            f.write(content)
+            f.close()
+
+def main(offset):
+    html = get_page_index(offset, keyword)
+    for url in prase_get_index(html):
+        html=get_page_urlli(url)
+        if html:
+            result=prase_page_urlli(html)
+            print(result)
+
+
+
+if __name__ == &apos;__main__&apos;:
+    group=[x*20 for x in range(stat,end+1)]
+    pool=Pool()
+    pool.map(main,group)
+</code></pre><p>###以下我会进行详细的解释。</p>
+<ul>
+<li></li>
+<li></li>
+<li>title: python爬虫学习<br>date: 2018-02-15 11:29:38<br>tags:</li>
+</ul>
+<hr>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/09/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -390,7 +623,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
