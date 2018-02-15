@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>TomorrowLi&#39;s Blogs</title>
+  
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2018-02-15T08:01:47.857Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>TomorrowLi</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>今日头条上的美女图片进行爬取</title>
+    <link href="http://yoursite.com/2018/02/15/python-student/"/>
+    <id>http://yoursite.com/2018/02/15/python-student/</id>
+    <published>2018-02-15T03:29:38.128Z</published>
+    <updated>2018-02-15T08:01:47.857Z</updated>
+    
+    <content type="html"><![CDATA[<p>欢迎来到<a href="https://www.python.org/" target="_blank" rel="external">python</a>!学习 这是你人生旅途的第一课，非常重要。 </p><p>###代码演示：<br>    import json<br>    import re<br>    import urllib.request<br>    from hashlib import md5</p><pre><code>import MySQLdbimport osimport requestsfrom urllib.parse import urlencodefrom bs4 import BeautifulSoupfrom requests.exceptions import RequestExceptionfrom config import *from multiprocessing import Pooldef get_page_index(offset, keyword):    data = {        &apos;offset&apos;: offset,        &apos;format&apos;: &apos;json&apos;,        &apos;keyword&apos;: keyword,        &apos;autoload&apos;: &apos;true&apos;,        &apos;count&apos;: &apos;20&apos;,        &apos;cur_tab&apos;: 3,        &apos;from&apos;:&apos;gallery&apos;    }    url = &apos;https://www.toutiao.com/search_content/?&apos; + urlencode(data)    try:        header = {            &apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36&apos;        }        response = requests.get(url,headers=header)        if response.status_code == 200:            return response.text        return None    except:        print(&apos;请求索引失败&apos;)        return Nonedef prase_get_index(html):    data = json.loads(html)    if data and &apos;data&apos; in data.keys():        for item in data.get(&apos;data&apos;):            yield item.get(&apos;article_url&apos;)def prase_page_urlli(html):    soup = BeautifulSoup(html, &apos;lxml&apos;)    title = soup.select(&apos;title&apos;)[0].get_text()    print(title)    images_pattern= re.compile(&apos;gallery: JSON.parse\((.*?)\)&apos;,re.S)    result=re.search(images_pattern,html)    if result:        data=json.loads(result.group(1))        data=eval(data)        if data and &apos;sub_images&apos;in data.keys():            sub_images=data.get(&apos;sub_images&apos;)            image=[item.get(&apos;url&apos;).replace(&apos;\\&apos;,&apos;&apos;) for item in sub_images]            for images_page in image:                dowload_image(images_page)            return{                &apos;title&apos;:title,                &apos;image&apos;:image            }def get_page_urlli(url):    try:        header = {            &apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36&apos;        }        response = requests.get(url,headers=header)        if response.status_code == 200:            return response.text        return None    except:        print(&apos;请求失败&apos;,url)        return Nonedef dowload_image(url):    print(&quot;正在下载&quot;,url)    try:        header = {            &apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36&apos;        }        response = requests.get(url,headers=header)        if response.status_code == 200:            save_image(response.content)        return None    except:        print(&apos;请求图片出错&apos;,url)        return Nonedef save_image(content):    file_path=&apos;{0}/{1}.{2}&apos;.format(os.getcwd(),md5(content).hexdigest(),&apos;jpg&apos;)    if not os.path.exists(file_path):        with open(file_path,&apos;wb&apos;) as f:            f.write(content)            f.close()def main(offset):    html = get_page_index(offset, keyword)    for url in prase_get_index(html):        html=get_page_urlli(url)        if html:            result=prase_page_urlli(html)            print(result)if __name__ == &apos;__main__&apos;:    group=[x*20 for x in range(stat,end+1)]    pool=Pool()    pool.map(main,group)</code></pre><p>###以下我会进行详细的解释。</p><ul><li></li><li></li><li>title: python爬虫学习<br>date: 2018-02-15 11:29:38<br>tags:</li></ul><hr>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;欢迎来到&lt;a href=&quot;https://www.python.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;python&lt;/a&gt;!学习 这是你人生旅途的第一课，非常重要。 &lt;/p&gt;
+&lt;p&gt;###代码演示：&lt;br&gt;    import json&lt;
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://yoursite.com/2017/11/09/hello-world/"/>
+    <id>http://yoursite.com/2017/11/09/hello-world/</id>
+    <published>2017-11-09T08:58:35.515Z</published>
+    <updated>2017-11-09T08:58:35.516Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+</feed>
