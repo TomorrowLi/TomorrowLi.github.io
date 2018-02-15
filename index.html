@@ -303,8 +303,17 @@
         
           
             <p>欢迎来到<a href="https://www.python.org/" target="_blank" rel="external">python</a>!学习。 这是我人生旅途的第一课，非常重要。 我从这个案例中学到的许多关于python爬虫的知识，这是我python爬虫的启蒙。</p>
-<p>###代码演示：<br>    import json<br>    import re<br>    from hashlib import md5<br>    import os<br>    import requests<br>    from urllib.parse import urlencode<br>    from bs4 import BeautifulSoup<br>    from config import *<br>    from multiprocessing import Pool</p>
-<pre><code>#对要爬取页面的解析
+<p>代码演示：</p>
+<pre><code>import json
+import re
+from hashlib import md5
+import os
+import requests
+from urllib.parse import urlencode
+from bs4 import BeautifulSoup
+from config import *
+from multiprocessing import Pool
+#对要爬取页面的解析
 def get_page_index(offset, keyword):
     data = {
         &apos;offset&apos;: offset,
@@ -404,7 +413,7 @@ if __name__ == &apos;__main__&apos;:
     group=[x*20 for x in range(stat,end+1)]
     pool=Pool()
     pool.map(main,group)
-</code></pre><p>###以下我会进行详细的解释。</p>
+</code></pre><p>详细的解释。</p>
 <ul>
 <li></li>
 <li></li>
