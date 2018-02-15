@@ -302,17 +302,9 @@
       
         
           
-            <p>欢迎来到<a href="https://www.python.org/" target="_blank" rel="external">python</a>!学习 这是你人生旅途的第一课，非常重要。 </p>
-<p>###代码演示：<br>    import json<br>    import re<br>    import urllib.request<br>    from hashlib import md5</p>
-<pre><code>import MySQLdb
-import os
-import requests
-from urllib.parse import urlencode
-
-from bs4 import BeautifulSoup
-from requests.exceptions import RequestException
-from config import *
-from multiprocessing import Pool
+            <p>欢迎来到<a href="https://www.python.org/" target="_blank" rel="external">python</a>!学习。 这是我人生旅途的第一课，非常重要。 我从这个案例中学到的许多关于python爬虫的知识，这是我python爬虫的启蒙。</p>
+<p>###代码演示：<br>    import json<br>    import re<br>    from hashlib import md5<br>    import os<br>    import requests<br>    from urllib.parse import urlencode<br>    from bs4 import BeautifulSoup<br>    from config import *<br>    from multiprocessing import Pool</p>
+<pre><code>#对要爬取页面的解析
 def get_page_index(offset, keyword):
     data = {
         &apos;offset&apos;: offset,
@@ -336,14 +328,14 @@ def get_page_index(offset, keyword):
         print(&apos;请求索引失败&apos;)
         return None
 
-
+#获取所要的数据在json中
 def prase_get_index(html):
     data = json.loads(html)
     if data and &apos;data&apos; in data.keys():
         for item in data.get(&apos;data&apos;):
             yield item.get(&apos;article_url&apos;)
 
-
+#用正则对json数据进行解析
 def prase_page_urlli(html):
     soup = BeautifulSoup(html, &apos;lxml&apos;)
     title = soup.select(&apos;title&apos;)[0].get_text()
@@ -363,6 +355,7 @@ def prase_page_urlli(html):
                 &apos;title&apos;:title,
                 &apos;image&apos;:image
             }
+#对所要下载的图片链接进行访问
 def get_page_urlli(url):
     try:
         header = {
@@ -375,6 +368,7 @@ def get_page_urlli(url):
     except:
         print(&apos;请求失败&apos;,url)
         return None
+#下载图片
 def dowload_image(url):
     print(&quot;正在下载&quot;,url)
     try:
@@ -388,6 +382,7 @@ def dowload_image(url):
     except:
         print(&apos;请求图片出错&apos;,url)
         return None
+#把图片保存到本地路径下
 def save_image(content):
     file_path=&apos;{0}/{1}.{2}&apos;.format(os.getcwd(),md5(content).hexdigest(),&apos;jpg&apos;)
     if not os.path.exists(file_path):
