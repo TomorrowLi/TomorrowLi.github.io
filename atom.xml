@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-02-15T10:30:22.593Z</updated>
+  <updated>2018-02-17T07:12:22.835Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>爬取美女图片并按照文件进行存储</title>
+    <link href="http://yoursite.com/2018/02/17/file-tupian/"/>
+    <id>http://yoursite.com/2018/02/17/file-tupian/</id>
+    <published>2018-02-17T07:12:22.828Z</published>
+    <updated>2018-02-17T07:12:22.835Z</updated>
+    
+    <content type="html"><![CDATA[<p>欢迎来到<a href="https://www.python.org/" target="_blank" rel="external">python</a>!学习。 </p><p>代码演示：</p><pre><code>import reimport requestsfrom bs4 import BeautifulSoupdef fand_email(url,counts):    data=requests.get(url)    content=data.text    pattern = r&apos;[0-9a-zA-Z._]+@[0-9a-zA-Z._]+\.[0-9a-zA-Z._]+&apos;    p = re.compile(pattern)    m = p.findall(content)    with open(&apos;emal.txt&apos;,&apos;a+&apos;) as f:        for i in m:            f.write(i+&apos;\n&apos;)            print(i)            counts= counts+1return countsdef main():    counts=0    numbers=0    for i in range(1,32):        url=&apos;http://tieba.baidu.com/p/2314539885?pn=%s&apos;% i        number=fand_email(url,counts)        numbers=numbers+number    print(numbers)if __name__ == &apos;__main__&apos;:    main()</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;欢迎来到&lt;a href=&quot;https://www.python.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;python&lt;/a&gt;!学习。 &lt;/p&gt;
+&lt;p&gt;代码演示：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import re
+import request
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>今日头条上的美女图片进行爬取</title>
