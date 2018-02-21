@@ -81,17 +81,17 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="description" content="title： 用selenium自动爬取淘宝美食的信息并存储在MySQL中代码： import re  import MySQLdb from selenium import webdriver from selenium.common.exceptions import TimeoutException from selenium.webdriver.common.by import By f">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2017/11/09/hello-world/index.html">
+<meta property="og:title" content="TomorrowLi&#39;s Blogs">
+<meta property="og:url" content="http://yoursite.com/2018/02/21/selenium-taobao/index.html">
 <meta property="og:site_name" content="TomorrowLi&#39;s Blogs">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="title： 用selenium自动爬取淘宝美食的信息并存储在MySQL中代码： import re  import MySQLdb from selenium import webdriver from selenium.common.exceptions import TimeoutException from selenium.webdriver.common.by import By f">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-09T08:58:35.516Z">
+<meta property="og:updated_time" content="2018-02-21T01:20:45.131Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="TomorrowLi&#39;s Blogs">
+<meta name="twitter:description" content="title： 用selenium自动爬取淘宝美食的信息并存储在MySQL中代码： import re  import MySQLdb from selenium import webdriver from selenium.common.exceptions import TimeoutException from selenium.webdriver.common.by import By f">
 
 
 
@@ -121,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/11/09/hello-world/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/02/21/selenium-taobao/"/>
 
 
 
 
 
-  <title>Hello World | TomorrowLi's Blogs</title>
+  <title> | TomorrowLi's Blogs</title>
   
 
 
@@ -234,7 +234,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/09/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/21/selenium-taobao/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="TomorrowLi">
@@ -251,7 +251,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello World</h1>
+          <h1 class="post-title" itemprop="name headline"></h1>
         
 
         <div class="post-meta">
@@ -263,8 +263,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-09T16:58:35+08:00">
-                2017-11-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-21T09:08:57+08:00">
+                2018-02-21
               </time>
             
 
@@ -301,16 +301,222 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <hr>
+<h2 id="title：-用selenium自动爬取淘宝美食的信息并存储在MySQL中"><a href="#title：-用selenium自动爬取淘宝美食的信息并存储在MySQL中" class="headerlink" title="title： 用selenium自动爬取淘宝美食的信息并存储在MySQL中"></a>title： 用selenium自动爬取淘宝美食的信息并存储在MySQL中</h2><p>代码：</p>
+<pre><code>import re
 
+import MySQLdb
+from selenium import webdriver
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from pyquery import PyQuery as pq
+broser=webdriver.Chrome()
+
+wait=WebDriverWait(broser, 10)
+def search(table):
+    try:
+        broser.get(&apos;https://www.taobao.com&apos;)
+        inputs = wait.until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, &quot;#q&quot;))
+        )
+        submit = wait.until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, &apos;#J_TSearchForm &gt; div.search-button &gt; button&apos;))
+        )
+        inputs.send_keys(&apos;美食&apos;)
+        submit.click()
+        total = wait.until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR,&apos;#mainsrp-pager &gt; div &gt; div &gt; div &gt; div.total&apos;))
+        )
+        get_product(table)
+        return total.text
+    except TimeoutException:
+        return search(table)
+def next_page(page_number,table):
+    try:
+        inputs = wait.until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, &quot;#mainsrp-pager &gt; div &gt; div &gt; div &gt; div.form &gt; input&quot;))
+        )
+        submit = wait.until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, &quot;#mainsrp-pager &gt; div &gt; div &gt; div &gt; div.form &gt; span.btn.J_Submit&quot;))
+        )
+        inputs.clear()
+        inputs.send_keys(page_number)
+        submit.click()
+        wait.until(
+            EC.text_to_be_present_in_element((By.CSS_SELECTOR, &quot;#mainsrp-pager &gt; div &gt; div &gt; div &gt; ul &gt; li.item.active &gt; span&quot;),str(page_number))
+        )
+        get_product(table)
+    except TimeoutException:
+        next_page(page_number,table)
+def get_product(table):
+    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR,&apos;#mainsrp-itemlist .items .item&apos;)))
+    html=broser.page_source
+    doc=pq(html)
+    items=doc(&apos;#mainsrp-itemlist .items .item&apos;).items()
+    for item in items:
+        product={
+            &apos;image&apos;:item.find(&apos;.pic .img&apos;).attr(&apos;src&apos;),
+            &apos;price&apos;:item.find(&apos;.price&apos;).text().replace(&apos;\n&apos;,&apos;&apos;),
+            &apos;deal&apos;:item.find(&apos;.deal-cnt&apos;).text()[:-3],
+            &apos;title&apos;:item.find(&apos;.title&apos;).text().replace(&apos;\n&apos;,&apos;&apos;),
+            &apos;shop&apos;:item.find(&apos;.shop&apos;).text(),
+            &apos;location&apos;:item.find(&apos;.location&apos;).text()
+        }
+        print(product)
+        inserttable(table, product[&apos;image&apos;], product[&apos;price&apos;], product[&apos;deal&apos;], product[&apos;title&apos;],product[&apos;shop&apos;],product[&apos;location&apos;])
+#连接数据库 mysql
+def connectDB():
+        host=&quot;localhost&quot;
+        dbName=&quot;test&quot;
+        user=&quot;root&quot;
+        password=&quot;&quot;
+        #此处添加charset=&apos;utf8&apos;是为了在数据库中显示中文，此编码必须与数据库的编码一致
+        db=MySQLdb.connect(host,user,password,dbName,charset=&apos;utf8&apos;)
+        return db
+        cursorDB=db.cursor()
+        return cursorDB
+
+#创建表，SQL语言。CREATE TABLE IF NOT EXISTS 表示：表createTableName不存在时就创建
+def creatTable(createTableName):
+    createTableSql=&quot;CREATE TABLE IF NOT EXISTS &quot;+ createTableName+&quot;(image VARCHAR(255),price VARCHAR(255),deal  VARCHAR(255),title VARCHAR(255),shop VARCHAR(255),location VARCHAR(255))&quot;
+    DB_create=connectDB()
+    print(&apos;链接数据库成功&apos;)
+    cursor_create=DB_create.cursor()
+    cursor_create.execute(createTableSql)
+    DB_create.close()
+    print(&apos;creat table &apos;+createTableName+&apos; successfully&apos;)
+    return createTableName
+#数据插入表中
+def inserttable(insertTable,insertimages,insertprice,insertdeal,inserttitle,insertshop,insertloaction):
+    insertContentSql=&quot;INSERT INTO &quot;+insertTable+&quot;(image,price,deal,title,shop,location)VALUES(%s,%s,%s,%s,%s,%s)&quot;
+#         insertContentSql=&quot;INSERT INTO &quot;+insertTable+&quot;(time,title,text,clicks)VALUES(&quot;+insertTime+&quot; , &quot;+insertTitle+&quot; , &quot;+insertText+&quot; , &quot;+insertClicks+&quot;)&quot;
+
+
+    DB_insert=connectDB()
+    cursor_insert=DB_insert.cursor()
+    cursor_insert.execute(insertContentSql,(insertimages,insertprice,insertdeal,inserttitle,insertshop,insertloaction))
+    DB_insert.commit()
+    DB_insert.close()
+    print (&apos;inert contents to  &apos;+insertTable+&apos; successfully&apos;)
+
+def main():
+    table = creatTable(&apos;yh1&apos;)
+    print(&apos;创建表成功&apos;)
+    total=search(table)
+    total=int(re.compile(&apos;(\d+)&apos;).search(total).group(1))
+    for i in range(2,total+1):
+        next_page(i,table)
+if __name__==&apos;__main__&apos;:
+    main()import re
+
+import MySQLdb
+from selenium import webdriver
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from pyquery import PyQuery as pq
+broser=webdriver.Chrome()
+
+wait=WebDriverWait(broser, 10)
+def search(table):
+    try:
+        broser.get(&apos;https://www.taobao.com&apos;)
+        inputs = wait.until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, &quot;#q&quot;))
+        )
+        submit = wait.until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, &apos;#J_TSearchForm &gt; div.search-button &gt; button&apos;))
+        )
+        inputs.send_keys(&apos;美食&apos;)
+        submit.click()
+        total = wait.until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR,&apos;#mainsrp-pager &gt; div &gt; div &gt; div &gt; div.total&apos;))
+        )
+        get_product(table)
+        return total.text
+    except TimeoutException:
+        return search(table)
+def next_page(page_number,table):
+    try:
+        inputs = wait.until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, &quot;#mainsrp-pager &gt; div &gt; div &gt; div &gt; div.form &gt; input&quot;))
+        )
+        submit = wait.until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, &quot;#mainsrp-pager &gt; div &gt; div &gt; div &gt; div.form &gt; span.btn.J_Submit&quot;))
+        )
+        inputs.clear()
+        inputs.send_keys(page_number)
+        submit.click()
+        wait.until(
+            EC.text_to_be_present_in_element((By.CSS_SELECTOR, &quot;#mainsrp-pager &gt; div &gt; div &gt; div &gt; ul &gt; li.item.active &gt; span&quot;),str(page_number))
+        )
+        get_product(table)
+    except TimeoutException:
+        next_page(page_number,table)
+def get_product(table):
+    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR,&apos;#mainsrp-itemlist .items .item&apos;)))
+    html=broser.page_source
+    doc=pq(html)
+    items=doc(&apos;#mainsrp-itemlist .items .item&apos;).items()
+    for item in items:
+        product={
+            &apos;image&apos;:item.find(&apos;.pic .img&apos;).attr(&apos;src&apos;),
+            &apos;price&apos;:item.find(&apos;.price&apos;).text().replace(&apos;\n&apos;,&apos;&apos;),
+            &apos;deal&apos;:item.find(&apos;.deal-cnt&apos;).text()[:-3],
+            &apos;title&apos;:item.find(&apos;.title&apos;).text().replace(&apos;\n&apos;,&apos;&apos;),
+            &apos;shop&apos;:item.find(&apos;.shop&apos;).text(),
+            &apos;location&apos;:item.find(&apos;.location&apos;).text()
+        }
+        print(product)
+        inserttable(table, product[&apos;image&apos;], product[&apos;price&apos;], product[&apos;deal&apos;], product[&apos;title&apos;],product[&apos;shop&apos;],product[&apos;location&apos;])
+#连接数据库 mysql
+def connectDB():
+        host=&quot;localhost&quot;
+        dbName=&quot;test&quot;
+        user=&quot;root&quot;
+        password=&quot;&quot;
+        #此处添加charset=&apos;utf8&apos;是为了在数据库中显示中文，此编码必须与数据库的编码一致
+        db=MySQLdb.connect(host,user,password,dbName,charset=&apos;utf8&apos;)
+        return db
+        cursorDB=db.cursor()
+        return cursorDB
+
+#创建表，SQL语言。CREATE TABLE IF NOT EXISTS 表示：表createTableName不存在时就创建
+def creatTable(createTableName):
+    createTableSql=&quot;CREATE TABLE IF NOT EXISTS &quot;+ createTableName+&quot;(image VARCHAR(255),price VARCHAR(255),deal  VARCHAR(255),title VARCHAR(255),shop VARCHAR(255),location VARCHAR(255))&quot;
+    DB_create=connectDB()
+    print(&apos;链接数据库成功&apos;)
+    cursor_create=DB_create.cursor()
+    cursor_create.execute(createTableSql)
+    DB_create.close()
+    print(&apos;creat table &apos;+createTableName+&apos; successfully&apos;)
+    return createTableName
+#数据插入表中
+def inserttable(insertTable,insertimages,insertprice,insertdeal,inserttitle,insertshop,insertloaction):
+    insertContentSql=&quot;INSERT INTO &quot;+insertTable+&quot;(image,price,deal,title,shop,location)VALUES(%s,%s,%s,%s,%s,%s)&quot;
+#         insertContentSql=&quot;INSERT INTO &quot;+insertTable+&quot;(time,title,text,clicks)VALUES(&quot;+insertTime+&quot; , &quot;+insertTitle+&quot; , &quot;+insertText+&quot; , &quot;+insertClicks+&quot;)&quot;
+
+
+    DB_insert=connectDB()
+    cursor_insert=DB_insert.cursor()
+    cursor_insert.execute(insertContentSql,(insertimages,insertprice,insertdeal,inserttitle,insertshop,insertloaction))
+    DB_insert.commit()
+    DB_insert.close()
+    print (&apos;inert contents to  &apos;+insertTable+&apos; successfully&apos;)
+
+def main():
+    table = creatTable(&apos;yh1&apos;)
+    print(&apos;创建表成功&apos;)
+    total=search(table)
+    total=int(re.compile(&apos;(\d+)&apos;).search(total).group(1))
+    for i in range(2,total+1):
+        next_page(i,table)
+if __name__==&apos;__main__&apos;:
+    main()
+</code></pre>
       
     </div>
     
@@ -363,15 +569,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/02/17/file-tupian/" rel="next" title="爬取美女图片并按照文件进行存储">
+                <i class="fa fa-chevron-left"></i> 爬取美女图片并按照文件进行存储
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/02/15/python-student/" rel="prev" title="今日头条上的美女图片进行爬取">
-                今日头条上的美女图片进行爬取 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -512,7 +718,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#title：-用selenium自动爬取淘宝美食的信息并存储在MySQL中"><span class="nav-number">1.</span> <span class="nav-text">title： 用selenium自动爬取淘宝美食的信息并存储在MySQL中</span></a></li></ol></div>
             
 
           </div>
