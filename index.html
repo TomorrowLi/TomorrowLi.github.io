@@ -250,7 +250,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/21/selenium-taobao/" itemprop="url">未命名</a></h1>
+                <a class="post-title-link" href="/2018/02/21/selenium-taobao/" itemprop="url">用selenium自动爬取淘宝美食的信息并存储在MySQL中</a></h1>
         
 
         <div class="post-meta">
@@ -302,8 +302,7 @@
       
         
           
-            <hr>
-<h2 id="title：-用selenium自动爬取淘宝美食的信息并存储在MySQL中"><a href="#title：-用selenium自动爬取淘宝美食的信息并存储在MySQL中" class="headerlink" title="title： 用selenium自动爬取淘宝美食的信息并存储在MySQL中"></a>title： 用selenium自动爬取淘宝美食的信息并存储在MySQL中</h2><p>代码：</p>
+            <p>代码：</p>
 <pre><code>import re
 
 import MySQLdb
@@ -663,6 +662,23 @@ def main():
     print(numbers)
 if __name__ == &apos;__main__&apos;:
     main()
+</code></pre><p>文件 text.py</p>
+<pre><code>import requests
+from bs4 import BeautifulSoup
+
+
+def fand_load_image(url):
+    wb_date = requests.get(url)
+    #wb_date.encoding = &apos;gbk&apos;
+    soup = BeautifulSoup(wb_date.text, &apos;lxml&apos;)
+    print(soup)
+    images = soup.select(&apos;div.image-item-inner &gt; a&apos;)
+    print(images)
+    #image=images[0].get(&apos;href&apos;)
+    #print(image)
+
+url=&apos;https://www.toutiao.com/a6520385683419300359/&apos;
+fand_load_image(url)
 </code></pre>
           
         
