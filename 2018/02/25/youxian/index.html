@@ -81,13 +81,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="TomorrowLi&#39;s Blogs">
-<meta property="og:url" content="http://yoursite.com/archives/2017/index.html">
+<meta name="description" content="代码演示： import re  import requests def fand_email(url,counts):     data=requests.get(url)     content=data.text     pattern = r&amp;apos;[0-9a-zA-Z._]+@[0-9a-zA-Z._]+\.[0-9a-zA-Z._]+&amp;apos;     p = re.compil">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用正则表达式来爬取某论坛的邮箱地址">
+<meta property="og:url" content="http://yoursite.com/2018/02/25/youxian/index.html">
 <meta property="og:site_name" content="TomorrowLi&#39;s Blogs">
+<meta property="og:description" content="代码演示： import re  import requests def fand_email(url,counts):     data=requests.get(url)     content=data.text     pattern = r&amp;apos;[0-9a-zA-Z._]+@[0-9a-zA-Z._]+\.[0-9a-zA-Z._]+&amp;apos;     p = re.compil">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-02-25T09:07:57.622Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="TomorrowLi&#39;s Blogs">
+<meta name="twitter:title" content="用正则表达式来爬取某论坛的邮箱地址">
+<meta name="twitter:description" content="代码演示： import re  import requests def fand_email(url,counts):     data=requests.get(url)     content=data.text     pattern = r&amp;apos;[0-9a-zA-Z._]+@[0-9a-zA-Z._]+\.[0-9a-zA-Z._]+&amp;apos;     p = re.compil">
 
 
 
@@ -117,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2017/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/02/25/youxian/"/>
 
 
 
 
 
-  <title>归档 | TomorrowLi's Blogs</title>
+  <title>用正则表达式来爬取某论坛的邮箱地址 | TomorrowLi's Blogs</title>
   
 
 
@@ -142,7 +146,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -216,74 +220,195 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
-
-      <span class="archive-page-counter">
-        
-        
-        
-          
-        
-        嗯..! 目前共计 5 篇日志。 继续努力。
-      </span>
-
-      
-
-        
-        
-        
-
-        
-          
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2017">2017</h1>
-          </div>
-        
-        
-
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/25/youxian/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TomorrowLi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://7xrvas.com1.z0.glb.clouddn.com/16-4-6/38502140.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TomorrowLi's Blogs">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2017/11/09/hello-world/" itemprop="url">
-              
-                <span itemprop="name">Hello World</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">用正则表达式来爬取某论坛的邮箱地址</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-09T16:58:35+08:00"
-              content="2017-11-09" >
-          11-09
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-25T17:07:57+08:00">
+                2018-02-25
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
 
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
+      
 
+      
+        <p>代码演示：</p>
+<pre><code>import re
+
+import requests
+def fand_email(url,counts):
+    data=requests.get(url)
+    content=data.text
+    pattern = r&apos;[0-9a-zA-Z._]+@[0-9a-zA-Z._]+\.[0-9a-zA-Z._]+&apos;
+    p = re.compile(pattern)
+    m = p.findall(content)
+    with open(&apos;emal.txt&apos;,&apos;a+&apos;) as f:
+        for i in m:
+            f.write(i+&apos;\n&apos;)
+            print(i)
+            counts= counts+1
+    return counts
+def main():
+    counts=0
+    numbers=0
+    for i in range(1,32):
+        url=&apos;http://tieba.baidu.com/p/2314539885?pn=%s&apos;% i
+        number=fand_email(url,counts)
+        numbers=numbers+number
+    print(numbers)
+if __name__ == &apos;__main__&apos;:
+    main()
+</code></pre>
+      
     </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/weixing.png" alt="TomorrowLi 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/zhifu.jpg" alt="TomorrowLi 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/21/selenium-taobao/" rel="next" title="爬取淘宝美食信息并存储到MySql数据库中">
+                <i class="fa fa-chevron-left"></i> 爬取淘宝美食信息并存储到MySql数据库中
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -291,6 +416,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -534,6 +663,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 
