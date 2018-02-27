@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-02-25T09:07:57.622Z</updated>
+  <updated>2018-02-27T02:14:21.697Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://yoursite.com/2018/02/25/youxian/"/>
     <id>http://yoursite.com/2018/02/25/youxian/</id>
     <published>2018-02-25T09:07:57.610Z</published>
-    <updated>2018-02-25T09:07:57.622Z</updated>
+    <updated>2018-02-27T02:14:21.697Z</updated>
     
     <content type="html"><![CDATA[<p>代码演示：</p><pre><code>import reimport requestsdef fand_email(url,counts):    data=requests.get(url)    content=data.text    pattern = r&apos;[0-9a-zA-Z._]+@[0-9a-zA-Z._]+\.[0-9a-zA-Z._]+&apos;    p = re.compile(pattern)    m = p.findall(content)    with open(&apos;emal.txt&apos;,&apos;a+&apos;) as f:        for i in m:            f.write(i+&apos;\n&apos;)            print(i)            counts= counts+1    return countsdef main():    counts=0    numbers=0    for i in range(1,32):        url=&apos;http://tieba.baidu.com/p/2314539885?pn=%s&apos;% i        number=fand_email(url,counts)        numbers=numbers+number    print(numbers)if __name__ == &apos;__main__&apos;:    main()</code></pre>]]></content>
     
@@ -41,6 +41,12 @@ def fand_email(url,counts):
     
     </summary>
     
+      <category term="爬虫" scheme="http://yoursite.com/categories/%E7%88%AC%E8%99%AB/"/>
+    
+    
+      <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="邮箱地址爬取" scheme="http://yoursite.com/tags/%E9%82%AE%E7%AE%B1%E5%9C%B0%E5%9D%80%E7%88%AC%E5%8F%96/"/>
     
   </entry>
   
@@ -49,7 +55,7 @@ def fand_email(url,counts):
     <link href="http://yoursite.com/2018/02/21/selenium-taobao/"/>
     <id>http://yoursite.com/2018/02/21/selenium-taobao/</id>
     <published>2018-02-21T01:08:57.717Z</published>
-    <updated>2018-02-25T10:34:01.201Z</updated>
+    <updated>2018-02-27T02:13:45.818Z</updated>
     
     <content type="html"><![CDATA[<p>代码演示：</p><pre><code>import reimport MySQLdbfrom selenium import webdriverfrom selenium.common.exceptions import TimeoutExceptionfrom selenium.webdriver.common.by import Byfrom selenium.webdriver.support.ui import WebDriverWaitfrom selenium.webdriver.support import expected_conditions as ECfrom pyquery import PyQuery as pqbroser=webdriver.Chrome()wait=WebDriverWait(broser, 10)def search(table):    try:        broser.get(&apos;https://www.taobao.com&apos;)        inputs = wait.until(            EC.presence_of_element_located((By.CSS_SELECTOR, &quot;#q&quot;))        )        submit = wait.until(            EC.element_to_be_clickable((By.CSS_SELECTOR, &apos;#J_TSearchForm &gt; div.search-button &gt; button&apos;))        )        inputs.send_keys(&apos;美食&apos;)        submit.click()        total = wait.until(            EC.element_to_be_clickable((By.CSS_SELECTOR,&apos;#mainsrp-pager &gt; div &gt; div &gt; div &gt; div.total&apos;))        )        get_product(table)        return total.text    except TimeoutException:        return search(table)def next_page(page_number,table):    try:        inputs = wait.until(            EC.presence_of_element_located((By.CSS_SELECTOR, &quot;#mainsrp-pager &gt; div &gt; div &gt; div &gt; div.form &gt; input&quot;))        )        submit = wait.until(            EC.element_to_be_clickable((By.CSS_SELECTOR, &quot;#mainsrp-pager &gt; div &gt; div &gt; div &gt; div.form &gt; span.btn.J_Submit&quot;))        )        inputs.clear()        inputs.send_keys(page_number)        submit.click()        wait.until(            EC.text_to_be_present_in_element((By.CSS_SELECTOR, &quot;#mainsrp-pager &gt; div &gt; div &gt; div &gt; ul &gt; li.item.active &gt; span&quot;),str(page_number))        )        get_product(table)    except TimeoutException:        next_page(page_number,table)def get_product(table):    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR,&apos;#mainsrp-itemlist .items .item&apos;)))    html=broser.page_source    doc=pq(html)    items=doc(&apos;#mainsrp-itemlist .items .item&apos;).items()    for item in items:        product={            &apos;image&apos;:item.find(&apos;.pic .img&apos;).attr(&apos;src&apos;),            &apos;price&apos;:item.find(&apos;.price&apos;).text().replace(&apos;\n&apos;,&apos;&apos;),            &apos;deal&apos;:item.find(&apos;.deal-cnt&apos;).text()[:-3],            &apos;title&apos;:item.find(&apos;.title&apos;).text().replace(&apos;\n&apos;,&apos;&apos;),            &apos;shop&apos;:item.find(&apos;.shop&apos;).text(),            &apos;location&apos;:item.find(&apos;.location&apos;).text()        }        print(product)        inserttable(table, product[&apos;image&apos;], product[&apos;price&apos;], product[&apos;deal&apos;], product[&apos;title&apos;],product[&apos;shop&apos;],product[&apos;location&apos;])#连接数据库 mysqldef connectDB():        host=&quot;localhost&quot;        dbName=&quot;test&quot;        user=&quot;root&quot;        password=&quot;&quot;        #此处添加charset=&apos;utf8&apos;是为了在数据库中显示中文，此编码必须与数据库的编码一致        db=MySQLdb.connect(host,user,password,dbName,charset=&apos;utf8&apos;)        return db        cursorDB=db.cursor()        return cursorDB#创建表，SQL语言。CREATE TABLE IF NOT EXISTS 表示：表createTableName不存在时就创建def creatTable(createTableName):    createTableSql=&quot;CREATE TABLE IF NOT EXISTS &quot;+ createTableName+&quot;(image VARCHAR(255),price VARCHAR(255),deal  VARCHAR(255),title VARCHAR(255),shop VARCHAR(255),location VARCHAR(255))&quot;    DB_create=connectDB()    print(&apos;链接数据库成功&apos;)    cursor_create=DB_create.cursor()    cursor_create.execute(createTableSql)    DB_create.close()    print(&apos;creat table &apos;+createTableName+&apos; successfully&apos;)    return createTableName#数据插入表中def inserttable(insertTable,insertimages,insertprice,insertdeal,inserttitle,insertshop,insertloaction):    insertContentSql=&quot;INSERT INTO &quot;+insertTable+&quot;(image,price,deal,title,shop,location)VALUES(%s,%s,%s,%s,%s,%s)&quot;#         insertContentSql=&quot;INSERT INTO &quot;+insertTable+&quot;(time,title,text,clicks)VALUES(&quot;+insertTime+&quot; , &quot;+insertTitle+&quot; , &quot;+insertText+&quot; , &quot;+insertClicks+&quot;)&quot;    DB_insert=connectDB()    cursor_insert=DB_insert.cursor()    cursor_insert.execute(insertContentSql,(insertimages,insertprice,insertdeal,inserttitle,insertshop,insertloaction))    DB_insert.commit()    DB_insert.close()    print (&apos;inert contents to  &apos;+insertTable+&apos; successfully&apos;)def main():    table = creatTable(&apos;yh1&apos;)    print(&apos;创建表成功&apos;)    total=search(table)    total=int(re.compile(&apos;(\d+)&apos;).search(total).group(1))    for i in range(2,total+1):        next_page(i,table)if __name__==&apos;__main__&apos;:    main()</code></pre>]]></content>
     
@@ -68,6 +74,12 @@ fro
     
     </summary>
     
+      <category term="爬虫" scheme="http://yoursite.com/categories/%E7%88%AC%E8%99%AB/"/>
+    
+    
+      <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="美食信息" scheme="http://yoursite.com/tags/%E7%BE%8E%E9%A3%9F%E4%BF%A1%E6%81%AF/"/>
     
   </entry>
   
@@ -76,7 +88,7 @@ fro
     <link href="http://yoursite.com/2018/02/17/file-tupian/"/>
     <id>http://yoursite.com/2018/02/17/file-tupian/</id>
     <published>2018-02-17T07:12:22.828Z</published>
-    <updated>2018-02-22T23:31:11.720Z</updated>
+    <updated>2018-02-27T02:10:12.356Z</updated>
     
     <content type="html"><![CDATA[<p>欢迎来到<a href="https://www.python.org/" target="_blank" rel="external">python</a>!学习。 </p><p>代码演示：</p><pre><code>import reimport requestsfrom bs4 import BeautifulSoupdef fand_email(url,counts):    data=requests.get(url)    content=data.text    pattern = r&apos;[0-9a-zA-Z._]+@[0-9a-zA-Z._]+\.[0-9a-zA-Z._]+&apos;    p = re.compile(pattern)    m = p.findall(content)    with open(&apos;emal.txt&apos;,&apos;a+&apos;) as f:        for i in m:            f.write(i+&apos;\n&apos;)            print(i)            counts= counts+1return countsdef main():    counts=0    numbers=0    for i in range(1,32):        url=&apos;http://tieba.baidu.com/p/2314539885?pn=%s&apos;% i        number=fand_email(url,counts)        numbers=numbers+number    print(numbers)if __name__ == &apos;__main__&apos;:    main()</code></pre><p>文件 text.py</p><pre><code>import requestsfrom bs4 import BeautifulSoupdef fand_load_image(url):    wb_date = requests.get(url)    #wb_date.encoding = &apos;gbk&apos;    soup = BeautifulSoup(wb_date.text, &apos;lxml&apos;)    print(soup)    images = soup.select(&apos;div.image-item-inner &gt; a&apos;)    print(images)    #image=images[0].get(&apos;href&apos;)    #print(image)url=&apos;https://www.toutiao.com/a6520385683419300359/&apos;fand_load_image(url)</code></pre>]]></content>
     
@@ -92,6 +104,12 @@ import request
     
     </summary>
     
+      <category term="爬虫" scheme="http://yoursite.com/categories/%E7%88%AC%E8%99%AB/"/>
+    
+    
+      <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="美女图片" scheme="http://yoursite.com/tags/%E7%BE%8E%E5%A5%B3%E5%9B%BE%E7%89%87/"/>
     
   </entry>
   
@@ -100,7 +118,7 @@ import request
     <link href="http://yoursite.com/2018/02/15/python-student/"/>
     <id>http://yoursite.com/2018/02/15/python-student/</id>
     <published>2018-02-15T03:29:38.128Z</published>
-    <updated>2018-02-15T10:30:22.593Z</updated>
+    <updated>2018-02-27T02:13:22.374Z</updated>
     
     <content type="html"><![CDATA[<p>欢迎来到<a href="https://www.python.org/" target="_blank" rel="external">python</a>!学习。 这是我人生旅途的第一课，非常重要。 我从这个案例中学到的许多关于python爬虫的知识，这是我python爬虫的启蒙。</p><p>代码演示：</p><pre><code>import jsonimport refrom hashlib import md5import osimport requestsfrom urllib.parse import urlencodefrom bs4 import BeautifulSoupfrom config import *from multiprocessing import Pool#对要爬取页面的解析def get_page_index(offset, keyword):    data = {        &apos;offset&apos;: offset,        &apos;format&apos;: &apos;json&apos;,        &apos;keyword&apos;: keyword,        &apos;autoload&apos;: &apos;true&apos;,        &apos;count&apos;: &apos;20&apos;,        &apos;cur_tab&apos;: 3,        &apos;from&apos;:&apos;gallery&apos;    }    url = &apos;https://www.toutiao.com/search_content/?&apos; + urlencode(data)    try:        header = {            &apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36&apos;        }        response = requests.get(url,headers=header)        if response.status_code == 200:            return response.text        return None    except:        print(&apos;请求索引失败&apos;)        return None#获取所要的数据在json中def prase_get_index(html):    data = json.loads(html)    if data and &apos;data&apos; in data.keys():        for item in data.get(&apos;data&apos;):            yield item.get(&apos;article_url&apos;)#用正则对json数据进行解析def prase_page_urlli(html):    soup = BeautifulSoup(html, &apos;lxml&apos;)    title = soup.select(&apos;title&apos;)[0].get_text()    print(title)    images_pattern= re.compile(&apos;gallery: JSON.parse\((.*?)\)&apos;,re.S)    result=re.search(images_pattern,html)    if result:        data=json.loads(result.group(1))        data=eval(data)        if data and &apos;sub_images&apos;in data.keys():            sub_images=data.get(&apos;sub_images&apos;)            image=[item.get(&apos;url&apos;).replace(&apos;\\&apos;,&apos;&apos;) for item in sub_images]            for images_page in image:                dowload_image(images_page)            return{                &apos;title&apos;:title,                &apos;image&apos;:image            }#对所要下载的图片链接进行访问def get_page_urlli(url):    try:        header = {            &apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36&apos;        }        response = requests.get(url,headers=header)        if response.status_code == 200:            return response.text        return None    except:        print(&apos;请求失败&apos;,url)        return None#下载图片def dowload_image(url):    print(&quot;正在下载&quot;,url)    try:        header = {            &apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36&apos;        }        response = requests.get(url,headers=header)        if response.status_code == 200:            save_image(response.content)        return None    except:        print(&apos;请求图片出错&apos;,url)        return None#把图片保存到本地路径下def save_image(content):    file_path=&apos;{0}/{1}.{2}&apos;.format(os.getcwd(),md5(content).hexdigest(),&apos;jpg&apos;)    if not os.path.exists(file_path):        with open(file_path,&apos;wb&apos;) as f:            f.write(content)            f.close()def main(offset):    html = get_page_index(offset, keyword)    for url in prase_get_index(html):        html=get_page_urlli(url)        if html:            result=prase_page_urlli(html)            print(result)if __name__ == &apos;__main__&apos;:    group=[x*20 for x in range(stat,end+1)]    pool=Pool()    pool.map(main,group)</code></pre><p>详细的解释。</p><ul><li></li><li></li><li>title: python爬虫学习<br>date: 2018-02-15 11:29:38<br>tags:</li></ul><hr>]]></content>
     
@@ -113,6 +131,12 @@ import request
     
     </summary>
     
+      <category term="爬虫" scheme="http://yoursite.com/categories/%E7%88%AC%E8%99%AB/"/>
+    
+    
+      <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="美女图片" scheme="http://yoursite.com/tags/%E7%BE%8E%E5%A5%B3%E5%9B%BE%E7%89%87/"/>
     
   </entry>
   
