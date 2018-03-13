@@ -3,6 +3,28 @@
   
     
     <entry>
+      <title>用selenium自动爬取天眼查上的公司信息</title>
+      <link href="/2018/03/13/tianyancha/"/>
+      <content type="html"><![CDATA[<h2 id="Quict-Start"><a href="#Quict-Start" class="headerlink" title="Quict Start"></a>Quict Start</h2><h3 id="1、需要的库"><a href="#1、需要的库" class="headerlink" title="1、需要的库"></a>1、需要的库</h3><p>re、selenium、pymysql</p><h3 id="2、程序前的准备"><a href="#2、程序前的准备" class="headerlink" title="2、程序前的准备"></a>2、程序前的准备</h3><p>首先在自己的python路径下放入web</p>]]></content>
+      
+      <categories>
+          
+          <category> 爬虫 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 爬虫 </tag>
+            
+            <tag> 信息 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>爬取网站的种子链接并下载视频到本地</title>
       <link href="/2018/02/28/zhongzi/"/>
       <content type="html"><![CDATA[<p>首先读取网站的链接存到txt文件中</p><pre><code>import reimport urllib.requestfrom selenium import webdriverfrom selenium.common.exceptions import TimeoutExceptionfrom selenium.webdriver.support.ui import WebDriverWaitfrom multiprocessing import Poolbrowser = webdriver.Chrome()wait=WebDriverWait(browser, 10)def search(url,next_title):    try:        browser.get(url)        html = browser.page_source        reg = r&apos;&lt;span style=&quot;&quot; id=&quot;streamurj&quot;&gt;(.*?)&lt;/span&gt;&apos;        wang = re.findall(reg, html)        for i in wang:            zhongzi=&apos;https://openload.co/stream/&apos; +i            print(zhongzi)            with open(&apos;lianjie.txt&apos;, &apos;a+&apos;) as f:                f.write(str(zhongzi) + &apos;\n&apos;)                f.close()            #load(product[&apos;url&apos;],product[&apos;title&apos;])    except TimeoutException:        return search(url,next_title)def load(url,title):    print(&apos;正在下载&apos;,url)    urllib.request.urlretrieve(url,&apos;mp4/%s.mp4&apos;% title)    print(&apos;下载成功&apos;,title)def index_page(url):    try:        browser.get(url)        html = browser.page_source        reg = r&apos;&lt;td class=&quot;mytd-padding&quot;&gt;&lt;a href=&quot;(.*?)&quot;&gt;&apos;        video = re.findall(reg, html)        for age in video:            next_url = &apos;http://ourjav.com/&apos; + age.split(&apos;[&apos;)[0]            next_title=age.split(&apos;[&apos;)[-1]            next_page(next_url,next_title)    except TimeoutException:        index_page(url)def next_page(url,next_title):    try:        browser.get(url)        html = browser.page_source        age=r&apos;&lt;iframe id=&quot;flash_game_object&quot; name=&quot;flash_game_object&quot; frameborder=&quot;no&quot; scrolling=&quot;no&quot; width=&quot;650&quot; height=&quot;500&quot; src=&quot;(.*?)&quot; allowfullscreen=&quot;true&quot; webkitallowfullscreen=&quot;true&quot; mozallowfullscreen=&quot;true&quot;&gt;&lt;/iframe&gt;&apos;        video=re.findall(age,html,re.S)        for image in video:            search(image,next_title)    except TimeoutException:        next_page(url, next_title)def read_load():    f2 = open(&quot;lianjie.txt&quot;,&quot;r&quot;)    lines = f2.readlines()    count=0    for line3 in lines:        print(line3)        respon=browser.get(line3)        count=count+1        if count==5:            break    print(count)def main(offset):    url = &apos;http://ourjav.com/&apos;+&apos;index.php?&amp;page=%s&apos; % offset    index_page(url)if __name__ == &apos;__main__&apos;:    group = [x for x in range(1, 11)]    pool = Pool()    pool.map(main, group)</code></pre><p>其次从txt文件中读取url进行下载</p><pre><code>from selenium import webdriverfrom selenium.webdriver.support.ui import WebDriverWaitbrowser = webdriver.Chrome()wait=WebDriverWait(browser, 10)def read_load():    f2 = open(&quot;lianjie.txt&quot;,&quot;r&quot;)    lines = f2.readlines()    count=0    for line3 in lines:        print(line3)        browser.get(line3)        count=count+1        if count==5:            break    print(count)def main():    read_load()if __name__ == &apos;__main__&apos;:    main()</code></pre>]]></content>
