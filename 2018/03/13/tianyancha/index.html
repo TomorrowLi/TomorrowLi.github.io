@@ -106,18 +106,18 @@
         }
     })();
 </script>
-<meta name="description" content="Quict Start1、需要的库re、selenium、pymysql 2、程序前的准备首先在自己的python路径下放入web">
+<meta name="description" content="Quict Start1、需要的库re、selenium、pymysql 2、程序前的准备首先在自己的python路径下放入 chromedriver.exe 选择自己浏览器合适的版本下载 ###代码展示 from selenium import webdriver from selenium.webdriver.common.by import By from selenium.webdrive">
 <meta name="keywords" content="爬虫,信息">
 <meta property="og:type" content="article">
 <meta property="og:title" content="用selenium自动爬取天眼查上的公司信息">
 <meta property="og:url" content="http://yoursite.com/2018/03/13/tianyancha/index.html">
 <meta property="og:site_name" content="TomorrowLi&#39;s Blog">
-<meta property="og:description" content="Quict Start1、需要的库re、selenium、pymysql 2、程序前的准备首先在自己的python路径下放入web">
+<meta property="og:description" content="Quict Start1、需要的库re、selenium、pymysql 2、程序前的准备首先在自己的python路径下放入 chromedriver.exe 选择自己浏览器合适的版本下载 ###代码展示 from selenium import webdriver from selenium.webdriver.common.by import By from selenium.webdrive">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-13T03:42:39.506Z">
+<meta property="og:updated_time" content="2018-03-13T05:25:28.275Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用selenium自动爬取天眼查上的公司信息">
-<meta name="twitter:description" content="Quict Start1、需要的库re、selenium、pymysql 2、程序前的准备首先在自己的python路径下放入web">
+<meta name="twitter:description" content="Quict Start1、需要的库re、selenium、pymysql 2、程序前的准备首先在自己的python路径下放入 chromedriver.exe 选择自己浏览器合适的版本下载 ###代码展示 from selenium import webdriver from selenium.webdriver.common.by import By from selenium.webdrive">
 
 
 
@@ -407,7 +407,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  29
+                  621
                 </span>
               
 
@@ -423,7 +423,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  4
                 </span>
               
             </div>
@@ -445,7 +445,90 @@
 
       
         <h2 id="Quict-Start"><a href="#Quict-Start" class="headerlink" title="Quict Start"></a>Quict Start</h2><h3 id="1、需要的库"><a href="#1、需要的库" class="headerlink" title="1、需要的库"></a>1、需要的库</h3><p>re、selenium、pymysql</p>
-<h3 id="2、程序前的准备"><a href="#2、程序前的准备" class="headerlink" title="2、程序前的准备"></a>2、程序前的准备</h3><p>首先在自己的python路径下放入web</p>
+<h3 id="2、程序前的准备"><a href="#2、程序前的准备" class="headerlink" title="2、程序前的准备"></a>2、程序前的准备</h3><p>首先在自己的python路径下放入 <a href="http://npm.taobao.org/mirrors/chromedriver/" target="_blank" rel="external">chromedriver.exe</a> 选择自己浏览器合适的版本下载</p>
+<p>###代码展示</p>
+<pre><code>from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import re
+import MySQLdb
+host=&apos;localhost&apos;
+user=&apos;root&apos;
+passwd=&apos;&apos;
+db=&apos;test&apos;
+conn=MySQLdb.connect(host,user,passwd,db,charset=&apos;utf8&apos;)
+cursor = conn.cursor()
+boser=webdriver.Chrome()
+boser.maximize_window()
+wait=WebDriverWait(boser , 10)
+def getlogin():
+    boser.get(&apos;https://www.tianyancha.com/login&apos;)
+    user = wait.until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, &quot;#web-content &gt; div &gt; div &gt; div &gt; div.position-rel.container.company_container &gt; div &gt; div.in-block.vertical-top.float-right.right_content.mt50.mr5.mb5 &gt; div.module.module1.module2.loginmodule.collapse.in &gt; div.modulein.modulein1.mobile_box.pl30.pr30.f14.collapse.in &gt; div.pb30.position-rel &gt; input&quot;))
+    )
+    password=wait.until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, &apos;#web-content &gt; div &gt; div &gt; div &gt; div.position-rel.container.company_container &gt; div &gt; div.in-block.vertical-top.float-right.right_content.mt50.mr5.mb5 &gt; div.module.module1.module2.loginmodule.collapse.in &gt; div.modulein.modulein1.mobile_box.pl30.pr30.f14.collapse.in &gt; div.pb40.position-rel &gt; input&apos;))
+    )
+    submit = wait.until(
+        EC.element_to_be_clickable((By.CSS_SELECTOR , &apos;#web-content &gt; div &gt; div &gt; div &gt; div.position-rel.container.company_container &gt; div &gt; div.in-block.vertical-top.float-right.right_content.mt50.mr5.mb5 &gt; div.module.module1.module2.loginmodule.collapse.in &gt; div.modulein.modulein1.mobile_box.pl30.pr30.f14.collapse.in &gt; div.c-white.b-c9.pt8.f18.text-center.login_btn&apos;))
+    )
+    user.send_keys(&apos;15109157091&apos;)
+    password.send_keys(&apos;lm1425560783&apos;)
+    submit.click()
+    getSearch()
+def getSearch():
+    user = wait.until(
+        EC.presence_of_element_located((By.CSS_SELECTOR , &quot;#home-main-search&quot;))
+    )
+    submit = wait.until(
+        EC.element_to_be_clickable((By.CSS_SELECTOR ,
+                                    &apos;#web-content &gt; div &gt; div.mainV3_tab1_enter.position-rel &gt; div.mainv2_tab1.position-rel &gt; div &gt; div.main-tab-outer &gt; div:nth-child(2) &gt; div &gt; div:nth-child(1) &gt; div.input-group.inputV2 &gt; div &gt; span&apos;))
+    )
+    key=&apos;佛山市顺德区&apos;
+    user.send_keys(key)
+    submit.click()
+    html=boser.page_source
+    geturl(html)
+    getUrlNext()
+def getUrlNext():
+    for i in range(2,5):
+        boser.get(r&apos;https://www.tianyancha.com/search/p%s?key=佛山市顺德区&apos;% i)
+        html=boser.page_source
+        geturl(html)
+def geturl(html):
+    try:
+        reg=r&apos;&lt;a href=&quot;.*?&quot; target=&quot;_blank&quot; tyc-event-click=&quot;&quot; tyc-event-ch=&quot;CompanySearch.Company&quot; style=&quot;word-break: break-all;font-weight: 600;&quot; class=&quot;query_name sv-search-company f18 in-block vertical-middle&quot;&gt;&lt;span&gt;(.*?)&lt;/span&gt;&lt;/a&gt;&apos;
+        names=re.findall(reg,html,re.S)
+        reg=r&apos;&lt;a title=&quot;.*?&quot; class=&quot;legalPersonName hover_underline&quot; target=&quot;_blank&quot; href=&quot;.*?&quot;&gt;(.*?)&lt;/a&gt;&apos;
+        daibiao=re.findall(reg,html,re.S)
+        reg=r&apos;&lt;div class=&quot;title overflow-width&quot; style=&quot;border-right: none&quot;&gt;.*?&lt;span title=&quot;.*?&quot;&gt;(.*?)&lt;/span&gt;&lt;/div&gt;&apos;
+        days = re.findall(reg,html,re.S)
+        reg=r&apos;&lt;span class=&quot;sec-c3&quot;&gt;联系电话：&lt;/span&gt;&lt;span class=&quot;overflow-width over-hide vertical-bottom in-block&quot; style=&quot;max-width:500px;&quot;&gt;(.*?)&lt;/span&gt;&apos;
+        phones = re.findall(reg , html , re.S)
+        reg=r&apos;&lt;div class=&quot;add&quot;&gt;&lt;span class=&quot;sec-c3&quot;&gt;.*?&lt;/span&gt;&lt;span&gt;：&lt;/span&gt;&lt;span class=&quot;overflow-width over-hide vertical-bottom in-block&quot; style=&quot;max-width:500px;&quot;&gt;(.*?)&lt;/span&gt;&apos;
+        location=re.findall(reg,html,re.S)
+        for i in range(20):
+            data={
+                &apos;name&apos;:names[i].replace(&apos;&lt;em&gt;&apos;,&apos;&apos;).replace(&apos;&lt;/em&gt;&apos;,&apos;&apos;),
+                &apos;daibiao&apos;:daibiao[i],
+                &apos;day&apos;:days[i].replace(&apos;&lt;em&gt;&apos;,&apos;&apos;).replace(&apos;&lt;/em&gt;&apos;,&apos;&apos;),
+                &apos;phone&apos;:phones[i].replace(&apos;&lt;em&gt;&apos;,&apos;&apos;).replace(&apos;&lt;/em&gt;&apos;,&apos;&apos;),
+                &apos;location&apos;: location[i].replace(&apos;&lt;em&gt;&apos;, &apos;&apos;).replace(&apos;&lt;/em&gt;&apos;,&apos;&apos;)
+            }
+            print(data)
+            cursor.execute(&quot;insert into tianyancha(name,daibiao,day,phone,location) values(&apos;{}&apos;,&apos;{}&apos;,&apos;{}&apos;,&apos;{}&apos;,&apos;{}&apos;)&quot;.format(data[&apos;name&apos;],data[&apos;daibiao&apos;],data[&apos;day&apos;],data[&apos;phone&apos;],data[&apos;location&apos;]))
+            print(data[&apos;daibiao&apos;],&apos;成功存入数据库&apos;)
+            conn.commit()
+
+    except:
+        return None
+def main():
+    getlogin()
+
+if __name__ == &apos;__main__&apos;:
+    main()
+</code></pre><p>代码详细解释：</p>
 
       
     </div>
@@ -774,7 +857,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共1.8k字</span>
+  <span class="post-count">博客全站共2.4k字</span>
 </div>
 
         
