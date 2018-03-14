@@ -3,6 +3,30 @@
   
     
     <entry>
+      <title>用Google插件看各大视频网的VIP视频</title>
+      <link href="/2018/03/14/googlevip/"/>
+      <content type="html"><![CDATA[<h3 id="首先你必须科学上网"><a href="#首先你必须科学上网" class="headerlink" title="首先你必须科学上网"></a>首先你必须科学上网</h3><p>   1、你可以用蓝灯</p><p>   2、可以看这个链接 <a href="http://mp.weixin.qq.com/s?__biz=MzIzMzE4NTk3OA==&amp;mid=2651257286&amp;idx=1&amp;sn=3a65472546a66e87486af29e6f75e668&amp;chksm=f37b2e13c40ca70569a8a1635ffc21da5a2872aafc8dda6ab64cb9cb7007202e29082a061b17&amp;scene=27#wechat_redirect" target="_blank" rel="external">点击</a> 出自这里</p>]]></content>
+      
+      <categories>
+          
+          <category> google插件 </category>
+          
+          <category> vip视频 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vip视频观看 </tag>
+            
+            <tag> Google插件 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>通过知乎抓取粉丝</title>
       <link href="/2018/03/14/zhihu/"/>
       <content type="html"><![CDATA[<h3 id="首先以此-网站-为目标路径"><a href="#首先以此-网站-为目标路径" class="headerlink" title="首先以此 网站 为目标路径"></a>首先以此 <a href="https://zhuanlan.zhihu.com/qinlibo-ml/followers" target="_blank" rel="external">网站</a> 为目标路径</h3><h2 id="1、所需要的库"><a href="#1、所需要的库" class="headerlink" title="1、所需要的库"></a>1、所需要的库</h2><p>   requests</p><h2 id="2、对以瀑布流的json数据进行解析"><a href="#2、对以瀑布流的json数据进行解析" class="headerlink" title="2、对以瀑布流的json数据进行解析"></a>2、对以瀑布流的json数据进行解析</h2><pre><code>data={        &apos;limit&apos;:20,        &apos;offset&apos;:20    }</code></pre><h2 id="3、代码演示"><a href="#3、代码演示" class="headerlink" title="3、代码演示"></a>3、代码演示</h2><pre><code>#!/usr/bin/python3# -*- coding: utf-8 -*-# @Time    : 2018/3/13 15:40# @Author  : tomorrowliimport requestsclass Zhuhu():#初始化参数def __init__(self):    #赋值网址    self.url = &apos;https://zhuanlan.zhihu.com/api/columns/wajuejiprince/followers&apos;    self.headers={        &apos;user-agent&apos;:&apos;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36&apos;    }def getMesg(self,param):    self.html=requests.get(self.url,params=param,headers=self.headers)    for m in range(20):        &apos;&apos;&apos;        with open(&apos;zhihu.txt&apos;,&apos;a&apos;) as f:            print(self.html.json()[m][&apos;hash&apos;])            f.write(self.html.json()[m][&apos;hash&apos;]+&apos;\n&apos;)        &apos;&apos;&apos;        data={            &apos;bio&apos;:self.html.json()[m][&apos;bio&apos;],            &apos;name&apos;:self.html.json()[m][&apos;name&apos;],            &apos;profileUrl&apos;:self.html.json()[m][&apos;profileUrl&apos;],            &apos;hash&apos;:self.html.json()[m][&apos;hash&apos;]        }        print(data)def main():    for n in range(0,60,20):        data={            &apos;limit&apos;:20,            &apos;offset&apos;:n        }        zhihu=Zhuhu()        zhihu.getMesg(data)if __name__ == &apos;__main__&apos;:    main()</code></pre><h2 id="4、可以为每个粉丝进行发私信"><a href="#4、可以为每个粉丝进行发私信" class="headerlink" title="4、可以为每个粉丝进行发私信"></a>4、可以为每个粉丝进行发私信</h2><p>  需要获取每个粉丝的hash和自己cookie值</p>]]></content>
