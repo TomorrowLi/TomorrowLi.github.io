@@ -114,7 +114,7 @@
 <meta property="og:site_name" content="TomorrowLi&#39;s Blog">
 <meta property="og:description" content="Quict Start1、需要的库re、selenium、pymysql 2、程序前的准备首先在自己的python路径下放入 chromedriver.exe 选择自己浏览器合适的版本下载 代码展示from selenium import webdriver from selenium.webdriver.common.by import By from selenium.webdriver.su">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-13T05:36:21.503Z">
+<meta property="og:updated_time" content="2018-03-15T07:10:58.235Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用selenium自动爬取天眼查上的公司信息">
 <meta name="twitter:description" content="Quict Start1、需要的库re、selenium、pymysql 2、程序前的准备首先在自己的python路径下放入 chromedriver.exe 选择自己浏览器合适的版本下载 代码展示from selenium import webdriver from selenium.webdriver.common.by import By from selenium.webdriver.su">
@@ -407,7 +407,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  637
+                  640
                 </span>
               
 
@@ -472,8 +472,8 @@ def getlogin():
     submit = wait.until(
         EC.element_to_be_clickable((By.CSS_SELECTOR , &apos;#web-content &gt; div &gt; div &gt; div &gt; div.position-rel.container.company_container &gt; div &gt; div.in-block.vertical-top.float-right.right_content.mt50.mr5.mb5 &gt; div.module.module1.module2.loginmodule.collapse.in &gt; div.modulein.modulein1.mobile_box.pl30.pr30.f14.collapse.in &gt; div.c-white.b-c9.pt8.f18.text-center.login_btn&apos;))
     )
-    user.send_keys(&apos;15109157091&apos;)
-    password.send_keys(&apos;lm1425560783&apos;)
+    user.send_keys(&apos;用户名&apos;)
+    password.send_keys(&apos;密码&apos;)
     submit.click()
     getSearch()
 def getSearch():
