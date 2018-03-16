@@ -320,6 +320,244 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/16/douban/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TomorrowLi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://7xrvas.com1.z0.glb.clouddn.com/16-4-6/38502140.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TomorrowLi's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/16/douban/" itemprop="url">豆瓣输入验证码登陆</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-16T17:49:27+08:00">
+                2018-03-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/爬虫/" itemprop="url" rel="index">
+                    <span itemprop="name">爬虫</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/爬虫/反爬方式/" itemprop="url" rel="index">
+                    <span itemprop="name">反爬方式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  336
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="首先要登陆豆瓣要必须获取验证码"><a href="#首先要登陆豆瓣要必须获取验证码" class="headerlink" title="首先要登陆豆瓣要必须获取验证码"></a>首先要登陆豆瓣要必须获取验证码</h2><h3 id="1、获取验证码的图片链接下载到本地"><a href="#1、获取验证码的图片链接下载到本地" class="headerlink" title="1、获取验证码的图片链接下载到本地"></a>1、获取验证码的图片链接下载到本地</h3><pre><code>req=r&apos;&lt;img id=&quot;captcha_image&quot; src=&quot;(.*?)&quot; alt=&quot;captcha&quot; class=&quot;captcha_image&quot;/&gt;&apos;
+yanzhenma=re.findall(req,html.text,re.S)
+</code></pre><h3 id="2、手动输入验证码添加到data中"><a href="#2、手动输入验证码添加到data中" class="headerlink" title="2、手动输入验证码添加到data中"></a>2、手动输入验证码添加到data中</h3><pre><code>x=input(&apos;请输入验证码:&apos;)
+data[&apos;captcha-solution&apos;]=x
+data[&apos;captcha-id&apos;]=captcha_id[0]
+</code></pre><h3 id="3、代码演示"><a href="#3、代码演示" class="headerlink" title="3、代码演示"></a>3、代码演示</h3><pre><code>#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+# @Time    : 2018/3/15 20:20
+# @Author  : tomorrowli
+import requests
+import re
+import os
+import time
+import random
+from hashlib import md5
+def geturl():
+    time.sleep(random.randint(2,5))
+    url=&apos;https://www.douban.com/accounts/login&apos;
+    headers={
+        &apos;User-Agent&apos;:&apos;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36&apos;
+    }
+    data={
+        &apos;source&apos;:&apos;index_nav&apos;,
+        &apos;form_email&apos;:&apos;1425560783@qq.com&apos;,
+        &apos;form_password&apos;:&apos;lm1425560783&apos;,
+    }
+    html=requests.get(url,headers=headers)
+    #print(html.text)
+    req=r&apos;&lt;img id=&quot;captcha_image&quot; src=&quot;(.*?)&quot; alt=&quot;captcha&quot; class=&quot;captcha_image&quot;/&gt;&apos;
+    captcha = r&apos;&lt;input type=&quot;hidden&quot; name=&quot;captcha-id&quot; value=&quot;(.*?)&quot;/&gt;&apos;
+    yanzhenma=re.findall(req,html.text,re.S)
+    if yanzhenma:
+        captcha_id = re.findall(captcha,html.text,re.S)
+        html=requests.get(yanzhenma[0])
+        #可以采用MD5算法给图片随机取一个名字
+        #md5(html.content)
+        file_path = &apos;{0}/{1}.{2}&apos;.format(os.getcwd(), md5(html.content).hexdigest(), &apos;jpg&apos;)
+        if not os.path.exists(file_path):
+            with open(file_path, &apos;wb&apos;) as f:
+                f.write(html.content)
+                f.close()
+        x=input(&apos;请输入验证码:&apos;)
+        data[&apos;captcha-solution&apos;]=x
+        data[&apos;captcha-id&apos;]=captcha_id[0]
+        html = requests.post(url , data=data , headers=headers)
+        print(html.status_code)
+        print(&apos;登陆成功&apos;)
+    else:
+        html=requests.post(url,data=data,headers=headers)
+        print(&apos;登陆成功&apos;)
+
+def main():
+    geturl()
+if __name__ == &apos;__main__&apos;:
+    main()
+</code></pre><h3 id="4、之后可以从豆瓣上获取信息存到数据库中"><a href="#4、之后可以从豆瓣上获取信息存到数据库中" class="headerlink" title="4、之后可以从豆瓣上获取信息存到数据库中"></a>4、之后可以从豆瓣上获取信息存到数据库中</h3>
+          
+        
+      
+    </div>
+    
+    
+    
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/14/googlechajian/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2111,168 +2349,13 @@ fand_load_image(url)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/09/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="TomorrowLi">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://7xrvas.com1.z0.glb.clouddn.com/16-4-6/38502140.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="TomorrowLi's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/09/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-09T16:58:35+08:00">
-                2017-11-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  78
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-    
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -2320,7 +2403,7 @@ fand_load_image(url)
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2331,7 +2414,7 @@ fand_load_image(url)
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2342,7 +2425,7 @@ fand_load_image(url)
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2454,7 +2537,7 @@ fand_load_image(url)
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共3.0k字</span>
+  <span class="post-count">博客全站共3.3k字</span>
 </div>
 
         

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-14T15:04:36.130Z</updated>
+  <updated>2018-03-16T10:03:30.306Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>豆瓣输入验证码登陆</title>
+    <link href="http://yoursite.com/2018/03/16/douban/"/>
+    <id>http://yoursite.com/2018/03/16/douban/</id>
+    <published>2018-03-16T09:49:27.681Z</published>
+    <updated>2018-03-16T10:03:30.306Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="首先要登陆豆瓣要必须获取验证码"><a href="#首先要登陆豆瓣要必须获取验证码" class="headerlink" title="首先要登陆豆瓣要必须获取验证码"></a>首先要登陆豆瓣要必须获取验证码</h2><h3 id="1、获取验证码的图片链接下载到本地"><a href="#1、获取验证码的图片链接下载到本地" class="headerlink" title="1、获取验证码的图片链接下载到本地"></a>1、获取验证码的图片链接下载到本地</h3><pre><code>req=r&apos;&lt;img id=&quot;captcha_image&quot; src=&quot;(.*?)&quot; alt=&quot;captcha&quot; class=&quot;captcha_image&quot;/&gt;&apos;yanzhenma=re.findall(req,html.text,re.S)</code></pre><h3 id="2、手动输入验证码添加到data中"><a href="#2、手动输入验证码添加到data中" class="headerlink" title="2、手动输入验证码添加到data中"></a>2、手动输入验证码添加到data中</h3><pre><code>x=input(&apos;请输入验证码:&apos;)data[&apos;captcha-solution&apos;]=xdata[&apos;captcha-id&apos;]=captcha_id[0]</code></pre><h3 id="3、代码演示"><a href="#3、代码演示" class="headerlink" title="3、代码演示"></a>3、代码演示</h3><pre><code>#!/usr/bin/python3# -*- coding: utf-8 -*-# @Time    : 2018/3/15 20:20# @Author  : tomorrowliimport requestsimport reimport osimport timeimport randomfrom hashlib import md5def geturl():    time.sleep(random.randint(2,5))    url=&apos;https://www.douban.com/accounts/login&apos;    headers={        &apos;User-Agent&apos;:&apos;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36&apos;    }    data={        &apos;source&apos;:&apos;index_nav&apos;,        &apos;form_email&apos;:&apos;1425560783@qq.com&apos;,        &apos;form_password&apos;:&apos;lm1425560783&apos;,    }    html=requests.get(url,headers=headers)    #print(html.text)    req=r&apos;&lt;img id=&quot;captcha_image&quot; src=&quot;(.*?)&quot; alt=&quot;captcha&quot; class=&quot;captcha_image&quot;/&gt;&apos;    captcha = r&apos;&lt;input type=&quot;hidden&quot; name=&quot;captcha-id&quot; value=&quot;(.*?)&quot;/&gt;&apos;    yanzhenma=re.findall(req,html.text,re.S)    if yanzhenma:        captcha_id = re.findall(captcha,html.text,re.S)        html=requests.get(yanzhenma[0])        #可以采用MD5算法给图片随机取一个名字        #md5(html.content)        file_path = &apos;{0}/{1}.{2}&apos;.format(os.getcwd(), md5(html.content).hexdigest(), &apos;jpg&apos;)        if not os.path.exists(file_path):            with open(file_path, &apos;wb&apos;) as f:                f.write(html.content)                f.close()        x=input(&apos;请输入验证码:&apos;)        data[&apos;captcha-solution&apos;]=x        data[&apos;captcha-id&apos;]=captcha_id[0]        html = requests.post(url , data=data , headers=headers)        print(html.status_code)        print(&apos;登陆成功&apos;)    else:        html=requests.post(url,data=data,headers=headers)        print(&apos;登陆成功&apos;)def main():    geturl()if __name__ == &apos;__main__&apos;:    main()</code></pre><h3 id="4、之后可以从豆瓣上获取信息存到数据库中"><a href="#4、之后可以从豆瓣上获取信息存到数据库中" class="headerlink" title="4、之后可以从豆瓣上获取信息存到数据库中"></a>4、之后可以从豆瓣上获取信息存到数据库中</h3>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;首先要登陆豆瓣要必须获取验证码&quot;&gt;&lt;a href=&quot;#首先要登陆豆瓣要必须获取验证码&quot; class=&quot;headerlink&quot; title=&quot;首先要登陆豆瓣要必须获取验证码&quot;&gt;&lt;/a&gt;首先要登陆豆瓣要必须获取验证码&lt;/h2&gt;&lt;h3 id=&quot;1、获取验证码的图片链接下
+      
+    
+    </summary>
+    
+      <category term="爬虫" scheme="http://yoursite.com/categories/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="反爬方式" scheme="http://yoursite.com/categories/%E7%88%AC%E8%99%AB/%E5%8F%8D%E7%88%AC%E6%96%B9%E5%BC%8F/"/>
+    
+    
+      <category term="反爬" scheme="http://yoursite.com/tags/%E5%8F%8D%E7%88%AC/"/>
+    
+      <category term="登陆" scheme="http://yoursite.com/tags/%E7%99%BB%E9%99%86/"/>
+    
+  </entry>
   
   <entry>
     <title>推荐五款常用的Google插件</title>
@@ -63,9 +92,9 @@
       <category term="google插件" scheme="http://yoursite.com/categories/google%E6%8F%92%E4%BB%B6/"/>
     
     
-      <category term="vip视频观看" scheme="http://yoursite.com/tags/vip%E8%A7%86%E9%A2%91%E8%A7%82%E7%9C%8B/"/>
-    
       <category term="Google插件" scheme="http://yoursite.com/tags/Google%E6%8F%92%E4%BB%B6/"/>
+    
+      <category term="vip视频观看" scheme="http://yoursite.com/tags/vip%E8%A7%86%E9%A2%91%E8%A7%82%E7%9C%8B/"/>
     
   </entry>
   
