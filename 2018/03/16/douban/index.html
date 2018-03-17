@@ -114,7 +114,7 @@
 <meta property="og:site_name" content="TomorrowLi&#39;s Blog">
 <meta property="og:description" content="首先要登陆豆瓣要必须获取验证码1、获取验证码的图片链接下载到本地req=r&amp;apos;&amp;lt;img id=&amp;quot;captcha_image&amp;quot; src=&amp;quot;(.*?)&amp;quot; alt=&amp;quot;captcha&amp;quot; class=&amp;quot;captcha_image&amp;quot;/&amp;gt;&amp;apos; yanzhenma=re.findall(req,html.t">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-16T10:03:30.306Z">
+<meta property="og:updated_time" content="2018-03-17T06:05:49.578Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="豆瓣输入验证码登陆">
 <meta name="twitter:description" content="首先要登陆豆瓣要必须获取验证码1、获取验证码的图片链接下载到本地req=r&amp;apos;&amp;lt;img id=&amp;quot;captcha_image&amp;quot; src=&amp;quot;(.*?)&amp;quot; alt=&amp;quot;captcha&amp;quot; class=&amp;quot;captcha_image&amp;quot;/&amp;gt;&amp;apos; yanzhenma=re.findall(req,html.t">
@@ -418,7 +418,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  336
+                  337
                 </span>
               
 
@@ -478,8 +478,8 @@ def geturl():
     }
     data={
         &apos;source&apos;:&apos;index_nav&apos;,
-        &apos;form_email&apos;:&apos;1425560783@qq.com&apos;,
-        &apos;form_password&apos;:&apos;lm1425560783&apos;,
+        &apos;form_email&apos;:&apos;用户名&apos;,
+        &apos;form_password&apos;:&apos;密码&apos;,
     }
     html=requests.get(url,headers=headers)
     #print(html.text)
