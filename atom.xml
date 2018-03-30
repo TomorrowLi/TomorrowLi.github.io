@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-22T10:21:56.134Z</updated>
+  <updated>2018-03-30T12:38:30.934Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,39 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>scrapy爬虫框架的简介</title>
+    <link href="http://yoursite.com/2018/03/29/scrpdy/"/>
+    <id>http://yoursite.com/2018/03/29/scrpdy/</id>
+    <published>2018-03-29T14:43:47.032Z</published>
+    <updated>2018-03-30T12:38:30.934Z</updated>
+    
+    <content type="html"><![CDATA[<p>一、安装scrapy所依赖的库</p><pre><code>1、安装wheel    pip install wheel2、安装lxml    https://pypi.python.org/pypi/lxml/4.1.03、安装pyopenssl    https://pypi.python.org/pypi/pyOpenSSL/17.5.04、安装Twisted    https://www.lfd.uci.edu/~gohlke/pythonlibs/5、安装pywin32    https://sourceforge.net/projects/pywin32/files/6、安装scrapy    pip install scrapy</code></pre><p>二、爬虫举例</p><p>1、创建项目</p><pre><code>scrapy startproject zhihu</code></pre><p>2、创建spider项目程序</p><pre><code>cd zhihuscrapy genspider zhihuspider www.zhihu.com</code></pre><p>3、自动创建目录及文件</p><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/scrapy.jpg?raw=true" alt="image"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;一、安装scrapy所依赖的库&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;1、安装wheel
+    pip install wheel
+2、安装lxml
+    https://pypi.python.org/pypi/lxml/4.1.0
+3、安装pyopenssl
+    htt
+      
+    
+    </summary>
+    
+      <category term="scrapy" scheme="http://yoursite.com/categories/scrapy/"/>
+    
+    
+      <category term="scrapy" scheme="http://yoursite.com/tags/scrapy/"/>
+    
+      <category term="爬虫框架" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB%E6%A1%86%E6%9E%B6/"/>
+    
+  </entry>
   
   <entry>
     <title>python爬虫的精华篇</title>
