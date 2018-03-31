@@ -405,7 +405,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  660
                 </span>
               
 
@@ -421,7 +421,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  4
                 </span>
               
             </div>
@@ -444,7 +444,139 @@
       
         
           
-            
+            <p>一、首先在setting.py中修改True改为False</p>
+<pre><code># Obey robots.txt rules
+#允许爬取robots.txt文件内不能爬取的资源
+ROBOTSTXT_OBEY = True
+#知乎是由反扒措施的必须添加User-agent以及authorization
+DEFAULT_REQUEST_HEADERS = {
+  &apos;Accept&apos;: &apos;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&apos;,
+  &apos;Accept-Language&apos;: &apos;en&apos;,
+    &apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36&apos; ,
+    &apos;authorization&apos;:&apos;Bearer 2|1:0|10:1521707334|4:z_c0|80:MS4xS1NYS0FnQUFBQUFtQUFBQVlBSlZUVWEzb0Z0ZDl0MGhaa0VJOWM0ODhiejhRenVUd0tURnFnPT0=|98bb6f4900c1b4b52ece0282393ede5e31046c9a90216e69dec1feece8086ee0&apos;
+}
+</code></pre><p>二、编写spider的项目文件</p>
+<p>1、zhihu_user.py</p>
+<pre><code># -*- coding: utf-8 -*-
+import json
+
+import scrapy
+from scrapy import Spider,Request
+
+from ..items import UserItem
+
+
+class ZhihuUserSpider(Spider):
+    name = &apos;zhihu_user&apos;
+    allowed_domains = [&apos;www.zhihu.com&apos;]
+    start_urls = [&apos;http://www.zhihu.com/&apos;]
+    start_user=&apos;excited-vczh&apos;
+    user_url=&apos;https://www.zhihu.com/api/v4/members/{user}?include={include}&apos;
+    user_query=&apos;allow_message,is_followed,is_following,is_org,is_blocking,employments,answer_count,follower_count,articles_count,gender,badge[?(type=best_answerer)].topics&apos;
+    follows_url=&apos;https://www.zhihu.com/api/v4/members/{user}/followees?include={include}&amp;offset={offset}&amp;limit={limit}&apos;
+    follows_query=&apos;data[*].answer_count,articles_count,gender,follower_count,is_followed,is_following,badge[?(type=best_answerer)].topics&apos;
+    followers_url=&apos;https://www.zhihu.com/api/v4/members/{user}/followers?include={include}&amp;offset={offset}&amp;limit={limit}&apos;
+    followers_query=&apos;data[*].answer_count,articles_count,gender,follower_count,is_followed,is_following,badge[?(type=best_answerer)].topics&apos;
+    def start_requests(self):
+        yield Request(self.user_url.format(user=self.start_user,include=self.user_query),self.parse_user)
+        yield Request(self.follows_url.format(user=self.start_user,include=self.follows_query,offset=0,limit=20),callback=self.parse_query)
+    def parse_user(self, response):
+        result=json.loads(response.text)
+        item=UserItem()
+        for field in item.fields:
+            if field in result.keys():
+                item[field]=result.get(field)
+        yield item
+        yield Request(self.follows_url.format(user=result.get(&apos;url_token&apos;),include=self.follows_query,offset=0,limit=20),callback=self.parse_query)
+        yield Request(self.followers_url.format(user=result.get(&apos;url_token&apos;),include=self.followers_query,offset=0,limit=20),callback=self.parse_querys)
+    def parse_query(self, response):
+        results=json.loads(response.text)
+        if &apos;data&apos; in results.keys():
+            for result in results.get(&apos;data&apos;):
+                yield Request(self.user_url.format(user=result.get(&apos;url_token&apos;),include=self.user_query),callback=self.parse_user)
+        if &apos;paging&apos; in results.keys() and results.get(&apos;paging&apos;).get(&apos;is_end&apos;)==False:
+            next_page=results.get(&apos;paging&apos;).get(&apos;next&apos;)
+            yield Request(next_page,self.parse_query)
+    def parse_querys(self, response):
+        results=json.loads(response.text)
+        if &apos;data&apos; in results.keys():
+            for result in results.get(&apos;data&apos;):
+                yield Request(self.user_url.format(user=result.get(&apos;url_token&apos;),include=self.user_query),callback=self.parse_user)
+        if &apos;paging&apos; in results.keys() and results.get(&apos;paging&apos;).get(&apos;is_end&apos;)==False:
+            next_page=results.get(&apos;paging&apos;).get(&apos;next&apos;)
+            yield Request(next_page,self.parse_querys)
+</code></pre><p>2、items.py</p>
+<pre><code># -*- coding: utf-8 -*-
+
+# Define here the models for your scraped items
+#
+# See documentation in:
+# https://doc.scrapy.org/en/latest/topics/items.html
+
+import scrapy
+from scrapy import Item,Field
+
+class UserItem(Item):
+    # define the fields for your item here like:
+    # name = scrapy.Field()
+    headline=Field()
+    avatar_url=Field()
+    name=Field()
+    type=Field()
+    url_token=Field()
+    user_type=Field()
+</code></pre><p>3、pipelines.py</p>
+<pre><code># -*- coding: utf-8 -*-
+
+# Define your item pipelines here
+#
+# Don&apos;t forget to add your pipeline to the ITEM_PIPELINES setting
+# See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
+
+
+import pymongo
+
+class MongoPipeline(object):
+
+    collection_name = &apos;scrapy_items&apos;
+
+    def __init__(self, mongo_uri, mongo_db):
+        self.mongo_uri = mongo_uri
+        self.mongo_db = mongo_db
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        return cls(
+            mongo_uri=crawler.settings.get(&apos;MONGO_URI&apos;),
+            mongo_db=crawler.settings.get(&apos;MONGO_DATABASE&apos;)
+        )
+
+    def open_spider(self, spider):
+        self.client = pymongo.MongoClient(self.mongo_uri)
+        self.db = self.client[self.mongo_db]
+
+    def close_spider(self, spider):
+        self.client.close()
+
+    def process_item(self, item, spider):
+        self.db[&apos;user&apos;].update({&apos;url_token&apos;:item[&apos;url_token&apos;]},{&apos;$set&apos;:item},True)
+        #self.db[self.collection_name].insert_one(dict(item))
+        return item
+</code></pre><p>4、setting.py</p>
+<pre><code>BOT_NAME = &apos;zhihu&apos;
+
+SPIDER_MODULES = [&apos;zhihu.spiders&apos;]
+NEWSPIDER_MODULE = &apos;zhihu.spiders&apos;
+MONGO_URI=&apos;localhost&apos;
+MONGO_DATABASE=&apos;zhihu&apos;
+</code></pre><p>三、最后启动setting.py中的</p>
+<pre><code>ITEM_PIPELINES = {
+       &apos;zhihu.pipelines.MongoPipeline&apos;: 300,
+}
+#去掉注释
+</code></pre><p>四、结果展示</p>
+<p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/zhihuMongodb.PNG?raw=true" alt="image"></p>
+
           
         
       
@@ -1070,7 +1202,7 @@ Process end.
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  337
+                  341
                 </span>
               
 
@@ -1164,7 +1296,9 @@ def main():
     geturl()
 if __name__ == &apos;__main__&apos;:
     main()
-</code></pre><h3 id="4、之后可以从豆瓣上获取信息存到数据库中"><a href="#4、之后可以从豆瓣上获取信息存到数据库中" class="headerlink" title="4、之后可以从豆瓣上获取信息存到数据库中"></a>4、之后可以从豆瓣上获取信息存到数据库中</h3>
+</code></pre><p>结果展示</p>
+<p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/%E8%B1%86%E7%93%A3.PNG?raw=true" alt="image"></p>
+<h3 id="4、之后可以从豆瓣上获取信息存到数据库中"><a href="#4、之后可以从豆瓣上获取信息存到数据库中" class="headerlink" title="4、之后可以从豆瓣上获取信息存到数据库中"></a>4、之后可以从豆瓣上获取信息存到数据库中</h3>
           
         
       
@@ -1803,7 +1937,7 @@ if __name__ == &apos;__main__&apos;:
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  640
+                  644
                 </span>
               
 
@@ -1925,7 +2059,9 @@ def main():
 
 if __name__ == &apos;__main__&apos;:
     main()
-</code></pre>
+</code></pre><p>结果展示</p>
+<p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/%E5%A4%A9%E7%9C%BC%E6%9F%A5.PNG?raw=true" alt="image"></p>
+
           
         
       
@@ -2150,7 +2286,7 @@ if __name__ == &apos;__main__&apos;:
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/25/youxian/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/25/youxiang/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="TomorrowLi">
@@ -2169,7 +2305,7 @@ if __name__ == &apos;__main__&apos;:
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/25/youxian/" itemprop="url">用正则表达式来爬取某论坛的邮箱地址</a></h1>
+                <a class="post-title-link" href="/2018/02/25/youxiang/" itemprop="url">用正则表达式来爬取某论坛的邮箱地址</a></h1>
         
 
         <div class="post-meta">
@@ -2523,7 +2659,7 @@ if __name__ == &apos;__main__&apos;:
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共5.3k字</span>
+  <span class="post-count">博客全站共6.0k字</span>
 </div>
 
         
