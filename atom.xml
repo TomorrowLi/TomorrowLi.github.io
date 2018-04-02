@@ -181,9 +181,9 @@ ROBOTSTXT_OBEY = True
       <category term="google插件" scheme="http://yoursite.com/categories/google%E6%8F%92%E4%BB%B6/"/>
     
     
-      <category term="Google插件" scheme="http://yoursite.com/tags/Google%E6%8F%92%E4%BB%B6/"/>
-    
       <category term="vip视频观看" scheme="http://yoursite.com/tags/vip%E8%A7%86%E9%A2%91%E8%A7%82%E7%9C%8B/"/>
+    
+      <category term="Google插件" scheme="http://yoursite.com/tags/Google%E6%8F%92%E4%BB%B6/"/>
     
   </entry>
   
