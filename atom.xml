@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-31T07:13:01.743Z</updated>
+  <updated>2018-04-09T14:31:55.830Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>对百度糯米、美团、大众点评的数据进行爬取并保存到 mongodb 数据库和mysql数据库</title>
+    <link href="http://yoursite.com/2018/04/09/nuomi-meituan-dazhong/"/>
+    <id>http://yoursite.com/2018/04/09/nuomi-meituan-dazhong/</id>
+    <published>2018-04-09T11:53:36.595Z</published>
+    <updated>2018-04-09T14:31:55.830Z</updated>
+    
+    <content type="html"><![CDATA[<p>一、首先准备我们需要的库</p><pre><code>1、requests//用来请求网页2、json//用来解析json数据，用于把json数据转换为字典3、re//利用正则对字符串查找3、pyquery//利用css查找4、pymongo//存取pymongo5、MySQLdb//存取mysql</code></pre><p>创建一个配置文件config.py用于存储数据库的密码</p><pre><code>MYSQL_HOST=&apos;localhost&apos;MYSQL_USER=&apos;root&apos;MYSQL_PASSWORD=&apos;&apos;MYSQL_DB=&apos;test&apos;MOGO_URL=&apos;localhost&apos;MOGO_DB=&apos;nuomi&apos;MOGO_TABLE=&apos;product&apos;MOGO_DB_M=&apos;meituan&apos;MOGO_TABLE_M=&apos;product&apos;MOGO_DB_D=&apos;dazhong&apos;MOGO_TABLE_D=&apos;product&apos;</code></pre><p>二、百度糯米</p><p>1、获取全国的url</p><pre><code>def get_city():    url=&apos;https://www.nuomi.com/pcindex/main/changecity&apos;    response=requests.get(url)    response.encoding=&apos;utf-8&apos;    doc=pq(response.text)    items=doc(&apos;.city-list .cities li&apos;).items()    for item in items:        product={            &apos;city&apos;:item.find(&apos;a&apos;).text(),            &apos;url&apos;:&apos;https:&apos;+item.find(&apos;a&apos;).attr(&apos;href&apos;)        }        get_pase(product[&apos;url&apos;],keyword)</code></pre><p>2、通过关键字搜索商品</p><pre><code>def get_pase(url,keyword):    head={        &apos;k&apos;:keyword,    }    urls=url+&apos;/search?&apos;+urlencode(head)    response=requests.get(urls)    response.encoding = &apos;utf-8&apos;    req=re.findall(&apos;noresult-tip&apos;,response.text)    if req:        print(&apos;抱歉,没有找到你搜索的内容&apos;)    else:        req=r&apos;&lt;a href=&quot;(.*?)&quot; target=&quot;_blank&quot;&gt;&lt;img src=&quot;.*?&quot; class=&quot;shop-infoo-list-item-img&quot; /&gt;&lt;/a&gt;&apos;        url_req=re.findall(req,response.text)        for i in url_req:            url_pase=&apos;https:&apos;+i            get_pase_url(url_pase)        req=r&apos;&lt;a href=&quot;(.*?)&quot; .*? class=&quot;ui-pager-normal&quot; .*?&lt;/a&gt;&apos;        url_next=re.findall(req,response.text)        for i in url_next:            url_pases=url+i            get_pase_url(url_pases)</code></pre><p>3、获取商品页的商品信息</p><pre><code>def get_pase_url(url):    response=requests.get(url)    response.encoding = &apos;utf-8&apos;    doc=pq(response.text)    product={        &apos;title&apos;:doc(&apos;.shop-box .shop-title&apos;).text(),        &apos;score&apos;:doc(&apos;body &gt; div.main-container &gt; div.shop-box &gt; p &gt; span.score&apos;).text(),        &apos;price&apos;:doc(&apos;.shop-info .price&apos;).text(),        &apos;location&apos;:doc(&apos;.item .detail-shop-address&apos;).text(),        &apos;phone&apos;:doc(&apos;body &gt; div.main-container &gt; div.shop-box &gt; ul &gt; li:nth-child(2) &gt; p&apos;).text(),        &apos;time&apos;:doc(&apos;body &gt; div.main-container &gt; div.shop-box &gt; ul &gt; li:nth-child(3) &gt; p&apos;).text(),        &apos;tuijian&apos;:doc(&apos;body &gt; div.main-container &gt; div.shop-box &gt; ul &gt; li:nth-child(4) &gt; p&apos;).text()    }    print(product)    save_mysql(product)    #save_mongodb(product)</code></pre><p>4、保存到数据库中</p><pre><code>def save_mysql(product):    conn=MySQLdb.connect(MYSQL_HOST,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DB,charset=&apos;utf8&apos;)    cursor = conn.cursor()    cursor.execute(&quot;insert into nuomi(title,score,price,location,phone,time,tuijian) values(&apos;{}&apos;,&apos;{}&apos;,&apos;{}&apos;,&apos;{}&apos;,&apos;{}&apos;,&apos;{}&apos;,&apos;{}&apos;)&quot;.format(product[&apos;title&apos;] , product[&apos;score&apos;] , product[&apos;price&apos;] , product[&apos;location&apos;] , product[&apos;phone&apos;] ,product[&apos;time&apos;] , product[&apos;tuijian&apos;]))    print(&apos;成功存入数据库&apos;,product)def save_mongodb(result):    client=pymongo.MongoClient(MOGO_URL)    db=client[MOGO_DB]    try:        if db[MOGO_TABLE].insert(result):            print(&apos;保存成功&apos;,result)    except Exception:        print(&apos;保存失败&apos;,result)</code></pre><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/%E7%99%BE%E5%BA%A6%E7%B3%AF%E7%B1%B3.jpg?raw=true" alt="image"></p><p>二、美团</p><p>1、获取全国的url</p><pre><code>def get_city():    url=&apos;http://www.meituan.com/changecity/&apos;    response=requests.get(url)    response.encoding=&apos;utf-8&apos;    doc=pq(response.text)    items=doc(&apos;.city-area .cities .city&apos;).items()    for item in items:        product={            &apos;url&apos;:&apos;http:&apos;+item.attr(&apos;href&apos;),            &apos;city&apos;:item.text()        }        get_url_number(product[&apos;url&apos;])</code></pre><p>2、通过关键字搜索商品</p><pre><code>def get_url_number(url):    try:        response=requests.get(url)        req=r&apos;{&quot;currentCity&quot;:{&quot;id&quot;:(.*?),&quot;name&quot;:&quot;.*?&quot;,&quot;pinyin&quot;:&apos;        number_url=re.findall(req,response.text)        for code in range(0,500,32):            url=&apos;http://apimobile.meituan.com/group/v4/poi/pcsearch/{}?limit=32&amp;offset={}&amp;q={}&apos;.format(number_url[0],code,keyword)            response=requests.get(url)            data=json.loads(response.text)            imageUrl=data[&apos;data&apos;][&apos;searchResult&apos;][0][&apos;imageUrl&apos;]            address=data[&apos;data&apos;][&apos;searchResult&apos;][0][&apos;address&apos;]            lowestprice=data[&apos;data&apos;][&apos;searchResult&apos;][0][&apos;lowestprice&apos;]            title=data[&apos;data&apos;][&apos;searchResult&apos;][0][&apos;title&apos;]            url_id=data[&apos;data&apos;][&apos;searchResult&apos;][0][&apos;id&apos;]            product={                &apos;url_id&apos;:url_id,                &apos;imageUrl&apos;:imageUrl,                &apos;address&apos;:address,                &apos;lowestprice&apos;:lowestprice,                &apos;title&apos;:title            }            save_mysql(product)    except Exception:        return None</code></pre><p>3、保存到数据库中</p><pre><code>def save_mysql(product):    conn=MySQLdb.connect(MYSQL_HOST,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DB,charset=&apos;utf8&apos;)    cursor = conn.cursor()    cursor.execute(&quot;insert into meituan(url_id,imageUrl,address,lowestprice,title) values(&apos;{}&apos;,&apos;{}&apos;,&apos;{}&apos;,&apos;{}&apos;,&apos;{}&apos;)&quot;.format(product[&apos;url_id&apos;], product[&apos;imageUrl&apos;], product[&apos;address&apos;], product[&apos;lowestprice&apos;], product[&apos;title&apos;]))    print(&apos;成功存入数据库&apos;,product)def save_mongodb(result):    client=pymongo.MongoClient(MOGO_URL)    db=client[MOGO_DB_M]    try:        if db[MOGO_TABLE_M].insert(result):            print(&apos;保存成功&apos;,result)    except Exception:        print(&apos;保存失败&apos;,result)</code></pre><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/%E7%BE%8E%E5%9B%A2.jpg?raw=true" alt="image"></p><p>三、大众点评</p><p>1、获取全国的url</p><pre><code>def get_url_city_id():    url = &apos;https://www.dianping.com/ajax/citylist/getAllDomesticCity&apos;    headers = {        &apos;User-Agent&apos;: &apos;Mozilla/5.0(Windows NT 10.0;Win64;x64)AppleWebKit/537.36(KHTML,likeGecko)Chrome/64.0.3282.186Safari/537.36&apos; ,    }    response = requests.get(url , headers=headers)    data=json.loads(response.text)    for i in range(1,35):        url_data=data[&apos;cityMap&apos;][str(i)]        for item in url_data:            product={                &apos;cityName&apos;:item[&apos;cityName&apos;],                &apos;cityId&apos;:item[&apos;cityId&apos;],                &apos;cityEnName&apos;:item[&apos;cityEnName&apos;]            }            get_url_keyword(product)            break</code></pre><p>2、通过关键字搜索商品</p><pre><code>def get_url_keyword(product):    urls = &apos;https://www.dianping.com/search/keyword/{}/0_%{}&apos;.format(product[&apos;cityId&apos;], keyword)    headers = {        &apos;User-Agent&apos;: &apos;Mozilla/5.0(Windows NT 10.0;Win64;x64)AppleWebKit/537.36(KHTML,likeGecko)Chrome/64.0.3282.186Safari/537.36&apos; ,    }    response = requests.get(urls, headers=headers)    req=r&apos;data-hippo-type=&quot;shop&quot; title=&quot;.*?&quot; target=&quot;_blank&quot; href=&quot;(.*?)&quot;&apos;    data=re.findall(req,response.text)    for url in data:        get_url_data(url)</code></pre><p>3、获取商品页的商品信息</p><pre><code>def get_url_data(url):    headers= {        &apos;User-Agent&apos;: &apos;Mozilla/5.0(Windows NT 10.0;Win64;x64)AppleWebKit/537.36(KHTML,likeGecko)Chrome/64.0.3282.186Safari/537.36&apos; ,        &apos;Host&apos;: &apos;www.dianping.com&apos;,        &apos;Pragma&apos;: &apos;no - cache&apos;,        &apos;Upgrade - Insecure - Requests&apos;: &apos;1&apos;    }    response = requests.get(url,headers=headers)    doc=pq(response.text)    title=doc(&apos;#basic-info &gt; h1&apos;).text().replace(&apos;\n&apos;,&apos;&apos;).replace(&apos;\xa0&apos;,&apos;&apos;)    avgPriceTitle=doc(&apos;#avgPriceTitle&apos;).text()    taste=doc(&apos;#comment_score &gt; span:nth-of-type(1)&apos;).text()    Environmental=doc(&apos;#comment_score &gt; span:nth-of-type(2)&apos;).text()    service=doc(&apos;#comment_score &gt; span:nth-of-type(3)&apos;).text()    street_address=doc(&apos;#basic-info &gt; div.expand-info.address &gt; span.item&apos;).text()    tel=doc(&apos;#basic-info &gt; p &gt; span.item&apos;).text()    info_name=doc(&apos;#basic-info &gt; div.promosearch-wrapper &gt; p &gt; span&apos;).text()    time=doc(&apos;#basic-info &gt; div.other.J-other &gt; p:nth-of-type(1) &gt; span.item&apos;).text()    product={        &apos;title&apos;:title,        &apos;avgPriceTitle&apos;:avgPriceTitle,        &apos;taste&apos;: taste ,        &apos;Environmental&apos;:Environmental,        &apos;service&apos;: service ,        &apos;street_address&apos;:street_address,        &apos;tel&apos;: tel ,        &apos;info_name&apos;:info_name,        &apos;time&apos;:time    }    save_mysql(product)</code></pre><p>3、保存到数据库中</p><pre><code>def save_mysql(product):    conn=MySQLdb.connect(MYSQL_HOST,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DB,charset=&apos;utf8&apos;)    cursor=conn.cursor()    cursor.execute(&quot;insert into dazhong(title,avgPriceTitle,taste,Environmental,service,street_address,tel,info_name,time) values(&apos;{}&apos;,&apos;{}&apos;,&apos;{}&apos;,&apos;{}&apos;,&apos;{}&apos;,&apos;{}&apos;,&apos;{}&apos;,&apos;{}&apos;,&apos;{}&apos;)&quot;.format(product[&apos;title&apos;],product[&apos;avgPriceTitle&apos;],product[&apos;taste&apos;],product[&apos;Environmental&apos;],product[&apos;service&apos;],product[&apos;street_address&apos;],product[&apos;tel&apos;],product[&apos;info_name&apos;],product[&apos;time&apos;]))    print(&apos;成功存入数据库&apos; , product)def save_mogodb(product):    client=pymongo.MongoClient(MOGO_URL)    db=client[MOGO_DB_D]    try:        if db[MOGO_TABLE_D].insert(product):            print(&apos;保存成功&apos;,product)    except Exception:        print(&apos;保存失败&apos;,product)</code></pre><p>详细的描述可以访问我的Github <a href="https://github.com/TomorrowLi/meituan-nuomi-dazhong.git" target="_blank" rel="external">TomorrowLi</a> 里面有我的源码</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;一、首先准备我们需要的库&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;1、requests//用来请求网页
+
+2、json//用来解析json数据，用于把json数据转换为字典
+
+3、re//利用正则对字符串查找
+
+3、pyquery//利用css查找
+
+4、pymongo//存取pym
+      
+    
+    </summary>
+    
+      <category term="爬虫" scheme="http://yoursite.com/categories/%E7%88%AC%E8%99%AB/"/>
+    
+    
+      <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="全国订餐信息" scheme="http://yoursite.com/tags/%E5%85%A8%E5%9B%BD%E8%AE%A2%E9%A4%90%E4%BF%A1%E6%81%AF/"/>
+    
+  </entry>
   
   <entry>
     <title>利用scrapy爬取知乎用户信息并存储在mongodb数据库中</title>
@@ -41,9 +77,9 @@ ROBOTSTXT_OBEY = True
       <category term="爬虫" scheme="http://yoursite.com/categories/%E7%88%AC%E8%99%AB/"/>
     
     
-      <category term="zhihu爬虫" scheme="http://yoursite.com/tags/zhihu%E7%88%AC%E8%99%AB/"/>
-    
       <category term="scrapy" scheme="http://yoursite.com/tags/scrapy/"/>
+    
+      <category term="zhihu爬虫" scheme="http://yoursite.com/tags/zhihu%E7%88%AC%E8%99%AB/"/>
     
   </entry>
   
@@ -181,9 +217,9 @@ ROBOTSTXT_OBEY = True
       <category term="google插件" scheme="http://yoursite.com/categories/google%E6%8F%92%E4%BB%B6/"/>
     
     
-      <category term="vip视频观看" scheme="http://yoursite.com/tags/vip%E8%A7%86%E9%A2%91%E8%A7%82%E7%9C%8B/"/>
-    
       <category term="Google插件" scheme="http://yoursite.com/tags/Google%E6%8F%92%E4%BB%B6/"/>
+    
+      <category term="vip视频观看" scheme="http://yoursite.com/tags/vip%E8%A7%86%E9%A2%91%E8%A7%82%E7%9C%8B/"/>
     
   </entry>
   
