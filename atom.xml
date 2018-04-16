@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-04-09T14:31:55.830Z</updated>
+  <updated>2018-04-16T13:46:20.007Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>爬取房天下的租房信息，并对数据进行可视化展示</title>
+    <link href="http://yoursite.com/2018/04/16/ScrapyZufang/"/>
+    <id>http://yoursite.com/2018/04/16/ScrapyZufang/</id>
+    <published>2018-04-16T12:28:34.097Z</published>
+    <updated>2018-04-16T13:46:20.007Z</updated>
+    
+    <content type="html"><![CDATA[<p>一、首先准备需要的库</p><pre><code>1、pandas//是python的一个数据分析包2、matplotlib//是一个 Python 的 2D绘图库，它以各种硬拷贝格式和跨平台的交互式环境生成出版质量级别的图形。3、jieba//jieba(结巴)是一个强大的分词库,完美支持中文分词4、wordcloud//基于Python的词云生成类库5、numpy//NumPy系统是Python的一种开源的数值计算扩展。这种工具可用来存储和处理大型矩阵，比Python自身的嵌套列表（nested list structure)结构要高效的多（该结构也可以用来表示矩阵（matrix））</code></pre><p>二、用scrapy创建一个项目</p><pre><code>scrapy startproject zufangSpiderscrapy genspider zufang http://zu.sh.fang.com/cities.aspx</code></pre><p>三、实现房天下的的数据爬取</p><pre><code>#初始化urldef start_requests(self):    yield scrapy.Reques(self.city_url,callback=self.get_city)#调用get_city()方法 def get_city(self,response):    url=response.xpath(&apos;/html/body/div[3]/div[1]/a/@href&apos;).extract()    #循环热门城市    for i in url:        product={            &apos;city&apos;:i        }        yield scrapy.Request(product[&apos;city&apos;],callback=self.city_parse, dont_filter=True)        #循环爬取每一页        for j in range(2,10):            next_url=product[&apos;city&apos;]+&apos;house/i3%s&apos;%j            yield scrapy.Request(next_url,callback=self.city_parse,dont_filter=True)#调用city_parse()方法获取每一页的数据def city_parse(self, response):    zufang = response.xpath(&apos;//div[@class=&quot;houseList&quot;]&apos;)    for fangzi in zufang:        title=fangzi.xpath(&apos;//p[@class=&quot;title&quot;]/a/text()&apos;).extract()        area =fangzi.xpath(&apos;//p[@class=&quot;gray6 mt20&quot;]/a[1]/span[1]/text()&apos;).extract()        rent_style = fangzi.xpath(&apos;//p[@class=&quot;font16 mt20 bold&quot;]/text()[1]&apos;).extract()        house_type= fangzi.xpath(&apos;//p[@class=&quot;font16 mt20 bold&quot;]/text()[2]&apos;).extract()        house_area = fangzi.xpath(&apos;//p[@class=&quot;font16 mt20 bold&quot;]/text()[3]&apos;).extract()        if fangzi.xpath(&apos;//p[@class=&quot;font16 mt20 bold&quot;]/text()[4]&apos;):            orientation = fangzi.xpath(&apos;//p[@class=&quot;font16 mt20 bold&quot;]/text()[4]&apos;).extract()        else:            orientation=&apos;&apos;        price = fangzi.xpath(&apos;//p[@class=&quot;mt5 alingC&quot;]/span/text()&apos;).extract()        for i in range(len(title)):            item = ZufangScrapyItem()            item[&apos;title&apos;]=title[i]            item[&apos;area&apos;]=area[i]            item[&apos;rent_style&apos;]=rent_style[i].strip()            item[&apos;house_type&apos;]=house_type[i]            item[&apos;house_area&apos;]=house_area[i]            item[&apos;orientation&apos;]=orientation[i].strip()            item[&apos;price&apos;]=price[i]            yield item</code></pre><p>四、对数据进行可视化</p><pre><code>1、首先运行 scrapy crawl zufang -o zufang.csv把数据保存成csv文件2、import pandas as pddata=pd.read_csv(r&apos;H:\Python\zufang_scrapy\zufang.csv&apos;)data.head()</code></pre><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/zufang.jpg?raw=true" alt="zufang.csv"></p><pre><code>3、import matplotlib.pyplot as pltplt.rcParams[&apos;font.sans-serif&apos;]=[&apos;SimHei&apos;]data[&apos;orientation&apos;].value_counts().plot(kind=&apos;barh&apos;,rot=0)plt.show()</code></pre><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/zufang1.jpg?raw=true" alt="image"></p><pre><code>4、final=&apos;&apos;stopword=[&apos;NaN&apos;]for n in range(data.shape[0]):seg_list=list(jieba.cut(data[&apos;area&apos;][n]))for seg in seg_list:    if seg not in stopword:        final=final+seg+&apos; &apos;my_wordcloud=WordCloud(collocations=False,font_path=r&apos;C:\Windows\Fonts\simfang.ttf&apos;,width=2000,height=600,margin=2).generate(final)plt.imshow(my_wordcloud)plt.axis(&apos;off&apos;)plt.show()</code></pre><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/zufang2.jpg?raw=true" alt="image"></p><p>详细代码：可以访问我的 <a href="https://github.com/TomorrowLi/ScraptZufaang" target="_blank" rel="external">GitHub</a> 地址</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;一、首先准备需要的库&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;1、pandas//是python的一个数据分析包
+2、matplotlib//是一个 Python 的 2D绘图库，它以各种硬拷贝格式和跨平台的交互式环境生成出版质量级别的图形。
+3、jieba//jieba(结巴)是一
+      
+    
+    </summary>
+    
+      <category term="Scrapy" scheme="http://yoursite.com/categories/Scrapy/"/>
+    
+    
+      <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="Scrapy" scheme="http://yoursite.com/tags/Scrapy/"/>
+    
+  </entry>
   
   <entry>
     <title>对百度糯米、美团、大众点评的数据进行爬取并保存到 mongodb 数据库和mysql数据库</title>
@@ -77,9 +107,9 @@ ROBOTSTXT_OBEY = True
       <category term="爬虫" scheme="http://yoursite.com/categories/%E7%88%AC%E8%99%AB/"/>
     
     
-      <category term="scrapy" scheme="http://yoursite.com/tags/scrapy/"/>
-    
       <category term="zhihu爬虫" scheme="http://yoursite.com/tags/zhihu%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="scrapy" scheme="http://yoursite.com/tags/scrapy/"/>
     
   </entry>
   
@@ -217,9 +247,9 @@ ROBOTSTXT_OBEY = True
       <category term="google插件" scheme="http://yoursite.com/categories/google%E6%8F%92%E4%BB%B6/"/>
     
     
-      <category term="Google插件" scheme="http://yoursite.com/tags/Google%E6%8F%92%E4%BB%B6/"/>
-    
       <category term="vip视频观看" scheme="http://yoursite.com/tags/vip%E8%A7%86%E9%A2%91%E8%A7%82%E7%9C%8B/"/>
+    
+      <category term="Google插件" scheme="http://yoursite.com/tags/Google%E6%8F%92%E4%BB%B6/"/>
     
   </entry>
   
