@@ -320,6 +320,351 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/24/scrapy_python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TomorrowLi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://7xrvas.com1.z0.glb.clouddn.com/16-4-6/38502140.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TomorrowLi's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/24/scrapy_python/" itemprop="url">利用scrapy爬取伯乐在线的所有文章</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-24T09:11:05+08:00">
+                2018-04-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/scrapy/" itemprop="url" rel="index">
+                    <span itemprop="name">scrapy</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,087
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>一、首先我们所需要的库</p>
+<pre><code>1、resquests
+2、re
+</code></pre><p>二、创建一个scrapy</p>
+<pre><code>scrapy startproject ArticleSpider
+
+scrapy genspider jobbole www.jobbole.com
+</code></pre><p>三、爬取所有文章列表的url以及爬取下一页</p>
+<pre><code>#所要爬取链接的起始url
+start_urls = [&apos;http://blog.jobbole.com/all-posts/&apos;]
+
+def parse(self, response):
+    #获取第一页下的所有a标签
+    url_list=response.css(&apos;#archive .floated-thumb .post-thumb a&apos;)
+    for url in url_list:
+        #获取img标签下的src属性，图片的链接dizhi
+        url_img=url.css(&apos;img::attr(src)&apos;).extract_first()
+        #获取每一个url_list的详情页面的url
+        urls=url.xpath(&apos;@href&apos;)[0].extract()
+        #通过parse.urljoin传递一个绝对地址
+        #通过meta属性向item中添加font_image_url属性
+        yield scrapy.Request(parse.urljoin(response.url,urls),meta={&apos;font_image_url&apos;:url_img},callback=self.get_parse)
+    #获取下一页的链接地址、
+    next=response.css(&apos;.next.page-numbers::attr(href)&apos;)[0].extract()
+    #一直循环，知道没有下一页为止
+    if next:
+        #回调parse函数
+        yield scrapy.Request(parse.urljoin(response.url,next),callback=self.parse)
+    else:
+        return None
+</code></pre><p>四、对详情<a href="http://blog.jobbole.com/all-posts/" target="_blank" rel="external">文章页面</a>进行分析</p>
+<p>&#160;&#160;&#160;&#160;我们要的数据是文章的 </p>
+<pre><code>[标题，日期，标签，文章，点赞数，收藏数，评论数]
+
+#标题
+title= response.css(&apos;.grid-8 .entry-header h1::text&apos;)[0].extract()
+#日期
+data=response.css(&apos;.grid-8 .entry-meta p::text&apos;)[0].extract().strip().replace(&apos;·&apos;,&apos;&apos;).strip()
+#标签
+tag_list = response.css(&quot;p.entry-meta-hide-on-mobile a::text&quot;).extract()
+tag_list = [element for element in tag_list if not element.strip().endswith(&quot;评论&quot;)]#删除标签内的评论数
+tags = &quot;,&quot;.join(tag_list)#把标签数组以&apos;,&apos;链接生成字符串
+#文章
+article= response.css(&apos;.grid-8 .entry&apos;)[0].extract()
+#点赞数
+votetotal=response.css(&apos;.post-adds h10::text&apos;)[0].extract()
+match_re = re.match(&apos;.*(\d+).*&apos;, votetotal)#用正则筛选出我们所需要的数字
+if match_re:
+    votetotal=int(match_re.group(1))#返回第一个
+else:
+    votetotal=0#如国没有则默认为0
+#收藏数
+bookmark=response.css(&apos;.post-adds .bookmark-btn::text&apos;)[0].extract()
+match_re = re.match(&apos;.*(\d+).*&apos;, bookmark)
+  if match_re:
+    bookmark=int(match_re.group(1))
+else:
+    bookmark=0
+#评论数
+comments=response.css(&apos;.post-adds a .hide-on-480::text&apos;)[0].extract()
+match_re = re.match(&apos;.*(\d+).*&apos;, comments)
+if match_re:
+ comments=int(match_re.group(1))
+else:
+ comments=0
+</code></pre><p>&#160;&#160;&#160;&#160;get_parse方法来获取详情页的数据</p>
+<pre><code>def get_parse(self,response):
+    #接收传过来的 font_iamgge_url
+    image_url=response.meta.get(&apos;font_image_url&apos;,&apos;&apos;)
+    title= response.css(&apos;.grid-8 .entry-header h1::text&apos;)[0].extract()
+    data=response.css(&apos;.grid-8 .entry-meta p::text&apos;)[0].extract().strip().replace(&apos;·&apos;,&apos;&apos;).strip()
+    category=response.css(&apos;.grid-8 .entry-meta p a::text&apos;)[0].extract()
+    tag=response.css(&apos;.grid-8 .entry-meta p a::text&apos;)[-1].extract().strip().replace(&apos;·&apos;,&apos;&apos;).strip()
+    article= response.css(&apos;.grid-8 .entry&apos;)[0].extract()
+    votetotal=response.css(&apos;.post-adds h10::text&apos;)[0].extract()
+    match_re = re.match(&apos;.*(\d+).*&apos;, votetotal)
+    if match_re:
+        votetotal=int(match_re.group(1))
+    else:
+        votetotal=0
+    bookmark=response.css(&apos;.post-adds .bookmark-btn::text&apos;)[0].extract()
+    match_re = re.match(&apos;.*(\d+).*&apos;, bookmark)
+    if match_re:
+        bookmark=int(match_re.group(1))
+    else:
+        bookmark=0
+    comments=response.css(&apos;.post-adds a .hide-on-480::text&apos;)[0].extract()
+    match_re = re.match(&apos;.*(\d+).*&apos;, comments)
+    if match_re:
+        comments=int(match_re.group(1))
+    else:
+        comments=0
+    #对item对象实例化
+    item=ArticlespiderItem()
+    item[&apos;url&apos;]=response.url
+    #调用md5把url压缩为固定的哈希值
+    item[&apos;url_object_id&apos;] = get_md5(response.url)
+    item[&apos;image_url&apos;]=[image_url]
+    #调用dtaetime库把字符串转化为date属性
+    try:
+        data=datetime.datetime.strftime(data,&quot;%Y/%m/%d&quot;).date()
+    except Exception as e:
+        #如果有异常就获取当前系统的时间
+        data=datetime.datetime.now().date()
+    item[&apos;data&apos;]=data
+    item[&apos;title&apos;] = title
+    item[&apos;category&apos;] = category
+    item[&apos;tag&apos;] = tag
+    item[&apos;article&apos;] = article
+    item[&apos;votetotal&apos;] = votetotal
+    item[&apos;bookmark&apos;]=bookmark
+    item[&apos;comments&apos;] = comments
+</code></pre><p>五、下载每一篇文章的图片</p>
+<pre><code>在settings.py文件中加入
+#获取item中iamge_url的图片链接
+IMAGES_URLS_FIELD=&apos;image_url&apos;
+#获取当前的文件路径
+object_url=os.path.abspath(os.path.dirname(__file__))
+#创建image文件夹来存储图片
+IMAGES_STORE=os.path.join(object_url,&apos;image&apos;)
+</code></pre><p>&#160;&#160;&#160;&#160;在image文件下会自动生成图片的名字，在ImagesPipeline中我们会找到path变量，我们可以找到每个url所对应的图片的名字，把它存到item中</p>
+<pre><code>class ArticleImagePipeline(ImagesPipeline):
+
+def item_completed(self, results, item, info):
+    if &apos;image_url&apos; in item:
+        for ok,value in results:
+            image_file_path=value[&apos;path&apos;]
+        item[&apos;image_url_path&apos;]=image_file_path
+    return item
+</code></pre><p>六、随着以后爬取速度加快，存的速度赶不上爬的速度，导致存的堆积影响性能，所以使用twisted将musql变成异步操作</p>
+<pre><code>from twisted.enterprise import adbapi
+
+class MysqlTwistePipline(object):
+def __init__(self,dbpool):
+    self.dbpool=dbpool
+@classmethod
+def from_settings(cls,settings):
+    dbparms=dict(
+        host=settings[&apos;MYSQL_HOST&apos;],
+        db=settings[&apos;MYSQL_DB&apos;] ,
+        user=settings[&apos;MYSQL_USER&apos;] ,
+        passwd=settings[&apos;MYSQL_PASSWORD&apos;] ,
+        charset=&apos;utf8&apos;,
+        cursorclass=MySQLdb.cursors.DictCursor,
+        use_unicode=True,
+    )
+    dbpool=adbapi.ConnectionPool(&apos;MySQLdb&apos;,**dbparms)
+    return cls(dbpool)
+
+def process_item(self , item , spider):
+    #使用twisted将musql变成异步操作
+    query=self.dbpool.runInteraction(self.do_insert,item)
+    query.addErrback(self.hand_erro)
+def hand_erro(self,failure):
+    print(failure)
+def do_insert(self,cursor,item):
+    url = item[&apos;url&apos;]
+    url_object_id = item[&apos;url_object_id&apos;]
+    image_urls = item[&apos;image_url&apos;]
+    image_url = image_urls[0]
+    image_url_path = item[&apos;image_url_path&apos;]
+    title = item[&apos;title&apos;]
+    data = item[&apos;data&apos;]
+    category = item[&apos;category&apos;]
+    tag = item[&apos;tag&apos;]
+    article = item[&apos;article&apos;]
+    votetotal = item[&apos;votetotal&apos;]
+    bookmark = item[&apos;bookmark&apos;]
+    comments = item[&apos;comments&apos;]
+    cursor.execute(
+        &apos;insert into jobole(title,data,url,url_object_id,image_url,image_url_path,tag,category,article,votetotal,bookmark,comments) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)&apos; ,
+        (title , data , url , url_object_id , image_url , image_url_path , tag , category , article , votetotal ,
+         bookmark , comments))
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/16/ScrapyZufang/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2485,263 +2830,6 @@ if __name__ == &apos;__main__&apos;:
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/13/tianyancha/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="TomorrowLi">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://7xrvas.com1.z0.glb.clouddn.com/16-4-6/38502140.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="TomorrowLi's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/13/tianyancha/" itemprop="url">用selenium自动爬取天眼查上的公司信息</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-13T09:07:45+08:00">
-                2018-03-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/爬虫/" itemprop="url" rel="index">
-                    <span itemprop="name">爬虫</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  644
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  4
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Quict-Start"><a href="#Quict-Start" class="headerlink" title="Quict Start"></a>Quict Start</h2><h3 id="1、需要的库"><a href="#1、需要的库" class="headerlink" title="1、需要的库"></a>1、需要的库</h3><p>re、selenium、pymysql</p>
-<h3 id="2、程序前的准备"><a href="#2、程序前的准备" class="headerlink" title="2、程序前的准备"></a>2、程序前的准备</h3><p>首先在自己的python路径下放入 <a href="http://npm.taobao.org/mirrors/chromedriver/" target="_blank" rel="external">chromedriver.exe</a> 选择自己浏览器合适的版本下载</p>
-<h3 id="代码展示"><a href="#代码展示" class="headerlink" title="代码展示"></a>代码展示</h3><pre><code>from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-import re
-import MySQLdb
-host=&apos;localhost&apos;#主机名
-user=&apos;root&apos;#数据库的用户名
-passwd=&apos;&apos;#数据库的密码
-db=&apos;test&apos;#数据库的名字
-conn=MySQLdb.connect(host,user,passwd,db,charset=&apos;utf8&apos;)
-cursor = conn.cursor()
-boser=webdriver.Chrome()
-boser.maximize_window()
-wait=WebDriverWait(boser , 10)
-def getlogin():
-    boser.get(&apos;https://www.tianyancha.com/login&apos;)
-    user = wait.until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, &quot;#web-content &gt; div &gt; div &gt; div &gt; div.position-rel.container.company_container &gt; div &gt; div.in-block.vertical-top.float-right.right_content.mt50.mr5.mb5 &gt; div.module.module1.module2.loginmodule.collapse.in &gt; div.modulein.modulein1.mobile_box.pl30.pr30.f14.collapse.in &gt; div.pb30.position-rel &gt; input&quot;))
-    )
-    password=wait.until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, &apos;#web-content &gt; div &gt; div &gt; div &gt; div.position-rel.container.company_container &gt; div &gt; div.in-block.vertical-top.float-right.right_content.mt50.mr5.mb5 &gt; div.module.module1.module2.loginmodule.collapse.in &gt; div.modulein.modulein1.mobile_box.pl30.pr30.f14.collapse.in &gt; div.pb40.position-rel &gt; input&apos;))
-    )
-    submit = wait.until(
-        EC.element_to_be_clickable((By.CSS_SELECTOR , &apos;#web-content &gt; div &gt; div &gt; div &gt; div.position-rel.container.company_container &gt; div &gt; div.in-block.vertical-top.float-right.right_content.mt50.mr5.mb5 &gt; div.module.module1.module2.loginmodule.collapse.in &gt; div.modulein.modulein1.mobile_box.pl30.pr30.f14.collapse.in &gt; div.c-white.b-c9.pt8.f18.text-center.login_btn&apos;))
-    )
-    user.send_keys(&apos;用户名&apos;)
-    password.send_keys(&apos;密码&apos;)
-    submit.click()
-    getSearch()
-def getSearch():
-    user = wait.until(
-        EC.presence_of_element_located((By.CSS_SELECTOR , &quot;#home-main-search&quot;))
-    )
-    submit = wait.until(
-        EC.element_to_be_clickable((By.CSS_SELECTOR ,
-                                    &apos;#web-content &gt; div &gt; div.mainV3_tab1_enter.position-rel &gt; div.mainv2_tab1.position-rel &gt; div &gt; div.main-tab-outer &gt; div:nth-child(2) &gt; div &gt; div:nth-child(1) &gt; div.input-group.inputV2 &gt; div &gt; span&apos;))
-    )
-    key=&apos;佛山市顺德区&apos;
-    user.send_keys(key)
-    submit.click()
-    html=boser.page_source
-    geturl(html)
-    getUrlNext()
-def getUrlNext():
-    for i in range(2,5):
-        boser.get(r&apos;https://www.tianyancha.com/search/p%s?key=佛山市顺德区&apos;% i)
-        html=boser.page_source
-        geturl(html)
-def geturl(html):
-    try:
-        reg=r&apos;&lt;a href=&quot;.*?&quot; target=&quot;_blank&quot; tyc-event-click=&quot;&quot; tyc-event-ch=&quot;CompanySearch.Company&quot; style=&quot;word-break: break-all;font-weight: 600;&quot; class=&quot;query_name sv-search-company f18 in-block vertical-middle&quot;&gt;&lt;span&gt;(.*?)&lt;/span&gt;&lt;/a&gt;&apos;
-        names=re.findall(reg,html,re.S)
-        reg=r&apos;&lt;a title=&quot;.*?&quot; class=&quot;legalPersonName hover_underline&quot; target=&quot;_blank&quot; href=&quot;.*?&quot;&gt;(.*?)&lt;/a&gt;&apos;
-        daibiao=re.findall(reg,html,re.S)
-        reg=r&apos;&lt;div class=&quot;title overflow-width&quot; style=&quot;border-right: none&quot;&gt;.*?&lt;span title=&quot;.*?&quot;&gt;(.*?)&lt;/span&gt;&lt;/div&gt;&apos;
-        days = re.findall(reg,html,re.S)
-        reg=r&apos;&lt;span class=&quot;sec-c3&quot;&gt;联系电话：&lt;/span&gt;&lt;span class=&quot;overflow-width over-hide vertical-bottom in-block&quot; style=&quot;max-width:500px;&quot;&gt;(.*?)&lt;/span&gt;&apos;
-        phones = re.findall(reg , html , re.S)
-        reg=r&apos;&lt;div class=&quot;add&quot;&gt;&lt;span class=&quot;sec-c3&quot;&gt;.*?&lt;/span&gt;&lt;span&gt;：&lt;/span&gt;&lt;span class=&quot;overflow-width over-hide vertical-bottom in-block&quot; style=&quot;max-width:500px;&quot;&gt;(.*?)&lt;/span&gt;&apos;
-        location=re.findall(reg,html,re.S)
-        for i in range(20):
-            data={
-                &apos;name&apos;:names[i].replace(&apos;&lt;em&gt;&apos;,&apos;&apos;).replace(&apos;&lt;/em&gt;&apos;,&apos;&apos;),
-                &apos;daibiao&apos;:daibiao[i],
-                &apos;day&apos;:days[i].replace(&apos;&lt;em&gt;&apos;,&apos;&apos;).replace(&apos;&lt;/em&gt;&apos;,&apos;&apos;),
-                &apos;phone&apos;:phones[i].replace(&apos;&lt;em&gt;&apos;,&apos;&apos;).replace(&apos;&lt;/em&gt;&apos;,&apos;&apos;),
-                &apos;location&apos;: location[i].replace(&apos;&lt;em&gt;&apos;, &apos;&apos;).replace(&apos;&lt;/em&gt;&apos;,&apos;&apos;)
-            }
-            print(data)
-            cursor.execute(&quot;insert into tianyancha(name,daibiao,day,phone,location) values(&apos;{}&apos;,&apos;{}&apos;,&apos;{}&apos;,&apos;{}&apos;,&apos;{}&apos;)&quot;.format(data[&apos;name&apos;],data[&apos;daibiao&apos;],data[&apos;day&apos;],data[&apos;phone&apos;],data[&apos;location&apos;]))
-            print(data[&apos;daibiao&apos;],&apos;成功存入数据库&apos;)
-            conn.commit()
-
-    except:
-        return None
-def main():
-    getlogin()
-
-if __name__ == &apos;__main__&apos;:
-    main()
-</code></pre><p>结果展示</p>
-<p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/%E5%A4%A9%E7%9C%BC%E6%9F%A5.PNG?raw=true" alt="image"></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-    
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2796,7 +2884,7 @@ if __name__ == &apos;__main__&apos;:
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2948,7 +3036,7 @@ if __name__ == &apos;__main__&apos;:
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共7.7k字</span>
+  <span class="post-count">博客全站共8.8k字</span>
 </div>
 
         
