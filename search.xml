@@ -3,6 +3,52 @@
   
     
     <entry>
+      <title>用scrapy的crawlspider全站爬去数据</title>
+      <link href="/2018/05/23/crawl_spider_99/"/>
+      <content type="html"><![CDATA[<p>###一、所需要的库</p><pre><code>1、scrapy</code></pre><p>###二、首先编写一个脚本，运行我们的spider</p><pre><code>mport sysimport osfrom scrapy.cmdline import execute#获取系统文件路径print(os.path.dirname(os.path.abspath(__file__)))#将文件路加到系统环境下sys.path.append(os.path.dirname(os.path.abspath(__file__)))#执行语句execute([&apos;scrapy&apos;,&apos;crawl&apos;,&apos;99spider&apos;])</code></pre><p>###三、编写spider</p><pre><code># -*- coding: utf-8 -*-import scrapyfrom scrapy.linkextractors import LinkExtractorfrom scrapy.spiders import CrawlSpider, Rulefrom ..items import jiankangItemLoader , Crawljiankang99Item#利用crawlspider全站爬取class A99spiderSpider(CrawlSpider):    #spider的名字    name = &apos;99spider&apos;    #spider所允许的域名，只能在这些域名下爬取    allowed_domains = [&apos;www.99.com.cn&apos;,                       &apos;nv.99.com.cn&apos;,                       &apos;ye.99.com.cn&apos;,                       &apos;zyk.99.com.cn&apos;,                       &apos;jf.99.com.cn&apos;,                       &apos;fk.99.com.cn&apos;,                       &apos;zx.99.com.cn&apos;,                       &apos;bj.99.com.cn&apos;,                       &apos;nan.99.com.cn&apos;,                       &apos;nan.99.com.cn&apos;,                       &apos;jz.99.com.cn&apos;,                       &apos;gh.99.com.cn&apos;,                       &apos;news.99.com.cn&apos;]    deny_domains=[]    #spider的初始域名    start_urls = [&apos;http://www.99.com.cn/&apos;]    #crawl spider的爬取规则    rules = (        #Rule(LinkExtractor(allow=r&quot;http://.*.99.com.cn/&quot;),follow=True),        #allow是允许爬取的页面，deny是当访问到这些页面是自动过滤，不爬取        Rule(LinkExtractor(allow=r&apos;.*/\d+.htm&apos;,deny=(r&apos;/jijiu/jjsp/\d+.htm&apos;,r&apos;/jzzn/.*/\d+.htm&apos;,r&apos;/ssbd/jfsp/\d+.htm&apos;                                                     ,r&apos;/zhongyiyangshengshipin/.*/.html&apos;,)), callback=&apos;parse_item&apos;, follow=True,),    )    #利用itemLoader进行对页面的分析    def parse_item(self, response):        image_url=response.css(&apos;.detail_con img::attr(src)&apos;).extract_first()        item_loader=jiankangItemLoader(item=Crawljiankang99Item(),response=response)        item_loader.add_css(&apos;title&apos;,&apos;.title_box h1::text&apos;)        item_loader.add_value(&apos;url&apos;,response.url)        item_loader.add_css(&apos;content&apos;,&apos;.detail_con&apos;)        #这里必须传入一个list列表，才能利用ImagesPipeline下载图片        item_loader.add_value(&apos;image_url&apos;,[image_url])        jiankang=item_loader.load_item()        return jiankang</code></pre><p>###四、编写item</p><pre><code>import scrapyfrom scrapy.loader import ItemLoaderfrom scrapy.loader.processors import TakeFirst , MapCompose#remove掉conten的tag标签from w3lib.html import remove_tags#利用item_loader就必须自定义itemclass jiankangItemLoader(ItemLoader):    #自定义item    default_output_processor = TakeFirst()def return_value(value):    return valueclass Crawljiankang99Item(scrapy.Item):    # define the fields for your item here like:    # name = scrapy.Field()    url=scrapy.Field()    title=scrapy.Field()    #用ImagePipelines所要做的    image_url=scrapy.Field(        output_processor=MapCompose(return_value)    )    image_url_path=scrapy.Field()    content=scrapy.Field(        input_processor=MapCompose(remove_tags)    )</code></pre><p>###五、编写pipelines存储到mysql数据库中</p><pre><code>import MySQLdbfrom twisted.enterprise import adbapiimport MySQLdb.cursorsfrom scrapy.pipelines.images import ImagesPipeline#image_url对应有一个path属性是下载的图片的地址，对其获取并存到数据库中class jiankangImagePipeline(ImagesPipeline):    def item_completed(self, results, item, info):        if &apos;image_url&apos; in item:            for ok,value in results:                image_file_path=value[&apos;path&apos;]            item[&apos;image_url_path&apos;]=image_file_path        return itemclass Crawljiankang99Pipeline(object):    def process_item(self, item, spider):        return item#使用twisted进行数据的插入class MysqlTwistePipline(object):    def __init__(self,dbpool):        self.dbpool=dbpool    #静态获取settings文件的值    @classmethod    def from_settings(cls,settings):        dbparms=dict(            #数据库的地址            host=settings[&apos;MYSQL_HOST&apos;],            #数据库的名字            db=settings[&apos;MYSQL_DB&apos;] ,            #数据库的用户名            user=settings[&apos;MYSQL_USER&apos;] ,            #数据库的名密码            passwd=settings[&apos;MYSQL_PASSWORD&apos;] ,            charset=&apos;utf8&apos;,            cursorclass=MySQLdb.cursors.DictCursor,            use_unicode=True,        )        #对数据进行异步操作        dbpool=adbapi.ConnectionPool(&apos;MySQLdb&apos;,**dbparms)        return cls(dbpool)    def process_item(self , item , spider):        #使用twisted将musql变成异步操作        query=self.dbpool.runInteraction(self.do_insert,item)        query.addErrback(self.hand_erro)    def hand_erro(self,failure):        print(failure)    #执行sql语句    def do_insert(self,cursor,item):        url = item[&apos;url&apos;]        image_urls = item[&apos;image_url&apos;]        image_url = image_urls[0]        content = item[&apos;content&apos;]        title = item[&apos;title&apos;]        image_url_path=item[&apos;image_url_path&apos;]        cursor.execute(            &apos;insert into jiankang(url,title,image_url,image_url_path,content) values(%s,%s,%s,%s,%s)&apos; ,            (url,title,image_url,image_url_path,content))</code></pre><p>###五、编写settings</p><pre><code>#数据库的配置文件MYSQL_HOST=&apos;127.0.0.1&apos;MYSQL_USER=&apos;root&apos;MYSQL_PASSWORD=&apos;&apos;MYSQL_DB=&apos;test&apos;import os#执行pipelinesITEM_PIPELINES = {    &apos;scrapy.pipelines.images.ImagesPipeline&apos;:1,   &apos;Crawljiankang99.pipelines.MysqlTwistePipline&apos;: 4,    &apos;Crawljiankang99.pipelines.jiankangImagePipeline&apos;:2,}#下载的图片链接IMAGES_URLS_FIELD=&apos;image_url&apos;#获取当前文件的路径object_url=os.path.abspath(os.path.dirname(__file__))#对应生成名叫image文件的文件夹来存储图片IMAGES_STORE=os.path.join(object_url,&apos;image&apos;)</code></pre><p>###结果如图所示<br><a href="https://github.com/TomorrowLi/MarkdownImage/blob/master/%E5%81%A5%E5%BA%B7.jpg?raw=true" target="_blank" rel="external">图片</a></p>]]></content>
+      
+      <categories>
+          
+          <category> scrapy </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 爬虫 </tag>
+            
+            <tag> scrapy </tag>
+            
+            <tag> crawlspider </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>最新的模拟知乎登陆</title>
+      <link href="/2018/05/03/loginZhihu/"/>
+      <content type="html"><![CDATA[<p>&#160;&#160;&#160;&#160;首先我们知道随着知乎页面的不断改版，以前的模拟登陆以不能用了，以下是对知乎改版之后的最新登陆方法</p><p>一、首先我们所需要的库</p><pre><code>import requestsimport timeimport re#用于下载验证码图片import base64wwwwwwwwwwwwwwwwwwwww#通过 Hmac 算法计算返回签名。实际是几个固定字符串加时间戳import hmacimport hashlibimport jsonimport matplotlib.pyplot as plt#保存cookiefrom http import cookiejar#打开图片from PIL import Image</code></pre><p>二、</p>]]></content>
+      
+      <categories>
+          
+          <category> 爬虫 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 知乎 </tag>
+            
+            <tag> 模拟登陆 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>利用scrapy爬取伯乐在线的所有文章</title>
       <link href="/2018/04/24/scrapy_python/"/>
       <content type="html"><![CDATA[<p>一、首先我们所需要的库</p><pre><code>1、resquests2、re</code></pre><p>二、创建一个scrapy</p><pre><code>scrapy startproject ArticleSpiderscrapy genspider jobbole www.jobbole.com</code></pre><p>三、爬取所有文章列表的url以及爬取下一页</p><pre><code>#所要爬取链接的起始urlstart_urls = [&apos;http://blog.jobbole.com/all-posts/&apos;]def parse(self, response):    #获取第一页下的所有a标签    url_list=response.css(&apos;#archive .floated-thumb .post-thumb a&apos;)    for url in url_list:        #获取img标签下的src属性，图片的链接dizhi        url_img=url.css(&apos;img::attr(src)&apos;).extract_first()        #获取每一个url_list的详情页面的url        urls=url.xpath(&apos;@href&apos;)[0].extract()        #通过parse.urljoin传递一个绝对地址        #通过meta属性向item中添加font_image_url属性        yield scrapy.Request(parse.urljoin(response.url,urls),meta={&apos;font_image_url&apos;:url_img},callback=self.get_parse)    #获取下一页的链接地址、    next=response.css(&apos;.next.page-numbers::attr(href)&apos;)[0].extract()    #一直循环，知道没有下一页为止    if next:        #回调parse函数        yield scrapy.Request(parse.urljoin(response.url,next),callback=self.parse)    else:        return None</code></pre><p>四、对详情<a href="http://blog.jobbole.com/all-posts/" target="_blank" rel="external">文章页面</a>进行分析</p><p>&#160;&#160;&#160;&#160;我们要的数据是文章的 </p><pre><code>[标题，日期，标签，文章，点赞数，收藏数，评论数]#标题title= response.css(&apos;.grid-8 .entry-header h1::text&apos;)[0].extract()#日期data=response.css(&apos;.grid-8 .entry-meta p::text&apos;)[0].extract().strip().replace(&apos;·&apos;,&apos;&apos;).strip()#标签tag_list = response.css(&quot;p.entry-meta-hide-on-mobile a::text&quot;).extract()tag_list = [element for element in tag_list if not element.strip().endswith(&quot;评论&quot;)]#删除标签内的评论数tags = &quot;,&quot;.join(tag_list)#把标签数组以&apos;,&apos;链接生成字符串#文章article= response.css(&apos;.grid-8 .entry&apos;)[0].extract()#点赞数votetotal=response.css(&apos;.post-adds h10::text&apos;)[0].extract()match_re = re.match(&apos;.*(\d+).*&apos;, votetotal)#用正则筛选出我们所需要的数字if match_re:    votetotal=int(match_re.group(1))#返回第一个else:    votetotal=0#如国没有则默认为0#收藏数bookmark=response.css(&apos;.post-adds .bookmark-btn::text&apos;)[0].extract()match_re = re.match(&apos;.*(\d+).*&apos;, bookmark)  if match_re:    bookmark=int(match_re.group(1))else:    bookmark=0#评论数comments=response.css(&apos;.post-adds a .hide-on-480::text&apos;)[0].extract()match_re = re.match(&apos;.*(\d+).*&apos;, comments)if match_re: comments=int(match_re.group(1))else: comments=0</code></pre><p>&#160;&#160;&#160;&#160;get_parse方法来获取详情页的数据</p><pre><code>def get_parse(self,response):    #接收传过来的 font_iamgge_url    image_url=response.meta.get(&apos;font_image_url&apos;,&apos;&apos;)    title= response.css(&apos;.grid-8 .entry-header h1::text&apos;)[0].extract()    data=response.css(&apos;.grid-8 .entry-meta p::text&apos;)[0].extract().strip().replace(&apos;·&apos;,&apos;&apos;).strip()    category=response.css(&apos;.grid-8 .entry-meta p a::text&apos;)[0].extract()    tag=response.css(&apos;.grid-8 .entry-meta p a::text&apos;)[-1].extract().strip().replace(&apos;·&apos;,&apos;&apos;).strip()    article= response.css(&apos;.grid-8 .entry&apos;)[0].extract()    votetotal=response.css(&apos;.post-adds h10::text&apos;)[0].extract()    match_re = re.match(&apos;.*(\d+).*&apos;, votetotal)    if match_re:        votetotal=int(match_re.group(1))    else:        votetotal=0    bookmark=response.css(&apos;.post-adds .bookmark-btn::text&apos;)[0].extract()    match_re = re.match(&apos;.*(\d+).*&apos;, bookmark)    if match_re:        bookmark=int(match_re.group(1))    else:        bookmark=0    comments=response.css(&apos;.post-adds a .hide-on-480::text&apos;)[0].extract()    match_re = re.match(&apos;.*(\d+).*&apos;, comments)    if match_re:        comments=int(match_re.group(1))    else:        comments=0    #对item对象实例化    item=ArticlespiderItem()    item[&apos;url&apos;]=response.url    #调用md5把url压缩为固定的哈希值    item[&apos;url_object_id&apos;] = get_md5(response.url)    item[&apos;image_url&apos;]=[image_url]    #调用dtaetime库把字符串转化为date属性    try:        data=datetime.datetime.strftime(data,&quot;%Y/%m/%d&quot;).date()    except Exception as e:        #如果有异常就获取当前系统的时间        data=datetime.datetime.now().date()    item[&apos;data&apos;]=data    item[&apos;title&apos;] = title    item[&apos;category&apos;] = category    item[&apos;tag&apos;] = tag    item[&apos;article&apos;] = article    item[&apos;votetotal&apos;] = votetotal    item[&apos;bookmark&apos;]=bookmark    item[&apos;comments&apos;] = comments</code></pre><p>五、下载每一篇文章的图片</p><pre><code>在settings.py文件中加入#获取item中iamge_url的图片链接IMAGES_URLS_FIELD=&apos;image_url&apos;#获取当前的文件路径object_url=os.path.abspath(os.path.dirname(__file__))#创建image文件夹来存储图片IMAGES_STORE=os.path.join(object_url,&apos;image&apos;)</code></pre><p>&#160;&#160;&#160;&#160;在image文件下会自动生成图片的名字，在ImagesPipeline中我们会找到path变量，我们可以找到每个url所对应的图片的名字，把它存到item中</p><pre><code>class ArticleImagePipeline(ImagesPipeline):def item_completed(self, results, item, info):    if &apos;image_url&apos; in item:        for ok,value in results:            image_file_path=value[&apos;path&apos;]        item[&apos;image_url_path&apos;]=image_file_path    return item</code></pre><p>六、随着以后爬取速度加快，存的速度赶不上爬的速度，导致存的堆积影响性能，所以使用twisted将musql变成异步操作</p><pre><code>from twisted.enterprise import adbapiclass MysqlTwistePipline(object):def __init__(self,dbpool):    self.dbpool=dbpool@classmethoddef from_settings(cls,settings):    dbparms=dict(        host=settings[&apos;MYSQL_HOST&apos;],        db=settings[&apos;MYSQL_DB&apos;] ,        user=settings[&apos;MYSQL_USER&apos;] ,        passwd=settings[&apos;MYSQL_PASSWORD&apos;] ,        charset=&apos;utf8&apos;,        cursorclass=MySQLdb.cursors.DictCursor,        use_unicode=True,    )    dbpool=adbapi.ConnectionPool(&apos;MySQLdb&apos;,**dbparms)    return cls(dbpool)def process_item(self , item , spider):    #使用twisted将musql变成异步操作    query=self.dbpool.runInteraction(self.do_insert,item)    query.addErrback(self.hand_erro)def hand_erro(self,failure):    print(failure)def do_insert(self,cursor,item):    url = item[&apos;url&apos;]    url_object_id = item[&apos;url_object_id&apos;]    image_urls = item[&apos;image_url&apos;]    image_url = image_urls[0]    image_url_path = item[&apos;image_url_path&apos;]    title = item[&apos;title&apos;]    data = item[&apos;data&apos;]    category = item[&apos;category&apos;]    tag = item[&apos;tag&apos;]    article = item[&apos;article&apos;]    votetotal = item[&apos;votetotal&apos;]    bookmark = item[&apos;bookmark&apos;]    comments = item[&apos;comments&apos;]    cursor.execute(        &apos;insert into jobole(title,data,url,url_object_id,image_url,image_url_path,tag,category,article,votetotal,bookmark,comments) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)&apos; ,        (title , data , url , url_object_id , image_url , image_url_path , tag , category , article , votetotal ,         bookmark , comments))</code></pre>]]></content>
@@ -82,9 +128,9 @@
       
         <tags>
             
-            <tag> zhihu爬虫 </tag>
-            
             <tag> scrapy </tag>
+            
+            <tag> zhihu爬虫 </tag>
             
         </tags>
       
@@ -190,9 +236,9 @@
       
         <tags>
             
-            <tag> Google插件 </tag>
-            
             <tag> vip视频观看 </tag>
+            
+            <tag> Google插件 </tag>
             
         </tags>
       
