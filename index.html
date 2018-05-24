@@ -405,7 +405,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  810
+                  808
                 </span>
               
 
@@ -444,10 +444,8 @@
       
         
           
-            <p>###一、所需要的库</p>
-<pre><code>1、scrapy
-</code></pre><p>###二、首先编写一个脚本，运行我们的spider</p>
-<pre><code>mport sys
+            <h3 id="一、所需要的库"><a href="#一、所需要的库" class="headerlink" title="一、所需要的库"></a>一、所需要的库</h3><pre><code>1、scrapy
+</code></pre><h3 id="二、首先编写一个脚本，运行我们的spider"><a href="#二、首先编写一个脚本，运行我们的spider" class="headerlink" title="二、首先编写一个脚本，运行我们的spider"></a>二、首先编写一个脚本，运行我们的spider</h3><pre><code>mport sys
 import os
 from scrapy.cmdline import execute
 #获取系统文件路径
@@ -456,8 +454,7 @@ print(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 #执行语句
 execute([&apos;scrapy&apos;,&apos;crawl&apos;,&apos;99spider&apos;])
-</code></pre><p>###三、编写spider</p>
-<pre><code># -*- coding: utf-8 -*-
+</code></pre><h3 id="三、编写spider"><a href="#三、编写spider" class="headerlink" title="三、编写spider"></a>三、编写spider</h3><pre><code># -*- coding: utf-8 -*-
 import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
@@ -503,8 +500,7 @@ class A99spiderSpider(CrawlSpider):
         jiankang=item_loader.load_item()
 
         return jiankang
-</code></pre><p>###四、编写item</p>
-<pre><code>import scrapy
+</code></pre><h3 id="四、编写item"><a href="#四、编写item" class="headerlink" title="四、编写item"></a>四、编写item</h3><pre><code>import scrapy
 from scrapy.loader import ItemLoader
 from scrapy.loader.processors import TakeFirst , MapCompose
 #remove掉conten的tag标签
@@ -528,8 +524,7 @@ class Crawljiankang99Item(scrapy.Item):
     content=scrapy.Field(
         input_processor=MapCompose(remove_tags)
     )
-</code></pre><p>###五、编写pipelines存储到mysql数据库中</p>
-<pre><code>import MySQLdb
+</code></pre><h3 id="五、编写pipelines存储到mysql数据库中"><a href="#五、编写pipelines存储到mysql数据库中" class="headerlink" title="五、编写pipelines存储到mysql数据库中"></a>五、编写pipelines存储到mysql数据库中</h3><pre><code>import MySQLdb
 from twisted.enterprise import adbapi
 import MySQLdb.cursors
 from scrapy.pipelines.images import ImagesPipeline
@@ -585,8 +580,7 @@ class MysqlTwistePipline(object):
         cursor.execute(
             &apos;insert into jiankang(url,title,image_url,image_url_path,content) values(%s,%s,%s,%s,%s)&apos; ,
             (url,title,image_url,image_url_path,content))
-</code></pre><p>###五、编写settings</p>
-<pre><code>#数据库的配置文件
+</code></pre><h3 id="六、编写settings"><a href="#六、编写settings" class="headerlink" title="六、编写settings"></a>六、编写settings</h3><pre><code>#数据库的配置文件
 MYSQL_HOST=&apos;127.0.0.1&apos;
 MYSQL_USER=&apos;root&apos;
 MYSQL_PASSWORD=&apos;&apos;
@@ -605,7 +599,7 @@ IMAGES_URLS_FIELD=&apos;image_url&apos;
 object_url=os.path.abspath(os.path.dirname(__file__))
 #对应生成名叫image文件的文件夹来存储图片
 IMAGES_STORE=os.path.join(object_url,&apos;image&apos;)
-</code></pre><p>###结果如图所示<br><a href="https://github.com/TomorrowLi/MarkdownImage/blob/master/%E5%81%A5%E5%BA%B7.jpg?raw=true" target="_blank" rel="external">图片</a></p>
+</code></pre><h3 id="结果如图所示"><a href="#结果如图所示" class="headerlink" title="结果如图所示"></a>结果如图所示</h3><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/%E5%81%A5%E5%BA%B7.jpg?raw=true" alt="jiankang"></p>
 
           
         
@@ -739,7 +733,7 @@ IMAGES_STORE=os.path.join(object_url,&apos;image&apos;)
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  125
+                  882
                 </span>
               
 
@@ -755,7 +749,7 @@ IMAGES_STORE=os.path.join(object_url,&apos;image&apos;)
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  4
                 </span>
               
             </div>
@@ -784,7 +778,7 @@ IMAGES_STORE=os.path.join(object_url,&apos;image&apos;)
 import time
 import re
 #用于下载验证码图片
-import base64wwwwwwwwwwwwwwwwwwwww
+import base64
 #通过 Hmac 算法计算返回签名。实际是几个固定字符串加时间戳
 import hmac
 import hashlib
@@ -794,7 +788,92 @@ import matplotlib.pyplot as plt
 from http import cookiejar
 #打开图片
 from PIL import Image
-</code></pre><p>二、</p>
+</code></pre><p>二、所需要的头信息</p>
+<pre><code>#所需要的头部信息
+HEADERS = {
+&apos;Connection&apos;: &apos;keep-alive&apos;,
+&apos;Host&apos;: &apos;www.zhihu.com&apos;,
+&apos;Referer&apos;: &apos;https://www.zhihu.com/&apos;,
+&apos;User-Agent&apos;: &apos;Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 &apos;
+              &apos;(KHTML, like Gecko) Chrome/56.0.2924.87 Mobile Safari/537.36&apos;
+}
+#登陆使的url
+LOGIN_URL = &apos;https://www.zhihu.com/signup&apos;
+LOGIN_API = &apos;https://www.zhihu.com/api/v3/oauth/sign_in&apos;
+FORM_DATA = {
+    #客户端id基本不会改变
+    &apos;client_id&apos;: &apos;c3cef7c66a1843f8b3a9e6a1e3160e20&apos;,
+    &apos;grant_type&apos;: &apos;password&apos;,
+    &apos;source&apos;: &apos;com.zhihu.web&apos;,
+    &apos;username&apos;: &apos;用户名&apos;,
+    &apos;password&apos;: &apos;密码&apos;,
+    # 改为&apos;cn&apos;是倒立汉字验证码
+    &apos;lang&apos;: &apos;en&apos;,
+    &apos;ref_source&apos;: &apos;homepage&apos;
+}
+</code></pre><p>&#160;&#160;&#160;&#160;要想登陆成功，header里必须还要俩个参数</p>
+<pre><code>#经过大量的验证，这个参数必须有，这个值基本不变
+&apos;authorization&apos;: &apos;oauth c3cef7c66a1843f8b3a9e6a1e3160e20&apos;,
+#X-Xsrftoken则是防 Xsrf 跨站的 Token 认证，在Response Headers的Set-Cookie字段中可以找到。所以我们需要先请求一次登录页面，然后用正则把这一段匹配出来。注意需要无 Cookies 请求才会返回 Set-Cookie
+&apos;X-Xsrftoken&apos;: _xsrf
+</code></pre><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/set_cookie%E6%8D%95%E8%8E%B7.PNG?raw=true" alt="Set-Cookie"></p>
+<p>&#160;&#160;&#160;&#160;要想登陆成功，form_data也里必须还要俩个参数</p>
+<pre><code>&apos;captcha&apos;: 验证码,
+&apos;timestamp&apos;: 时间戳,
+&apos;signature&apos;: 是通过 Hmac 算法对几个固定值和时间戳进行加密
+</code></pre><p>&#160;&#160;&#160;&#160;timestamp 时间戳，这个很好解决，区别是这里是13位整数，Python 生成的整数部分只有10位，需要额外乘以1000</p>
+<pre><code>timestamp = str(int(time.time()*1000))
+</code></pre><p>&#160;&#160;&#160;&#160;captcha 验证码，是通过 GET 请求单独的 API 接口返回是否需要验证码（无论是否需要，都要请求一次），如果是 True 则需要再次 PUT 请求获取图片的 base64 编码。</p>
+<pre><code>def _get_captcha(self, headers):
+   &quot;&quot;&quot;
+   请求验证码的 API 接口，无论是否需要验证码都需要请求一次
+   如果需要验证码会返回图片的 base64 编码
+   根据头部 lang 字段匹配验证码，需要人工输入
+   :param headers: 带授权信息的请求头部
+   :return: 验证码的 POST 参数
+   &quot;&quot;&quot;
+   lang = headers.get(&apos;lang&apos;, &apos;en&apos;)
+   if lang == &apos;cn&apos;:
+       api = &apos;https://www.zhihu.com/api/v3/oauth/captcha?lang=cn&apos;
+   else:
+       api = &apos;https://www.zhihu.com/api/v3/oauth/captcha?lang=en&apos;
+   resp = self.session.get(api, headers=headers)
+   show_captcha = re.search(r&apos;true&apos;, resp.text)
+   if show_captcha:
+       put_resp = self.session.put(api, headers=headers)
+       img_base64 = re.findall(
+           r&apos;&quot;img_base64&quot;:&quot;(.+)&quot;&apos;, put_resp.text, re.S)[0].replace(r&apos;\n&apos;, &apos;&apos;)
+       with open(&apos;./captcha.jpg&apos;, &apos;wb&apos;) as f:
+           f.write(base64.b64decode(img_base64))
+       img = Image.open(&apos;./captcha.jpg&apos;)
+       if lang == &apos;cn&apos;:
+           plt.imshow(img)
+           print(&apos;点击所有倒立的汉字，按回车提交&apos;)
+           points = plt.ginput(7)
+           capt = json.dumps({&apos;img_size&apos;: [200, 44],
+                              &apos;input_points&apos;: [[i[0]/2, i[1]/2] for i in points]})
+       else:
+           img.show()
+           capt = input(&apos;请输入图片里的验证码：&apos;)
+       # 这里必须先把参数 POST 验证码接口
+       self.session.post(api, data={&apos;input_text&apos;: capt}, headers=headers)
+       return capt
+   return &apos;&apos;
+</code></pre><p>&#160;&#160;&#160;&#160;signature 通过 Crtl+Shift+F 搜索找到是在一个 JS 里生成的，是通过 Hmac 算法对几个固定值和时间戳进行加密，那么只需要在 Python 里也模拟一次这个加密即可。</p>
+<pre><code>def _get_signature(self, timestamp):
+    &quot;&quot;&quot;
+    通过 Hmac 算法计算返回签名
+    实际是几个固定字符串加时间戳
+    :param timestamp: 时间戳
+    :return: 签名
+    &quot;&quot;&quot;
+    ha = hmac.new(b&apos;d1b964811afb40118a12068ff74a12f4&apos;, digestmod=hashlib.sha1)
+    grant_type = self.login_data[&apos;grant_type&apos;]
+    client_id = self.login_data[&apos;client_id&apos;]
+    source = self.login_data[&apos;source&apos;]
+    ha.update(bytes((grant_type + client_id + source + timestamp), &apos;utf-8&apos;))
+    return ha.hexdigest()
+</code></pre><p>文章出自   <a href="https://zhuanlan.zhihu.com/p/34073256" target="_blank" rel="external">知乎</a></p>
 
           
         
@@ -3230,7 +3309,7 @@ if __name__ == &apos;__main__&apos;:
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共9.8k字</span>
+  <span class="post-count">博客全站共10.5k字</span>
 </div>
 
         

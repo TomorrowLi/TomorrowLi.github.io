@@ -106,18 +106,20 @@
         }
     })();
 </script>
-<meta name="description" content="###一、所需要的库 1、scrapy ###二、首先编写一个脚本，运行我们的spider mport sys import os from scrapy.cmdline import execute #获取系统文件路径 print(os.path.dirname(os.path.abspath(__file__))) #将文件路加到系统环境下 sys.path.append(os.path.di">
+<meta name="description" content="一、所需要的库1、scrapy 二、首先编写一个脚本，运行我们的spidermport sys import os from scrapy.cmdline import execute #获取系统文件路径 print(os.path.dirname(os.path.abspath(__file__))) #将文件路加到系统环境下 sys.path.append(os.path.dirname(os">
 <meta name="keywords" content="爬虫,scrapy,crawlspider">
 <meta property="og:type" content="article">
 <meta property="og:title" content="用scrapy的crawlspider全站爬去数据">
 <meta property="og:url" content="http://yoursite.com/2018/05/23/crawl_spider_99/index.html">
 <meta property="og:site_name" content="TomorrowLi&#39;s Blog">
-<meta property="og:description" content="###一、所需要的库 1、scrapy ###二、首先编写一个脚本，运行我们的spider mport sys import os from scrapy.cmdline import execute #获取系统文件路径 print(os.path.dirname(os.path.abspath(__file__))) #将文件路加到系统环境下 sys.path.append(os.path.di">
+<meta property="og:description" content="一、所需要的库1、scrapy 二、首先编写一个脚本，运行我们的spidermport sys import os from scrapy.cmdline import execute #获取系统文件路径 print(os.path.dirname(os.path.abspath(__file__))) #将文件路加到系统环境下 sys.path.append(os.path.dirname(os">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-23T10:19:47.888Z">
+<meta property="og:image" content="https://github.com/TomorrowLi/MarkdownImage/blob/master/%E5%81%A5%E5%BA%B7.jpg?raw=true">
+<meta property="og:updated_time" content="2018-05-24T03:12:31.879Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用scrapy的crawlspider全站爬去数据">
-<meta name="twitter:description" content="###一、所需要的库 1、scrapy ###二、首先编写一个脚本，运行我们的spider mport sys import os from scrapy.cmdline import execute #获取系统文件路径 print(os.path.dirname(os.path.abspath(__file__))) #将文件路加到系统环境下 sys.path.append(os.path.di">
+<meta name="twitter:description" content="一、所需要的库1、scrapy 二、首先编写一个脚本，运行我们的spidermport sys import os from scrapy.cmdline import execute #获取系统文件路径 print(os.path.dirname(os.path.abspath(__file__))) #将文件路加到系统环境下 sys.path.append(os.path.dirname(os">
+<meta name="twitter:image" content="https://github.com/TomorrowLi/MarkdownImage/blob/master/%E5%81%A5%E5%BA%B7.jpg?raw=true">
 
 
 
@@ -407,7 +409,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  810
+                  808
                 </span>
               
 
@@ -444,10 +446,8 @@
       
 
       
-        <p>###一、所需要的库</p>
-<pre><code>1、scrapy
-</code></pre><p>###二、首先编写一个脚本，运行我们的spider</p>
-<pre><code>mport sys
+        <h3 id="一、所需要的库"><a href="#一、所需要的库" class="headerlink" title="一、所需要的库"></a>一、所需要的库</h3><pre><code>1、scrapy
+</code></pre><h3 id="二、首先编写一个脚本，运行我们的spider"><a href="#二、首先编写一个脚本，运行我们的spider" class="headerlink" title="二、首先编写一个脚本，运行我们的spider"></a>二、首先编写一个脚本，运行我们的spider</h3><pre><code>mport sys
 import os
 from scrapy.cmdline import execute
 #获取系统文件路径
@@ -456,8 +456,7 @@ print(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 #执行语句
 execute([&apos;scrapy&apos;,&apos;crawl&apos;,&apos;99spider&apos;])
-</code></pre><p>###三、编写spider</p>
-<pre><code># -*- coding: utf-8 -*-
+</code></pre><h3 id="三、编写spider"><a href="#三、编写spider" class="headerlink" title="三、编写spider"></a>三、编写spider</h3><pre><code># -*- coding: utf-8 -*-
 import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
@@ -503,8 +502,7 @@ class A99spiderSpider(CrawlSpider):
         jiankang=item_loader.load_item()
 
         return jiankang
-</code></pre><p>###四、编写item</p>
-<pre><code>import scrapy
+</code></pre><h3 id="四、编写item"><a href="#四、编写item" class="headerlink" title="四、编写item"></a>四、编写item</h3><pre><code>import scrapy
 from scrapy.loader import ItemLoader
 from scrapy.loader.processors import TakeFirst , MapCompose
 #remove掉conten的tag标签
@@ -528,8 +526,7 @@ class Crawljiankang99Item(scrapy.Item):
     content=scrapy.Field(
         input_processor=MapCompose(remove_tags)
     )
-</code></pre><p>###五、编写pipelines存储到mysql数据库中</p>
-<pre><code>import MySQLdb
+</code></pre><h3 id="五、编写pipelines存储到mysql数据库中"><a href="#五、编写pipelines存储到mysql数据库中" class="headerlink" title="五、编写pipelines存储到mysql数据库中"></a>五、编写pipelines存储到mysql数据库中</h3><pre><code>import MySQLdb
 from twisted.enterprise import adbapi
 import MySQLdb.cursors
 from scrapy.pipelines.images import ImagesPipeline
@@ -585,8 +582,7 @@ class MysqlTwistePipline(object):
         cursor.execute(
             &apos;insert into jiankang(url,title,image_url,image_url_path,content) values(%s,%s,%s,%s,%s)&apos; ,
             (url,title,image_url,image_url_path,content))
-</code></pre><p>###五、编写settings</p>
-<pre><code>#数据库的配置文件
+</code></pre><h3 id="六、编写settings"><a href="#六、编写settings" class="headerlink" title="六、编写settings"></a>六、编写settings</h3><pre><code>#数据库的配置文件
 MYSQL_HOST=&apos;127.0.0.1&apos;
 MYSQL_USER=&apos;root&apos;
 MYSQL_PASSWORD=&apos;&apos;
@@ -605,7 +601,7 @@ IMAGES_URLS_FIELD=&apos;image_url&apos;
 object_url=os.path.abspath(os.path.dirname(__file__))
 #对应生成名叫image文件的文件夹来存储图片
 IMAGES_STORE=os.path.join(object_url,&apos;image&apos;)
-</code></pre><p>###结果如图所示<br><a href="https://github.com/TomorrowLi/MarkdownImage/blob/master/%E5%81%A5%E5%BA%B7.jpg?raw=true" target="_blank" rel="external">图片</a></p>
+</code></pre><h3 id="结果如图所示"><a href="#结果如图所示" class="headerlink" title="结果如图所示"></a>结果如图所示</h3><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/%E5%81%A5%E5%BA%B7.jpg?raw=true" alt="jiankang"></p>
 
       
     </div>
@@ -757,8 +753,17 @@ var jiathis_config={
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -886,6 +891,22 @@ var jiathis_config={
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、所需要的库"><span class="nav-number">1.</span> <span class="nav-text">一、所需要的库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、首先编写一个脚本，运行我们的spider"><span class="nav-number">2.</span> <span class="nav-text">二、首先编写一个脚本，运行我们的spider</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、编写spider"><span class="nav-number">3.</span> <span class="nav-text">三、编写spider</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、编写item"><span class="nav-number">4.</span> <span class="nav-text">四、编写item</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、编写pipelines存储到mysql数据库中"><span class="nav-number">5.</span> <span class="nav-text">五、编写pipelines存储到mysql数据库中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#六、编写settings"><span class="nav-number">6.</span> <span class="nav-text">六、编写settings</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结果如图所示"><span class="nav-number">7.</span> <span class="nav-text">结果如图所示</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -929,7 +950,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共9.8k字</span>
+  <span class="post-count">博客全站共10.5k字</span>
 </div>
 
         
