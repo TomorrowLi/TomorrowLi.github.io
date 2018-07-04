@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-05-24T03:12:31.879Z</updated>
+  <updated>2018-07-04T14:25:46.934Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>利用scrapy打造属于自己的搜索引擎网站</title>
+    <link href="http://yoursite.com/2018/06/04/scrapy-search/"/>
+    <id>http://yoursite.com/2018/06/04/scrapy-search/</id>
+    <published>2018-06-04T03:37:10.174Z</published>
+    <updated>2018-07-04T14:25:46.934Z</updated>
+    
+    <content type="html"><![CDATA[<p>一、首先我们安装elasticsearch</p><p>&#160;&#160;&#160;&#160;ElasticSearch是一个基于Lucene的搜索服务器。它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。</p><p>&#160;&#160;&#160;&#160;我们要下载的是 elasticsearch-rtf,  Elasticsearch-RTF是针对中文的一个发行版，即使用最新稳定的elasticsearch版本，并且帮你下载测试好对应的插件，如中文分词插件等，目的是让你可以下载下来就可以直接的使用（虽然es已经很简单了，但是很多新手还是需要去花时间去找配置，中间的过程其实很痛苦），当然等你对这些都熟悉了之后，你完全可以自己去diy了，跟linux的众多发行版是一个意思。</p><p>下载地址：<a href="https://github.com/medcl/elasticsearch-rtf" target="_blank" rel="external">github</a>     <a href="https://github.com/medcl/elasticsearch-rtf" target="_blank" rel="external">https://github.com/medcl/elasticsearch-rtf</a></p><p>下载之后运行图中的 elasticsearch.bat 文件</p><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/search1.PNG?raw=true" alt="image"></p><p>还要安装 elasticsearch-head 插件  </p><p>可以访问 <a href="">https://blog.csdn.net/mjlfto/article/details/79772848</a></p><p>二、spider下的jobbole</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;一、首先我们安装elasticsearch&lt;/p&gt;
+&lt;p&gt;&amp;#160;&amp;#160;&amp;#160;&amp;#160;ElasticSearch是一个基于Lucene的搜索服务器。它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用
+      
+    
+    </summary>
+    
+      <category term="scrapy" scheme="http://yoursite.com/categories/scrapy/"/>
+    
+      <category term="elasticsearch" scheme="http://yoursite.com/categories/scrapy/elasticsearch/"/>
+    
+    
+      <category term="scrapy" scheme="http://yoursite.com/tags/scrapy/"/>
+    
+      <category term="elasticsearch" scheme="http://yoursite.com/tags/elasticsearch/"/>
+    
+      <category term="搜索引擎" scheme="http://yoursite.com/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/"/>
+    
+  </entry>
   
   <entry>
     <title>用scrapy的crawlspider全站爬去数据</title>
@@ -201,9 +233,9 @@ ROBOTSTXT_OBEY = True
       <category term="爬虫" scheme="http://yoursite.com/categories/%E7%88%AC%E8%99%AB/"/>
     
     
-      <category term="zhihu爬虫" scheme="http://yoursite.com/tags/zhihu%E7%88%AC%E8%99%AB/"/>
-    
       <category term="scrapy" scheme="http://yoursite.com/tags/scrapy/"/>
+    
+      <category term="zhihu爬虫" scheme="http://yoursite.com/tags/zhihu%E7%88%AC%E8%99%AB/"/>
     
   </entry>
   
