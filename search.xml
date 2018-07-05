@@ -3,13 +3,11 @@
   
     
     <entry>
-      <title>利用scrapy打造属于自己的搜索引擎网站</title>
+      <title>Elasticsearch搜索引擎</title>
       <link href="/2018/06/04/scrapy-search/"/>
-      <content type="html"><![CDATA[<p>一、首先我们安装elasticsearch</p><p>&#160;&#160;&#160;&#160;ElasticSearch是一个基于Lucene的搜索服务器。它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。</p><p>&#160;&#160;&#160;&#160;我们要下载的是 elasticsearch-rtf,  Elasticsearch-RTF是针对中文的一个发行版，即使用最新稳定的elasticsearch版本，并且帮你下载测试好对应的插件，如中文分词插件等，目的是让你可以下载下来就可以直接的使用（虽然es已经很简单了，但是很多新手还是需要去花时间去找配置，中间的过程其实很痛苦），当然等你对这些都熟悉了之后，你完全可以自己去diy了，跟linux的众多发行版是一个意思。</p><p>下载地址：<a href="https://github.com/medcl/elasticsearch-rtf" target="_blank" rel="external">github</a>     <a href="https://github.com/medcl/elasticsearch-rtf" target="_blank" rel="external">https://github.com/medcl/elasticsearch-rtf</a></p><p>下载之后运行图中的 elasticsearch.bat 文件</p><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/search1.PNG?raw=true" alt="image"></p><p>还要安装 elasticsearch-head 插件  </p><p>可以访问 <a href="">https://blog.csdn.net/mjlfto/article/details/79772848</a></p><p>二、spider下的jobbole</p>]]></content>
+      <content type="html"><![CDATA[<p>一、首先我们安装elasticsearch</p><p>&#160;&#160;&#160;&#160;ElasticSearch是一个基于Lucene的搜索服务器。它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。</p><p>&#160;&#160;&#160;&#160;我们要下载的是 elasticsearch-rtf,  Elasticsearch-RTF是针对中文的一个发行版，即使用最新稳定的elasticsearch版本，并且帮你下载测试好对应的插件，如中文分词插件等，目的是让你可以下载下来就可以直接的使用（虽然es已经很简单了，但是很多新手还是需要去花时间去找配置，中间的过程其实很痛苦），当然等你对这些都熟悉了之后，你完全可以自己去diy了，跟linux的众多发行版是一个意思。</p><p>下载地址：<a href="https://github.com/medcl/elasticsearch-rtf" target="_blank" rel="external">github</a>     <a href="https://github.com/medcl/elasticsearch-rtf" target="_blank" rel="external">https://github.com/medcl/elasticsearch-rtf</a></p><p>###1.运行环境</p><p>a.JDK8+<br>b.系统可用内存&gt;2G</p><p>这里如何安装jdk,我不做过多解释，百度上太多教程了。</p><p>###2.安装elasticsearch</p><p>下载之后运行图中的 elasticsearch.bat 文件</p><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/search1.PNG?raw=true" alt="image"></p><p>###3.安装 elasticsearch-head 插件  </p><p>安装elasticsearch-head插件需要nodejs的支持，所以此处讲解一下安装nodejs步骤</p><p>可以访问 <a href="https://blog.csdn.net/mjlfto/article/details/79772848" target="_blank" rel="external">https://blog.csdn.net/mjlfto/article/details/79772848</a> 里面有详细的步骤。</p><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/search2.png?raw=true" alt="image"></p>]]></content>
       
       <categories>
-          
-          <category> scrapy </category>
           
           <category> elasticsearch </category>
           
@@ -17,8 +15,6 @@
       
       
         <tags>
-            
-            <tag> scrapy </tag>
             
             <tag> elasticsearch </tag>
             
@@ -262,9 +258,9 @@
       
         <tags>
             
-            <tag> vip视频观看 </tag>
-            
             <tag> Google插件 </tag>
+            
+            <tag> vip视频观看 </tag>
             
         </tags>
       

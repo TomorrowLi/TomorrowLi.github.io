@@ -84,7 +84,7 @@
 
 
 
-  <meta name="keywords" content="scrapy,elasticsearch,搜索引擎," />
+  <meta name="keywords" content="elasticsearch,搜索引擎," />
 
 
 
@@ -107,17 +107,18 @@
     })();
 </script>
 <meta name="description" content="一、首先我们安装elasticsearch &amp;#160;&amp;#160;&amp;#160;&amp;#160;ElasticSearch是一个基于Lucene的搜索服务器。它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。 &amp;#160;&amp;#160;&amp;#160;&amp;#160;我">
-<meta name="keywords" content="scrapy,elasticsearch,搜索引擎">
+<meta name="keywords" content="elasticsearch,搜索引擎">
 <meta property="og:type" content="article">
-<meta property="og:title" content="利用scrapy打造属于自己的搜索引擎网站">
+<meta property="og:title" content="Elasticsearch搜索引擎">
 <meta property="og:url" content="http://yoursite.com/2018/06/04/scrapy-search/index.html">
 <meta property="og:site_name" content="TomorrowLi&#39;s Blog">
 <meta property="og:description" content="一、首先我们安装elasticsearch &amp;#160;&amp;#160;&amp;#160;&amp;#160;ElasticSearch是一个基于Lucene的搜索服务器。它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。 &amp;#160;&amp;#160;&amp;#160;&amp;#160;我">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://github.com/TomorrowLi/MarkdownImage/blob/master/search1.PNG?raw=true">
-<meta property="og:updated_time" content="2018-07-04T14:25:46.934Z">
+<meta property="og:image" content="https://github.com/TomorrowLi/MarkdownImage/blob/master/search2.png?raw=true">
+<meta property="og:updated_time" content="2018-07-05T00:53:47.121Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="利用scrapy打造属于自己的搜索引擎网站">
+<meta name="twitter:title" content="Elasticsearch搜索引擎">
 <meta name="twitter:description" content="一、首先我们安装elasticsearch &amp;#160;&amp;#160;&amp;#160;&amp;#160;ElasticSearch是一个基于Lucene的搜索服务器。它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。 &amp;#160;&amp;#160;&amp;#160;&amp;#160;我">
 <meta name="twitter:image" content="https://github.com/TomorrowLi/MarkdownImage/blob/master/search1.PNG?raw=true">
 
@@ -155,7 +156,7 @@
 
 
 
-  <title>利用scrapy打造属于自己的搜索引擎网站 | TomorrowLi's Blog</title>
+  <title>Elasticsearch搜索引擎 | TomorrowLi's Blog</title>
   
 
 
@@ -343,7 +344,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">利用scrapy打造属于自己的搜索引擎网站</h1>
+          <h1 class="post-title" itemprop="name headline">Elasticsearch搜索引擎</h1>
         
 
         <div class="post-meta">
@@ -378,18 +379,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/scrapy/" itemprop="url" rel="index">
-                    <span itemprop="name">scrapy</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/scrapy/elasticsearch/" itemprop="url" rel="index">
+                  <a href="/categories/elasticsearch/" itemprop="url" rel="index">
                     <span itemprop="name">elasticsearch</span>
                   </a>
                 </span>
@@ -420,7 +410,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  277
+                  345
                 </span>
               
 
@@ -461,11 +451,16 @@
 <p>&#160;&#160;&#160;&#160;ElasticSearch是一个基于Lucene的搜索服务器。它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。</p>
 <p>&#160;&#160;&#160;&#160;我们要下载的是 elasticsearch-rtf,  Elasticsearch-RTF是针对中文的一个发行版，即使用最新稳定的elasticsearch版本，并且帮你下载测试好对应的插件，如中文分词插件等，目的是让你可以下载下来就可以直接的使用（虽然es已经很简单了，但是很多新手还是需要去花时间去找配置，中间的过程其实很痛苦），当然等你对这些都熟悉了之后，你完全可以自己去diy了，跟linux的众多发行版是一个意思。</p>
 <p>下载地址：<a href="https://github.com/medcl/elasticsearch-rtf" target="_blank" rel="external">github</a>     <a href="https://github.com/medcl/elasticsearch-rtf" target="_blank" rel="external">https://github.com/medcl/elasticsearch-rtf</a></p>
+<p>###1.运行环境</p>
+<p>a.JDK8+<br>b.系统可用内存&gt;2G</p>
+<p>这里如何安装jdk,我不做过多解释，百度上太多教程了。</p>
+<p>###2.安装elasticsearch</p>
 <p>下载之后运行图中的 elasticsearch.bat 文件</p>
 <p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/search1.PNG?raw=true" alt="image"></p>
-<p>还要安装 elasticsearch-head 插件  </p>
-<p>可以访问 <a href="">https://blog.csdn.net/mjlfto/article/details/79772848</a></p>
-<p>二、spider下的jobbole</p>
+<p>###3.安装 elasticsearch-head 插件  </p>
+<p>安装elasticsearch-head插件需要nodejs的支持，所以此处讲解一下安装nodejs步骤</p>
+<p>可以访问 <a href="https://blog.csdn.net/mjlfto/article/details/79772848" target="_blank" rel="external">https://blog.csdn.net/mjlfto/article/details/79772848</a> 里面有详细的步骤。</p>
+<p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/search2.png?raw=true" alt="image"></p>
 
       
     </div>
@@ -513,8 +508,6 @@
     <footer class="post-footer">
       
         <div class="post-tags">
-          
-            <a href="/tags/scrapy/" rel="tag"><i class="fa fa-tag"></i>scrapy</a>
           
             <a href="/tags/elasticsearch/" rel="tag"><i class="fa fa-tag"></i>elasticsearch</a>
           
@@ -659,7 +652,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -789,7 +782,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共10.8k字</span>
+  <span class="post-count">博客全站共10.9k字</span>
 </div>
 
         
