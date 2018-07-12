@@ -3,8 +3,52 @@
   
     
     <entry>
+      <title>百度文库下载和百度云加速下载</title>
+      <link href="/2018/07/12/pojie/"/>
+      <content type="html"><![CDATA[<h3 id="一、百度文库、道客巴巴登免费下载"><a href="#一、百度文库、道客巴巴登免费下载" class="headerlink" title="一、百度文库、道客巴巴登免费下载"></a>一、百度文库、道客巴巴登免费下载</h3><p>&#160;&#160;&#160;&#160;1、百度文库下载：首先进入你要下载的文档页面</p><pre><code>例如:https://wenku.baidu.com/view/eeb5d53069eae009591bec34.html?from=search</code></pre><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/baidu.PNG?raw=true" alt="image"></p><p>&#160;&#160;&#160;&#160;2、把图中的链接复制到冰点文库的下载</p><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/baidu1.PNG?raw=true" alt="image"></p><p>&#160;&#160;&#160;&#160;3、文件下载地址：</p><pre><code>链接：https://pan.baidu.com/s/1G0zTlsG61ipGnGfmHPEijw密码: bzjm</code></pre><h3 id="二、百度云加速下载"><a href="#二、百度云加速下载" class="headerlink" title="二、百度云加速下载"></a>二、百度云加速下载</h3><p>&#160;&#160;&#160;&#160;1、首先要登陆你的百度云账号</p><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/baiduyun.PNG?raw=true" alt="image"></p><pre><code>链接：https://pan.baidu.com/s/1Lzm5_8lRPHO0e5r38rl-3A密码: mcc5</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> 破解软件 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 破解软解 </tag>
+            
+            <tag> 百度 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>Elasticsearch搜索引擎</title>
-      <link href="/2018/06/04/scrapy-search/"/>
+      <link href="/2018/07/05/scrapy-search/"/>
+      <content type="html"><![CDATA[<p>###一、首先我们安装elasticsearch</p><p>&#160;&#160;&#160;&#160;ElasticSearch是一个基于Lucene的搜索服务器。它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。</p><p>&#160;&#160;&#160;&#160;我们要下载的是 elasticsearch-rtf,  Elasticsearch-RTF是针对中文的一个发行版，即使用最新稳定的elasticsearch版本，并且帮你下载测试好对应的插件，如中文分词插件等，目的是让你可以下载下来就可以直接的使用（虽然es已经很简单了，但是很多新手还是需要去花时间去找配置，中间的过程其实很痛苦），当然等你对这些都熟悉了之后，你完全可以自己去diy了，跟linux的众多发行版是一个意思。</p><p>下载地址：<a href="https://github.com/medcl/elasticsearch-rtf" target="_blank" rel="external">github</a>     <a href="https://github.com/medcl/elasticsearch-rtf" target="_blank" rel="external">https://github.com/medcl/elasticsearch-rtf</a></p><h3 id="1-运行环境"><a href="#1-运行环境" class="headerlink" title="1.运行环境"></a>1.运行环境</h3><p>a.JDK8+<br>b.系统可用内存&gt;2G</p><p>这里如何安装jdk,我不做过多解释，百度上太多教程了。</p><h3 id="2-安装elasticsearch"><a href="#2-安装elasticsearch" class="headerlink" title="2.安装elasticsearch"></a>2.安装elasticsearch</h3><p>下载之后运行图中的 elasticsearch.bat 文件</p><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/search1.PNG?raw=true" alt="image"></p><h3 id="3-安装-elasticsearch-head-插件"><a href="#3-安装-elasticsearch-head-插件" class="headerlink" title="3.安装 elasticsearch-head 插件"></a>3.安装 elasticsearch-head 插件</h3><p>安装elasticsearch-head插件需要nodejs的支持，所以此处讲解一下安装nodejs步骤</p><p>可以访问 <a href="https://blog.csdn.net/mjlfto/article/details/79772848" target="_blank" rel="external">https://blog.csdn.net/mjlfto/article/details/79772848</a> 里面有详细的步骤。</p><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/search2.png?raw=true" alt="image"></p>]]></content>
+      
+      <categories>
+          
+          <category> elasticsearch </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> elasticsearch </tag>
+            
+            <tag> 搜索引擎 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>Elasticsearch搜索引擎</title>
+      <link href="/2018/06/04/elasticsearch/"/>
       <content type="html"><![CDATA[<p>一、首先我们安装elasticsearch</p><p>&#160;&#160;&#160;&#160;ElasticSearch是一个基于Lucene的搜索服务器。它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。</p><p>&#160;&#160;&#160;&#160;我们要下载的是 elasticsearch-rtf,  Elasticsearch-RTF是针对中文的一个发行版，即使用最新稳定的elasticsearch版本，并且帮你下载测试好对应的插件，如中文分词插件等，目的是让你可以下载下来就可以直接的使用（虽然es已经很简单了，但是很多新手还是需要去花时间去找配置，中间的过程其实很痛苦），当然等你对这些都熟悉了之后，你完全可以自己去diy了，跟linux的众多发行版是一个意思。</p><p>下载地址：<a href="https://github.com/medcl/elasticsearch-rtf" target="_blank" rel="external">github</a>     <a href="https://github.com/medcl/elasticsearch-rtf" target="_blank" rel="external">https://github.com/medcl/elasticsearch-rtf</a></p><h3 id="1-运行环境"><a href="#1-运行环境" class="headerlink" title="1.运行环境"></a>1.运行环境</h3><p>a.JDK8+<br>b.系统可用内存&gt;2G</p><p>这里如何安装jdk,我不做过多解释，百度上太多教程了。</p><h3 id="2-安装elasticsearch"><a href="#2-安装elasticsearch" class="headerlink" title="2.安装elasticsearch"></a>2.安装elasticsearch</h3><p>下载之后运行图中的 elasticsearch.bat 文件</p><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/search1.PNG?raw=true" alt="image"></p><h3 id="3-安装-elasticsearch-head-插件"><a href="#3-安装-elasticsearch-head-插件" class="headerlink" title="3.安装 elasticsearch-head 插件"></a>3.安装 elasticsearch-head 插件</h3><p>安装elasticsearch-head插件需要nodejs的支持，所以此处讲解一下安装nodejs步骤</p><p>可以访问 <a href="https://blog.csdn.net/mjlfto/article/details/79772848" target="_blank" rel="external">https://blog.csdn.net/mjlfto/article/details/79772848</a> 里面有详细的步骤。</p><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/search2.png?raw=true" alt="image"></p>]]></content>
       
       <categories>
@@ -258,9 +302,9 @@
       
         <tags>
             
-            <tag> Google插件 </tag>
-            
             <tag> vip视频观看 </tag>
+            
+            <tag> Google插件 </tag>
             
         </tags>
       
