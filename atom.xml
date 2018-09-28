@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-07-12T03:03:04.647Z</updated>
+  <updated>2018-09-28T13:35:22.084Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>JavaEE 之 &amp;和&amp;&amp; |和||</title>
+    <link href="http://yoursite.com/2018/09/20/javaEE_day01/"/>
+    <id>http://yoursite.com/2018/09/20/javaEE_day01/</id>
+    <published>2018-09-20T08:03:56.035Z</published>
+    <updated>2018-09-28T13:35:22.084Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="1、-amp-和-amp-amp-区别"><a href="#1、-amp-和-amp-amp-区别" class="headerlink" title="1、&amp;和&amp;&amp;区别"></a>1、&amp;和&amp;&amp;区别</h2><pre><code>结果是一样的，&amp;&amp;具有短路的效果，如果&amp;&amp;前面的值为false时，后面不执行;&amp;无论前面的值是true还是false，后面的表达式继续执行</code></pre><h2 id="2、-和-区别"><a href="#2、-和-区别" class="headerlink" title="2、|和||区别"></a>2、|和||区别</h2><pre><code>结果是一样的，||具有短路的效果，如果||前面的值为true时，后面不执行;|无论前面的值是true还是false，后面的表达式继续执行</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;1、-amp-和-amp-amp-区别&quot;&gt;&lt;a href=&quot;#1、-amp-和-amp-amp-区别&quot; class=&quot;headerlink&quot; title=&quot;1、&amp;amp;和&amp;amp;&amp;amp;区别&quot;&gt;&lt;/a&gt;1、&amp;amp;和&amp;amp;&amp;amp;区别&lt;/h2&gt;&lt;pr
+      
+    
+    </summary>
+    
+    
+      <category term="javaEE" scheme="http://yoursite.com/tags/javaEE/"/>
+    
+  </entry>
   
   <entry>
     <title>百度文库下载和百度云加速下载</title>
@@ -557,30 +580,6 @@ fro
 &lt;pre&gt;&lt;code&gt;import re
 import request
       
-    
-    </summary>
-    
-      <category term="爬虫" scheme="http://yoursite.com/categories/%E7%88%AC%E8%99%AB/"/>
-    
-    
-      <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
-    
-      <category term="美女图片" scheme="http://yoursite.com/tags/%E7%BE%8E%E5%A5%B3%E5%9B%BE%E7%89%87/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>今日头条上的美女图片进行爬取</title>
-    <link href="http://yoursite.com/2018/02/15/python-student/"/>
-    <id>http://yoursite.com/2018/02/15/python-student/</id>
-    <published>2018-02-15T03:29:38.128Z</published>
-    <updated>2018-02-28T03:43:46.413Z</updated>
-    
-    <content type="html"><![CDATA[<p>欢迎来到<a href="https://www.python.org/" target="_blank" rel="external">python</a>!学习。 这是我人生旅途的第一课，非常重要。 我从这个案例中学到的许多关于python爬虫的知识，这是我python爬虫的启蒙。</p><p>#所需要的库<br>requests：用于网页请求</p><p>BeautifulSoup：选择所要的元素</p><p>json：用来解析json数据的库</p><p>re：用于正则表达式的筛选</p><p>代码演示：</p><pre><code>import jsonimport refrom hashlib import md5import osimport requestsfrom urllib.parse import urlencodefrom bs4 import BeautifulSoupfrom config import *from multiprocessing import Pool#对要爬取页面的解析def get_page_index(offset, keyword):    data = {        &apos;offset&apos;: offset,        &apos;format&apos;: &apos;json&apos;,        &apos;keyword&apos;: keyword,        &apos;autoload&apos;: &apos;true&apos;,        &apos;count&apos;: &apos;20&apos;,        &apos;cur_tab&apos;: 3,        &apos;from&apos;:&apos;gallery&apos;    }    url = &apos;https://www.toutiao.com/search_content/?&apos; + urlencode(data)    try:        header = {            &apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36&apos;        }        response = requests.get(url,headers=header)        if response.status_code == 200:            return response.text        return None    except:        print(&apos;请求索引失败&apos;)        return None#获取所要的数据在json中def prase_get_index(html):    data = json.loads(html)    if data and &apos;data&apos; in data.keys():        for item in data.get(&apos;data&apos;):            yield item.get(&apos;article_url&apos;)#用正则对json数据进行解析def prase_page_urlli(html):    soup = BeautifulSoup(html, &apos;lxml&apos;)    title = soup.select(&apos;title&apos;)[0].get_text()    print(title)    images_pattern= re.compile(&apos;gallery: JSON.parse\((.*?)\)&apos;,re.S)    result=re.search(images_pattern,html)    if result:        data=json.loads(result.group(1))        data=eval(data)        if data and &apos;sub_images&apos;in data.keys():            sub_images=data.get(&apos;sub_images&apos;)            image=[item.get(&apos;url&apos;).replace(&apos;\\&apos;,&apos;&apos;) for item in sub_images]            for images_page in image:                dowload_image(images_page)            return{                &apos;title&apos;:title,                &apos;image&apos;:image            }#对所要下载的图片链接进行访问def get_page_urlli(url):    try:        header = {            &apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36&apos;        }        response = requests.get(url,headers=header)        if response.status_code == 200:            return response.text        return None    except:        print(&apos;请求失败&apos;,url)        return None#下载图片def dowload_image(url):    print(&quot;正在下载&quot;,url)    try:        header = {            &apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36&apos;        }        response = requests.get(url,headers=header)        if response.status_code == 200:            save_image(response.content)        return None    except:        print(&apos;请求图片出错&apos;,url)        return None#把图片保存到本地路径下def save_image(content):    file_path=&apos;{0}/{1}.{2}&apos;.format(os.getcwd(),md5(content).hexdigest(),&apos;jpg&apos;)    if not os.path.exists(file_path):        with open(file_path,&apos;wb&apos;) as f:            f.write(content)            f.close()def main(offset):    html = get_page_index(offset, keyword)    for url in prase_get_index(html):        html=get_page_urlli(url)        if html:            result=prase_page_urlli(html)            print(result)if __name__ == &apos;__main__&apos;:    group=[x*20 for x in range(stat,end+1)]    pool=Pool()    pool.map(main,group)</code></pre><p>详细的解释。</p>]]></content>
-    
-    <summary type="html">
-    
-      想要密码,请联系我
     
     </summary>
     

@@ -3,6 +3,20 @@
   
     
     <entry>
+      <title>JavaEE 之 &amp;和&amp;&amp; |和||</title>
+      <link href="/2018/09/20/javaEE_day01/"/>
+      <content type="html"><![CDATA[<h2 id="1、-amp-和-amp-amp-区别"><a href="#1、-amp-和-amp-amp-区别" class="headerlink" title="1、&amp;和&amp;&amp;区别"></a>1、&amp;和&amp;&amp;区别</h2><pre><code>结果是一样的，&amp;&amp;具有短路的效果，如果&amp;&amp;前面的值为false时，后面不执行;&amp;无论前面的值是true还是false，后面的表达式继续执行</code></pre><h2 id="2、-和-区别"><a href="#2、-和-区别" class="headerlink" title="2、|和||区别"></a>2、|和||区别</h2><pre><code>结果是一样的，||具有短路的效果，如果||前面的值为true时，后面不执行;|无论前面的值是true还是false，后面的表达式继续执行</code></pre>]]></content>
+      
+      
+        <tags>
+            
+            <tag> javaEE </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>百度文库下载和百度云加速下载</title>
       <link href="/2018/07/12/pojie/"/>
       <content type="html"><![CDATA[<h3 id="一、百度文库、道客巴巴登免费下载"><a href="#一、百度文库、道客巴巴登免费下载" class="headerlink" title="一、百度文库、道客巴巴登免费下载"></a>一、百度文库、道客巴巴登免费下载</h3><p>&#160;&#160;&#160;&#160;1、百度文库下载：首先进入你要下载的文档页面</p><pre><code>例如:https://wenku.baidu.com/view/eeb5d53069eae009591bec34.html?from=search</code></pre><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/baidu.PNG?raw=true" alt="image"></p><p>&#160;&#160;&#160;&#160;2、把图中的链接复制到冰点文库的下载</p><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/baidu1.PNG?raw=true" alt="image"></p><p>&#160;&#160;&#160;&#160;3、文件下载地址：</p><pre><code>链接：https://pan.baidu.com/s/1G0zTlsG61ipGnGfmHPEijw密码: bzjm</code></pre><h3 id="二、百度云加速下载"><a href="#二、百度云加速下载" class="headerlink" title="二、百度云加速下载"></a>二、百度云加速下载</h3><p>&#160;&#160;&#160;&#160;1、首先要登陆你的百度云账号</p><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/baiduyun.PNG?raw=true" alt="image"></p><pre><code>链接：https://pan.baidu.com/s/1Lzm5_8lRPHO0e5r38rl-3A密码: mcc5</code></pre>]]></content>
