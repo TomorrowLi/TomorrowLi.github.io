@@ -320,6 +320,579 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/31/scrapyZhihu/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TomorrowLi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://7xrvas.com1.z0.glb.clouddn.com/16-4-6/38502140.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TomorrowLi's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/31/scrapyZhihu/" itemprop="url">利用scrapy爬取知乎用户信息并存储在mongodb数据库中</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-31T14:26:24+08:00">
+                2018-03-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/爬虫/" itemprop="url" rel="index">
+                    <span itemprop="name">爬虫</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  660
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>一、首先在setting.py中修改True改为False</p>
+<pre><code># Obey robots.txt rules
+#允许爬取robots.txt文件内不能爬取的资源
+ROBOTSTXT_OBEY = True
+#知乎是由反扒措施的必须添加User-agent以及authorization
+DEFAULT_REQUEST_HEADERS = {
+  &apos;Accept&apos;: &apos;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&apos;,
+  &apos;Accept-Language&apos;: &apos;en&apos;,
+    &apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36&apos; ,
+    &apos;authorization&apos;:&apos;Bearer 2|1:0|10:1521707334|4:z_c0|80:MS4xS1NYS0FnQUFBQUFtQUFBQVlBSlZUVWEzb0Z0ZDl0MGhaa0VJOWM0ODhiejhRenVUd0tURnFnPT0=|98bb6f4900c1b4b52ece0282393ede5e31046c9a90216e69dec1feece8086ee0&apos;
+}
+</code></pre><p>二、编写spider的项目文件</p>
+<p>1、zhihu_user.py</p>
+<pre><code># -*- coding: utf-8 -*-
+import json
+
+import scrapy
+from scrapy import Spider,Request
+
+from ..items import UserItem
+
+
+class ZhihuUserSpider(Spider):
+    name = &apos;zhihu_user&apos;
+    allowed_domains = [&apos;www.zhihu.com&apos;]
+    start_urls = [&apos;http://www.zhihu.com/&apos;]
+    start_user=&apos;excited-vczh&apos;
+    user_url=&apos;https://www.zhihu.com/api/v4/members/{user}?include={include}&apos;
+    user_query=&apos;allow_message,is_followed,is_following,is_org,is_blocking,employments,answer_count,follower_count,articles_count,gender,badge[?(type=best_answerer)].topics&apos;
+    follows_url=&apos;https://www.zhihu.com/api/v4/members/{user}/followees?include={include}&amp;offset={offset}&amp;limit={limit}&apos;
+    follows_query=&apos;data[*].answer_count,articles_count,gender,follower_count,is_followed,is_following,badge[?(type=best_answerer)].topics&apos;
+    followers_url=&apos;https://www.zhihu.com/api/v4/members/{user}/followers?include={include}&amp;offset={offset}&amp;limit={limit}&apos;
+    followers_query=&apos;data[*].answer_count,articles_count,gender,follower_count,is_followed,is_following,badge[?(type=best_answerer)].topics&apos;
+    def start_requests(self):
+        yield Request(self.user_url.format(user=self.start_user,include=self.user_query),self.parse_user)
+        yield Request(self.follows_url.format(user=self.start_user,include=self.follows_query,offset=0,limit=20),callback=self.parse_query)
+    def parse_user(self, response):
+        result=json.loads(response.text)
+        item=UserItem()
+        for field in item.fields:
+            if field in result.keys():
+                item[field]=result.get(field)
+        yield item
+        yield Request(self.follows_url.format(user=result.get(&apos;url_token&apos;),include=self.follows_query,offset=0,limit=20),callback=self.parse_query)
+        yield Request(self.followers_url.format(user=result.get(&apos;url_token&apos;),include=self.followers_query,offset=0,limit=20),callback=self.parse_querys)
+    def parse_query(self, response):
+        results=json.loads(response.text)
+        if &apos;data&apos; in results.keys():
+            for result in results.get(&apos;data&apos;):
+                yield Request(self.user_url.format(user=result.get(&apos;url_token&apos;),include=self.user_query),callback=self.parse_user)
+        if &apos;paging&apos; in results.keys() and results.get(&apos;paging&apos;).get(&apos;is_end&apos;)==False:
+            next_page=results.get(&apos;paging&apos;).get(&apos;next&apos;)
+            yield Request(next_page,self.parse_query)
+    def parse_querys(self, response):
+        results=json.loads(response.text)
+        if &apos;data&apos; in results.keys():
+            for result in results.get(&apos;data&apos;):
+                yield Request(self.user_url.format(user=result.get(&apos;url_token&apos;),include=self.user_query),callback=self.parse_user)
+        if &apos;paging&apos; in results.keys() and results.get(&apos;paging&apos;).get(&apos;is_end&apos;)==False:
+            next_page=results.get(&apos;paging&apos;).get(&apos;next&apos;)
+            yield Request(next_page,self.parse_querys)
+</code></pre><p>2、items.py</p>
+<pre><code># -*- coding: utf-8 -*-
+
+# Define here the models for your scraped items
+#
+# See documentation in:
+# https://doc.scrapy.org/en/latest/topics/items.html
+
+import scrapy
+from scrapy import Item,Field
+
+class UserItem(Item):
+    # define the fields for your item here like:
+    # name = scrapy.Field()
+    headline=Field()
+    avatar_url=Field()
+    name=Field()
+    type=Field()
+    url_token=Field()
+    user_type=Field()
+</code></pre><p>3、pipelines.py</p>
+<pre><code># -*- coding: utf-8 -*-
+
+# Define your item pipelines here
+#
+# Don&apos;t forget to add your pipeline to the ITEM_PIPELINES setting
+# See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
+
+
+import pymongo
+
+class MongoPipeline(object):
+
+    collection_name = &apos;scrapy_items&apos;
+
+    def __init__(self, mongo_uri, mongo_db):
+        self.mongo_uri = mongo_uri
+        self.mongo_db = mongo_db
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        return cls(
+            mongo_uri=crawler.settings.get(&apos;MONGO_URI&apos;),
+            mongo_db=crawler.settings.get(&apos;MONGO_DATABASE&apos;)
+        )
+
+    def open_spider(self, spider):
+        self.client = pymongo.MongoClient(self.mongo_uri)
+        self.db = self.client[self.mongo_db]
+
+    def close_spider(self, spider):
+        self.client.close()
+
+    def process_item(self, item, spider):
+        self.db[&apos;user&apos;].update({&apos;url_token&apos;:item[&apos;url_token&apos;]},{&apos;$set&apos;:item},True)
+        #self.db[self.collection_name].insert_one(dict(item))
+        return item
+</code></pre><p>4、setting.py</p>
+<pre><code>BOT_NAME = &apos;zhihu&apos;
+
+SPIDER_MODULES = [&apos;zhihu.spiders&apos;]
+NEWSPIDER_MODULE = &apos;zhihu.spiders&apos;
+MONGO_URI=&apos;localhost&apos;
+MONGO_DATABASE=&apos;zhihu&apos;
+</code></pre><p>三、最后启动setting.py中的</p>
+<pre><code>ITEM_PIPELINES = {
+       &apos;zhihu.pipelines.MongoPipeline&apos;: 300,
+}
+#去掉注释
+</code></pre><p>四、结果展示</p>
+<p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/zhihuMongodb.PNG?raw=true" alt="image"></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/29/scrapy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TomorrowLi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://7xrvas.com1.z0.glb.clouddn.com/16-4-6/38502140.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TomorrowLi's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/29/scrapy/" itemprop="url">scrapy爬虫框架的简介</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-29T22:43:47+08:00">
+                2018-03-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/scrapy/" itemprop="url" rel="index">
+                    <span itemprop="name">scrapy</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  529
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>一、安装scrapy所依赖的库</p>
+<pre><code>1、安装wheel
+    pip install wheel
+2、安装lxml
+    https://pypi.python.org/pypi/lxml/4.1.0
+3、安装pyopenssl
+    https://pypi.python.org/pypi/pyOpenSSL/17.5.0
+4、安装Twisted
+    https://www.lfd.uci.edu/~gohlke/pythonlibs/
+5、安装pywin32
+    https://sourceforge.net/projects/pywin32/files/
+6、安装scrapy
+    pip install scrapy
+</code></pre><p>二、爬虫举例</p>
+<p>1、创建项目</p>
+<pre><code>scrapy startproject zhihu
+</code></pre><p>2、创建spider项目程序</p>
+<pre><code>cd zhihu
+scrapy genspider zhihuspider www.zhihu.com
+</code></pre><p>3、自动创建目录及文件</p>
+<p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/scrapy.jpg?raw=true" alt="image"></p>
+<p>4、生成的爬虫具有基本的结构，我们可以直接在此基础上编写代码</p>
+<pre><code># -*- coding: utf-8 -*-
+import scrapy
+
+
+class ZhihuSpider(scrapy.Spider):
+name = &quot;zhihuspider&quot;
+allowed_domains = [&quot;zhihu.com&quot;]
+start_urls = [&apos;http://www.zhihu.com/&apos;]
+
+def parse(self, response):
+    pass
+</code></pre><p>5、然后，可以我们按照name来运行爬虫</p>
+<pre><code>scrapy crawl &apos;zhihuspider&apos;
+</code></pre><p>二、项目文件详细分析</p>
+<p>1、spriders文件夹</p>
+<pre><code>#项目文件,以后的代码都要在这里写入
+zhihuspider.py
+</code></pre><p>2、items.py</p>
+<pre><code>from scrapy import Item,Field
+
+class UserItem(Item):
+    #Item 对象是种简单的容器，保存了爬取到得数据。 其提供了 类似于词典(dictionary-like) 的API以及用于声明可用字段的简单语法。
+    # define the fields for your item here like:
+    #爬取所需要的数据的名称在这里定义，很像字典
+    # name = scrapy.Field()
+</code></pre><p>3、pipelines.py</p>
+<p>&#160; &#160; &#160; &#160; 当Item在Spider中被收集之后，它将会被传递到Item Pipeline，一些组件会按照一定的顺序执行对Item的处理</p>
+<p>###主要是处理以下4点任务</p>
+<p>1.清理HTML数据</p>
+<p>2.验证爬取的数据(检查item包含某些字段)</p>
+<p>3.查重(并丢弃)</p>
+<p>4.将爬取结果保存到数据库中</p>
+<pre><code>#存到mogodb数据库
+
+import pymongo
+
+class MongoPipeline(object):
+
+    collection_name = &apos;scrapy_items&apos;
+
+    def __init__(self, mongo_uri, mongo_db):
+        self.mongo_uri = mongo_uri
+        self.mongo_db = mongo_db
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        return cls(
+            mongo_uri=crawler.settings.get(&apos;MONGO_URI&apos;),
+            mongo_db=crawler.settings.get(&apos;MONGO_DATABASE&apos;, &apos;items&apos;)
+        )
+
+    def open_spider(self, spider):
+        self.client = pymongo.MongoClient(self.mongo_uri)
+        self.db = self.client[self.mongo_db]
+
+    def close_spider(self, spider):
+        self.client.close()
+
+    def process_item(self, item, spider):
+        self.db[self.collection_name].insert_one(dict(item))
+        return item
+</code></pre><p>4、settings.py</p>
+<p>&#160; &#160; &#160; &#160; 用于设置常量的,例如 mongodb 的 url 和 database</p>
+<pre><code>BOT_NAME = &apos;zhihu&apos;
+
+SPIDER_MODULES = [&apos;zhihu.spiders&apos;]
+
+NEWSPIDER_MODULE = &apos;zhihu.spiders&apos;
+
+MONGO_URI=&apos;localhost&apos;
+
+MONGO_DATABASE=&apos;zhihu&apos;
+
+#默认是True的这个变量是用来是否爬robot文件的改为False是允许的意思
+ROBOTSTXT_OBEY = True
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/22/python/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1898,506 +2471,6 @@ if __name__ == &apos;__main__&apos;:
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/21/selenium-taobao/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="TomorrowLi">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://7xrvas.com1.z0.glb.clouddn.com/16-4-6/38502140.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="TomorrowLi's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/21/selenium-taobao/" itemprop="url">爬取淘宝美食信息并存储到数据库中</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-21T09:08:57+08:00">
-                2018-02-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/爬虫/" itemprop="url" rel="index">
-                    <span itemprop="name">爬虫</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  515
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  3
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>代码演示：</p>
-<pre><code>import re
-
-import MySQLdb
-from selenium import webdriver
-from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from pyquery import PyQuery as pq
-broser=webdriver.Chrome()
-
-wait=WebDriverWait(broser, 10)
-def search(table):
-    try:
-        broser.get(&apos;https://www.taobao.com&apos;)
-        inputs = wait.until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, &quot;#q&quot;))
-        )
-        submit = wait.until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, &apos;#J_TSearchForm &gt; div.search-button &gt; button&apos;))
-        )
-        inputs.send_keys(&apos;美食&apos;)
-        submit.click()
-        total = wait.until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR,&apos;#mainsrp-pager &gt; div &gt; div &gt; div &gt; div.total&apos;))
-        )
-        get_product(table)
-        return total.text
-    except TimeoutException:
-        return search(table)
-def next_page(page_number,table):
-    try:
-        inputs = wait.until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, &quot;#mainsrp-pager &gt; div &gt; div &gt; div &gt; div.form &gt; input&quot;))
-        )
-        submit = wait.until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, &quot;#mainsrp-pager &gt; div &gt; div &gt; div &gt; div.form &gt; span.btn.J_Submit&quot;))
-        )
-        inputs.clear()
-        inputs.send_keys(page_number)
-        submit.click()
-        wait.until(
-            EC.text_to_be_present_in_element((By.CSS_SELECTOR, &quot;#mainsrp-pager &gt; div &gt; div &gt; div &gt; ul &gt; li.item.active &gt; span&quot;),str(page_number))
-        )
-        get_product(table)
-    except TimeoutException:
-        next_page(page_number,table)
-def get_product(table):
-    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR,&apos;#mainsrp-itemlist .items .item&apos;)))
-    html=broser.page_source
-    doc=pq(html)
-    items=doc(&apos;#mainsrp-itemlist .items .item&apos;).items()
-    for item in items:
-        product={
-            &apos;image&apos;:item.find(&apos;.pic .img&apos;).attr(&apos;src&apos;),
-            &apos;price&apos;:item.find(&apos;.price&apos;).text().replace(&apos;\n&apos;,&apos;&apos;),
-            &apos;deal&apos;:item.find(&apos;.deal-cnt&apos;).text()[:-3],
-            &apos;title&apos;:item.find(&apos;.title&apos;).text().replace(&apos;\n&apos;,&apos;&apos;),
-            &apos;shop&apos;:item.find(&apos;.shop&apos;).text(),
-            &apos;location&apos;:item.find(&apos;.location&apos;).text()
-        }
-        print(product)
-        inserttable(table, product[&apos;image&apos;], product[&apos;price&apos;], product[&apos;deal&apos;], product[&apos;title&apos;],product[&apos;shop&apos;],product[&apos;location&apos;])
-#连接数据库 mysql
-def connectDB():
-        host=&quot;localhost&quot;
-        dbName=&quot;test&quot;
-        user=&quot;root&quot;
-        password=&quot;&quot;
-        #此处添加charset=&apos;utf8&apos;是为了在数据库中显示中文，此编码必须与数据库的编码一致
-        db=MySQLdb.connect(host,user,password,dbName,charset=&apos;utf8&apos;)
-        return db
-        cursorDB=db.cursor()
-        return cursorDB
-
-#创建表，SQL语言。CREATE TABLE IF NOT EXISTS 表示：表createTableName不存在时就创建
-def creatTable(createTableName):
-    createTableSql=&quot;CREATE TABLE IF NOT EXISTS &quot;+ createTableName+&quot;(image VARCHAR(255),price VARCHAR(255),deal  VARCHAR(255),title VARCHAR(255),shop VARCHAR(255),location VARCHAR(255))&quot;
-    DB_create=connectDB()
-    print(&apos;链接数据库成功&apos;)
-    cursor_create=DB_create.cursor()
-    cursor_create.execute(createTableSql)
-    DB_create.close()
-    print(&apos;creat table &apos;+createTableName+&apos; successfully&apos;)
-    return createTableName
-#数据插入表中
-def inserttable(insertTable,insertimages,insertprice,insertdeal,inserttitle,insertshop,insertloaction):
-    insertContentSql=&quot;INSERT INTO &quot;+insertTable+&quot;(image,price,deal,title,shop,location)VALUES(%s,%s,%s,%s,%s,%s)&quot;
-#         insertContentSql=&quot;INSERT INTO &quot;+insertTable+&quot;(time,title,text,clicks)VALUES(&quot;+insertTime+&quot; , &quot;+insertTitle+&quot; , &quot;+insertText+&quot; , &quot;+insertClicks+&quot;)&quot;
-
-
-    DB_insert=connectDB()
-    cursor_insert=DB_insert.cursor()
-    cursor_insert.execute(insertContentSql,(insertimages,insertprice,insertdeal,inserttitle,insertshop,insertloaction))
-    DB_insert.commit()
-    DB_insert.close()
-    print (&apos;inert contents to  &apos;+insertTable+&apos; successfully&apos;)
-
-def main():
-    table = creatTable(&apos;yh1&apos;)
-    print(&apos;创建表成功&apos;)
-    total=search(table)
-    total=int(re.compile(&apos;(\d+)&apos;).search(total).group(1))
-    for i in range(2,total+1):
-        next_page(i,table)
-if __name__==&apos;__main__&apos;:
-    main()
-</code></pre><p>结果展示</p>
-<p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/%E6%B7%98%E5%AE%9D%E7%BE%8E%E9%A3%9F.PNG?raw=true" alt="image"></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-    
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/17/file-tupian/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="TomorrowLi">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://7xrvas.com1.z0.glb.clouddn.com/16-4-6/38502140.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="TomorrowLi's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/17/file-tupian/" itemprop="url">爬取美女图片并按照文件进行存储</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-17T15:12:22+08:00">
-                2018-02-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/爬虫/" itemprop="url" rel="index">
-                    <span itemprop="name">爬虫</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  168
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>欢迎来到<a href="https://www.python.org/" target="_blank" rel="external">python</a>!学习。 </p>
-<p>代码演示：</p>
-<pre><code>import re
-import requests
-from bs4 import BeautifulSoup
-def fand_email(url,counts):
-    data=requests.get(url)
-    content=data.text
-    pattern = r&apos;[0-9a-zA-Z._]+@[0-9a-zA-Z._]+\.[0-9a-zA-Z._]+&apos;
-    p = re.compile(pattern)
-    m = p.findall(content)
-    with open(&apos;emal.txt&apos;,&apos;a+&apos;) as f:
-        for i in m:
-            f.write(i+&apos;\n&apos;)
-            print(i)
-            counts= counts+1
-return counts
-def main():
-    counts=0
-    numbers=0
-    for i in range(1,32):
-        url=&apos;http://tieba.baidu.com/p/2314539885?pn=%s&apos;% i
-        number=fand_email(url,counts)
-        numbers=numbers+number
-    print(numbers)
-if __name__ == &apos;__main__&apos;:
-    main()
-</code></pre><p>文件 text.py</p>
-<pre><code>import requests
-from bs4 import BeautifulSoup
-
-
-def fand_load_image(url):
-    wb_date = requests.get(url)
-    #wb_date.encoding = &apos;gbk&apos;
-    soup = BeautifulSoup(wb_date.text, &apos;lxml&apos;)
-    print(soup)
-    images = soup.select(&apos;div.image-item-inner &gt; a&apos;)
-    print(images)
-    #image=images[0].get(&apos;href&apos;)
-    #print(image)
-
-url=&apos;https://www.toutiao.com/a6520385683419300359/&apos;
-fand_load_image(url)
-</code></pre><p>结果展示</p>
-<p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/meinvtupian.PNG?raw=true" alt="image"></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-    
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2452,7 +2525,7 @@ fand_load_image(url)
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2463,7 +2536,7 @@ fand_load_image(url)
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2604,7 +2677,7 @@ fand_load_image(url)
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共11.1k字</span>
+  <span class="post-count">博客全站共11.6k字</span>
 </div>
 
         

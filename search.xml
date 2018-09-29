@@ -3,6 +3,46 @@
   
     
     <entry>
+      <title>javaEE 之 static 关键字的说明</title>
+      <link href="/2018/09/29/javaee_day03/"/>
+      <content type="html"><![CDATA[<h2 id="1、凡是有static关键字修饰的变量或方法，它是不属于对象的，，而是属于本类的，可以通过【类名-变量名-】或-【类名-方法名】使用"><a href="#1、凡是有static关键字修饰的变量或方法，它是不属于对象的，，而是属于本类的，可以通过【类名-变量名-】或-【类名-方法名】使用" class="headerlink" title="1、凡是有static关键字修饰的变量或方法，它是不属于对象的，，而是属于本类的，可以通过【类名.变量名 】或 【类名.方法名】使用"></a>1、凡是有static关键字修饰的变量或方法，它是不属于对象的，，而是属于本类的，可以通过【类名.变量名 】或 【类名.方法名】使用</h2><pre><code>  //无论是成员变量，还是成员方法。如果有了static，都推荐使用类名称进行调用。  静态变量：类名称.静态变量  静态方法：类名称.静态方法()//创建一个学生类  public class Student {      private String name;      private int age;      //创建静态变量room      static String room;   }  //创建对象  Student one=new Student();  //也可以对象调用static变量对其赋值，但是不推荐使用  one.room=&quot;101教室&quot;;  //一般通过本类来调用,或对其赋值  Student.room</code></pre><h2 id="2、静态方法可以调用可以使用static变量，但是不能使用非静态变量"><a href="#2、静态方法可以调用可以使用static变量，但是不能使用非静态变量" class="headerlink" title="2、静态方法可以调用可以使用static变量，但是不能使用非静态变量"></a>2、静态方法可以调用可以使用static变量，但是不能使用非静态变量</h2><pre><code>private int age;static String room;public static void max(){    System.out.println(room);//正确    //出错，静态方法不能调用非静态变量    System.out.println(age);}</code></pre><h2 id="3、非静态方法可以使用静态变量，也可使用非静态变量"><a href="#3、非静态方法可以使用静态变量，也可使用非静态变量" class="headerlink" title="3、非静态方法可以使用静态变量，也可使用非静态变量"></a>3、非静态方法可以使用静态变量，也可使用非静态变量</h2><pre><code>//原因：因为在内存当中是【先】有的静态内容，【后】有的非静态内容。//“先人不知道后人，但是后人知道先人。”private int age;static String room;public static void max(){    System.out.println(room);//正确    System.out.println(age);//正确}</code></pre><h2 id="4、静态方法中不可使用this关键字"><a href="#4、静态方法中不可使用this关键字" class="headerlink" title="4、静态方法中不可使用this关键字"></a>4、静态方法中不可使用this关键字</h2><pre><code>public static void max(){    System.out.println(this);//会报错}//原因：    this代表当前对象，通过谁调用的方法，谁就是当前对象    如果没有static关键字，那么必须首先创建对象，然后通过对象才能使用它。    如果有了static关键字，那么不需要创建对象，直接就能通过类名称来使用它。</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> javaEE </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> javaEE </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>javaEE 之 this的使用</title>
+      <link href="/2018/09/28/javaEE_day02/"/>
+      <content type="html"><![CDATA[<h2 id="1、this代表当前对象的意思（this就是谁调用了类的方法，this就是谁）。"><a href="#1、this代表当前对象的意思（this就是谁调用了类的方法，this就是谁）。" class="headerlink" title="1、this代表当前对象的意思（this就是谁调用了类的方法，this就是谁）。"></a>1、this代表当前对象的意思（this就是谁调用了类的方法，this就是谁）。</h2><pre><code>private String name;private int age;public void call(String name){    //student调用call,这里的this就是student    System.out.println(name+this.name);//name+student.anme    System.out.println(this);    //lianxi.Student@4554617c    //@前面的就是包名.所在类。后面的16进制的地址值}//创建了一个对象studentStudent student=new Student();//student对象调用了call方法//this就是谁调用了类的方法，this就是谁student.call(&quot;张三&quot;);</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> javaEE </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> javaEE </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>JavaEE 之 &amp;和&amp;&amp; |和||</title>
       <link href="/2018/09/20/javaEE_day01/"/>
       <content type="html"><![CDATA[<h2 id="1、-amp-和-amp-amp-区别"><a href="#1、-amp-和-amp-amp-区别" class="headerlink" title="1、&amp;和&amp;&amp;区别"></a>1、&amp;和&amp;&amp;区别</h2><pre><code>结果是一样的，&amp;&amp;具有短路的效果，如果&amp;&amp;前面的值为false时，后面不执行;&amp;无论前面的值是true还是false，后面的表达式继续执行</code></pre><h2 id="2、-和-区别"><a href="#2、-和-区别" class="headerlink" title="2、|和||区别"></a>2、|和||区别</h2><pre><code>结果是一样的，||具有短路的效果，如果||前面的值为true时，后面不执行;|无论前面的值是true还是false，后面的表达式继续执行</code></pre>]]></content>

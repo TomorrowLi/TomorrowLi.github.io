@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-09-28T13:35:22.084Z</updated>
+  <updated>2018-09-29T06:42:51.135Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,56 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>javaEE 之 static 关键字的说明</title>
+    <link href="http://yoursite.com/2018/09/29/javaee_day03/"/>
+    <id>http://yoursite.com/2018/09/29/javaee_day03/</id>
+    <published>2018-09-29T05:57:39.650Z</published>
+    <updated>2018-09-29T06:42:51.135Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="1、凡是有static关键字修饰的变量或方法，它是不属于对象的，，而是属于本类的，可以通过【类名-变量名-】或-【类名-方法名】使用"><a href="#1、凡是有static关键字修饰的变量或方法，它是不属于对象的，，而是属于本类的，可以通过【类名-变量名-】或-【类名-方法名】使用" class="headerlink" title="1、凡是有static关键字修饰的变量或方法，它是不属于对象的，，而是属于本类的，可以通过【类名.变量名 】或 【类名.方法名】使用"></a>1、凡是有static关键字修饰的变量或方法，它是不属于对象的，，而是属于本类的，可以通过【类名.变量名 】或 【类名.方法名】使用</h2><pre><code>  //无论是成员变量，还是成员方法。如果有了static，都推荐使用类名称进行调用。  静态变量：类名称.静态变量  静态方法：类名称.静态方法()//创建一个学生类  public class Student {      private String name;      private int age;      //创建静态变量room      static String room;   }  //创建对象  Student one=new Student();  //也可以对象调用static变量对其赋值，但是不推荐使用  one.room=&quot;101教室&quot;;  //一般通过本类来调用,或对其赋值  Student.room</code></pre><h2 id="2、静态方法可以调用可以使用static变量，但是不能使用非静态变量"><a href="#2、静态方法可以调用可以使用static变量，但是不能使用非静态变量" class="headerlink" title="2、静态方法可以调用可以使用static变量，但是不能使用非静态变量"></a>2、静态方法可以调用可以使用static变量，但是不能使用非静态变量</h2><pre><code>private int age;static String room;public static void max(){    System.out.println(room);//正确    //出错，静态方法不能调用非静态变量    System.out.println(age);}</code></pre><h2 id="3、非静态方法可以使用静态变量，也可使用非静态变量"><a href="#3、非静态方法可以使用静态变量，也可使用非静态变量" class="headerlink" title="3、非静态方法可以使用静态变量，也可使用非静态变量"></a>3、非静态方法可以使用静态变量，也可使用非静态变量</h2><pre><code>//原因：因为在内存当中是【先】有的静态内容，【后】有的非静态内容。//“先人不知道后人，但是后人知道先人。”private int age;static String room;public static void max(){    System.out.println(room);//正确    System.out.println(age);//正确}</code></pre><h2 id="4、静态方法中不可使用this关键字"><a href="#4、静态方法中不可使用this关键字" class="headerlink" title="4、静态方法中不可使用this关键字"></a>4、静态方法中不可使用this关键字</h2><pre><code>public static void max(){    System.out.println(this);//会报错}//原因：    this代表当前对象，通过谁调用的方法，谁就是当前对象    如果没有static关键字，那么必须首先创建对象，然后通过对象才能使用它。    如果有了static关键字，那么不需要创建对象，直接就能通过类名称来使用它。</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;1、凡是有static关键字修饰的变量或方法，它是不属于对象的，，而是属于本类的，可以通过【类名-变量名-】或-【类名-方法名】使用&quot;&gt;&lt;a href=&quot;#1、凡是有static关键字修饰的变量或方法，它是不属于对象的，，而是属于本类的，可以通过【类名-变量名-】
+      
+    
+    </summary>
+    
+      <category term="javaEE" scheme="http://yoursite.com/categories/javaEE/"/>
+    
+    
+      <category term="javaEE" scheme="http://yoursite.com/tags/javaEE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>javaEE 之 this的使用</title>
+    <link href="http://yoursite.com/2018/09/28/javaEE_day02/"/>
+    <id>http://yoursite.com/2018/09/28/javaEE_day02/</id>
+    <published>2018-09-28T14:01:57.480Z</published>
+    <updated>2018-09-28T14:25:24.903Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="1、this代表当前对象的意思（this就是谁调用了类的方法，this就是谁）。"><a href="#1、this代表当前对象的意思（this就是谁调用了类的方法，this就是谁）。" class="headerlink" title="1、this代表当前对象的意思（this就是谁调用了类的方法，this就是谁）。"></a>1、this代表当前对象的意思（this就是谁调用了类的方法，this就是谁）。</h2><pre><code>private String name;private int age;public void call(String name){    //student调用call,这里的this就是student    System.out.println(name+this.name);//name+student.anme    System.out.println(this);    //lianxi.Student@4554617c    //@前面的就是包名.所在类。后面的16进制的地址值}//创建了一个对象studentStudent student=new Student();//student对象调用了call方法//this就是谁调用了类的方法，this就是谁student.call(&quot;张三&quot;);</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;1、this代表当前对象的意思（this就是谁调用了类的方法，this就是谁）。&quot;&gt;&lt;a href=&quot;#1、this代表当前对象的意思（this就是谁调用了类的方法，this就是谁）。&quot; class=&quot;headerlink&quot; title=&quot;1、this代表当前对象
+      
+    
+    </summary>
+    
+      <category term="javaEE" scheme="http://yoursite.com/categories/javaEE/"/>
+    
+    
+      <category term="javaEE" scheme="http://yoursite.com/tags/javaEE/"/>
+    
+  </entry>
   
   <entry>
     <title>JavaEE 之 &amp;和&amp;&amp; |和||</title>
@@ -526,69 +576,6 @@ def fand_email(url,counts):
       <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
     
       <category term="邮箱地址爬取" scheme="http://yoursite.com/tags/%E9%82%AE%E7%AE%B1%E5%9C%B0%E5%9D%80%E7%88%AC%E5%8F%96/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>爬取淘宝美食信息并存储到数据库中</title>
-    <link href="http://yoursite.com/2018/02/21/selenium-taobao/"/>
-    <id>http://yoursite.com/2018/02/21/selenium-taobao/</id>
-    <published>2018-02-21T01:08:57.717Z</published>
-    <updated>2018-03-31T07:42:29.945Z</updated>
-    
-    <content type="html"><![CDATA[<p>代码演示：</p><pre><code>import reimport MySQLdbfrom selenium import webdriverfrom selenium.common.exceptions import TimeoutExceptionfrom selenium.webdriver.common.by import Byfrom selenium.webdriver.support.ui import WebDriverWaitfrom selenium.webdriver.support import expected_conditions as ECfrom pyquery import PyQuery as pqbroser=webdriver.Chrome()wait=WebDriverWait(broser, 10)def search(table):    try:        broser.get(&apos;https://www.taobao.com&apos;)        inputs = wait.until(            EC.presence_of_element_located((By.CSS_SELECTOR, &quot;#q&quot;))        )        submit = wait.until(            EC.element_to_be_clickable((By.CSS_SELECTOR, &apos;#J_TSearchForm &gt; div.search-button &gt; button&apos;))        )        inputs.send_keys(&apos;美食&apos;)        submit.click()        total = wait.until(            EC.element_to_be_clickable((By.CSS_SELECTOR,&apos;#mainsrp-pager &gt; div &gt; div &gt; div &gt; div.total&apos;))        )        get_product(table)        return total.text    except TimeoutException:        return search(table)def next_page(page_number,table):    try:        inputs = wait.until(            EC.presence_of_element_located((By.CSS_SELECTOR, &quot;#mainsrp-pager &gt; div &gt; div &gt; div &gt; div.form &gt; input&quot;))        )        submit = wait.until(            EC.element_to_be_clickable((By.CSS_SELECTOR, &quot;#mainsrp-pager &gt; div &gt; div &gt; div &gt; div.form &gt; span.btn.J_Submit&quot;))        )        inputs.clear()        inputs.send_keys(page_number)        submit.click()        wait.until(            EC.text_to_be_present_in_element((By.CSS_SELECTOR, &quot;#mainsrp-pager &gt; div &gt; div &gt; div &gt; ul &gt; li.item.active &gt; span&quot;),str(page_number))        )        get_product(table)    except TimeoutException:        next_page(page_number,table)def get_product(table):    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR,&apos;#mainsrp-itemlist .items .item&apos;)))    html=broser.page_source    doc=pq(html)    items=doc(&apos;#mainsrp-itemlist .items .item&apos;).items()    for item in items:        product={            &apos;image&apos;:item.find(&apos;.pic .img&apos;).attr(&apos;src&apos;),            &apos;price&apos;:item.find(&apos;.price&apos;).text().replace(&apos;\n&apos;,&apos;&apos;),            &apos;deal&apos;:item.find(&apos;.deal-cnt&apos;).text()[:-3],            &apos;title&apos;:item.find(&apos;.title&apos;).text().replace(&apos;\n&apos;,&apos;&apos;),            &apos;shop&apos;:item.find(&apos;.shop&apos;).text(),            &apos;location&apos;:item.find(&apos;.location&apos;).text()        }        print(product)        inserttable(table, product[&apos;image&apos;], product[&apos;price&apos;], product[&apos;deal&apos;], product[&apos;title&apos;],product[&apos;shop&apos;],product[&apos;location&apos;])#连接数据库 mysqldef connectDB():        host=&quot;localhost&quot;        dbName=&quot;test&quot;        user=&quot;root&quot;        password=&quot;&quot;        #此处添加charset=&apos;utf8&apos;是为了在数据库中显示中文，此编码必须与数据库的编码一致        db=MySQLdb.connect(host,user,password,dbName,charset=&apos;utf8&apos;)        return db        cursorDB=db.cursor()        return cursorDB#创建表，SQL语言。CREATE TABLE IF NOT EXISTS 表示：表createTableName不存在时就创建def creatTable(createTableName):    createTableSql=&quot;CREATE TABLE IF NOT EXISTS &quot;+ createTableName+&quot;(image VARCHAR(255),price VARCHAR(255),deal  VARCHAR(255),title VARCHAR(255),shop VARCHAR(255),location VARCHAR(255))&quot;    DB_create=connectDB()    print(&apos;链接数据库成功&apos;)    cursor_create=DB_create.cursor()    cursor_create.execute(createTableSql)    DB_create.close()    print(&apos;creat table &apos;+createTableName+&apos; successfully&apos;)    return createTableName#数据插入表中def inserttable(insertTable,insertimages,insertprice,insertdeal,inserttitle,insertshop,insertloaction):    insertContentSql=&quot;INSERT INTO &quot;+insertTable+&quot;(image,price,deal,title,shop,location)VALUES(%s,%s,%s,%s,%s,%s)&quot;#         insertContentSql=&quot;INSERT INTO &quot;+insertTable+&quot;(time,title,text,clicks)VALUES(&quot;+insertTime+&quot; , &quot;+insertTitle+&quot; , &quot;+insertText+&quot; , &quot;+insertClicks+&quot;)&quot;    DB_insert=connectDB()    cursor_insert=DB_insert.cursor()    cursor_insert.execute(insertContentSql,(insertimages,insertprice,insertdeal,inserttitle,insertshop,insertloaction))    DB_insert.commit()    DB_insert.close()    print (&apos;inert contents to  &apos;+insertTable+&apos; successfully&apos;)def main():    table = creatTable(&apos;yh1&apos;)    print(&apos;创建表成功&apos;)    total=search(table)    total=int(re.compile(&apos;(\d+)&apos;).search(total).group(1))    for i in range(2,total+1):        next_page(i,table)if __name__==&apos;__main__&apos;:    main()</code></pre><p>结果展示</p><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/%E6%B7%98%E5%AE%9D%E7%BE%8E%E9%A3%9F.PNG?raw=true" alt="image"></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;代码演示：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;import re
-
-import MySQLdb
-from selenium import webdriver
-from selenium.common.exceptions import TimeoutException
-fro
-      
-    
-    </summary>
-    
-      <category term="爬虫" scheme="http://yoursite.com/categories/%E7%88%AC%E8%99%AB/"/>
-    
-    
-      <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
-    
-      <category term="美食信息" scheme="http://yoursite.com/tags/%E7%BE%8E%E9%A3%9F%E4%BF%A1%E6%81%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>爬取美女图片并按照文件进行存储</title>
-    <link href="http://yoursite.com/2018/02/17/file-tupian/"/>
-    <id>http://yoursite.com/2018/02/17/file-tupian/</id>
-    <published>2018-02-17T07:12:22.828Z</published>
-    <updated>2018-03-31T07:34:12.293Z</updated>
-    
-    <content type="html"><![CDATA[<p>欢迎来到<a href="https://www.python.org/" target="_blank" rel="external">python</a>!学习。 </p><p>代码演示：</p><pre><code>import reimport requestsfrom bs4 import BeautifulSoupdef fand_email(url,counts):    data=requests.get(url)    content=data.text    pattern = r&apos;[0-9a-zA-Z._]+@[0-9a-zA-Z._]+\.[0-9a-zA-Z._]+&apos;    p = re.compile(pattern)    m = p.findall(content)    with open(&apos;emal.txt&apos;,&apos;a+&apos;) as f:        for i in m:            f.write(i+&apos;\n&apos;)            print(i)            counts= counts+1return countsdef main():    counts=0    numbers=0    for i in range(1,32):        url=&apos;http://tieba.baidu.com/p/2314539885?pn=%s&apos;% i        number=fand_email(url,counts)        numbers=numbers+number    print(numbers)if __name__ == &apos;__main__&apos;:    main()</code></pre><p>文件 text.py</p><pre><code>import requestsfrom bs4 import BeautifulSoupdef fand_load_image(url):    wb_date = requests.get(url)    #wb_date.encoding = &apos;gbk&apos;    soup = BeautifulSoup(wb_date.text, &apos;lxml&apos;)    print(soup)    images = soup.select(&apos;div.image-item-inner &gt; a&apos;)    print(images)    #image=images[0].get(&apos;href&apos;)    #print(image)url=&apos;https://www.toutiao.com/a6520385683419300359/&apos;fand_load_image(url)</code></pre><p>结果展示</p><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/meinvtupian.PNG?raw=true" alt="image"></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;欢迎来到&lt;a href=&quot;https://www.python.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;python&lt;/a&gt;!学习。 &lt;/p&gt;
-&lt;p&gt;代码演示：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;import re
-import request
-      
-    
-    </summary>
-    
-      <category term="爬虫" scheme="http://yoursite.com/categories/%E7%88%AC%E8%99%AB/"/>
-    
-    
-      <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
-    
-      <category term="美女图片" scheme="http://yoursite.com/tags/%E7%BE%8E%E5%A5%B3%E5%9B%BE%E7%89%87/"/>
     
   </entry>
   
