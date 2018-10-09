@@ -84,7 +84,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="javaEE," />
 
 
 
@@ -106,13 +106,18 @@
         }
     })();
 </script>
-<meta property="og:type" content="website">
-<meta property="og:title" content="TomorrowLi&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/tags/种子/index.html">
+<meta name="description" content="重载在使用重载时只能通过不同的参数样式（Overload）1、参数的个数不同public static void get(int a){  } public static void get(int a, int b){  } 2、参数的类型不同public static void get(int a){  } public static void get(double a){  } 3、参数的顺序">
+<meta name="keywords" content="javaEE">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javaEE之重载和覆盖重写的区别">
+<meta property="og:url" content="http://yoursite.com/2018/10/09/lavaEE_day04/index.html">
 <meta property="og:site_name" content="TomorrowLi&#39;s Blog">
+<meta property="og:description" content="重载在使用重载时只能通过不同的参数样式（Overload）1、参数的个数不同public static void get(int a){  } public static void get(int a, int b){  } 2、参数的类型不同public static void get(int a){  } public static void get(double a){  } 3、参数的顺序">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-10-09T02:45:12.851Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="TomorrowLi&#39;s Blog">
+<meta name="twitter:title" content="javaEE之重载和覆盖重写的区别">
+<meta name="twitter:description" content="重载在使用重载时只能通过不同的参数样式（Overload）1、参数的个数不同public static void get(int a){  } public static void get(int a, int b){  } 2、参数的类型不同public static void get(int a){  } public static void get(double a){  } 3、参数的顺序">
 
 
 
@@ -142,13 +147,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/种子/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/10/09/lavaEE_day04/"/>
 
 
 
 
 
-  <title>标签: 种子 | TomorrowLi's Blog</title>
+  <title>javaEE之重载和覆盖重写的区别 | TomorrowLi's Blog</title>
   
 
 
@@ -167,7 +172,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
     <a href="https://github.com/TomorrowLi" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -305,54 +310,330 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>种子<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/09/lavaEE_day04/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TomorrowLi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://7xrvas.com1.z0.glb.clouddn.com/16-4-6/38502140.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TomorrowLi's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/02/28/zhongzi/" itemprop="url">
-              
-                <span itemprop="name">爬取网站的种子链接并下载视频到本地</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">javaEE之重载和覆盖重写的区别</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-02-28T11:44:43+08:00"
-              content="2018-02-28" >
-          02-28
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-09T10:10:07+08:00">
+                2018-10-09
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javaEE/" itemprop="url" rel="index">
+                    <span itemprop="name">javaEE</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  597
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    </div>
+      
 
+      
+        <h2 id="重载"><a href="#重载" class="headerlink" title="重载"></a>重载</h2><h3 id="在使用重载时只能通过不同的参数样式（Overload）"><a href="#在使用重载时只能通过不同的参数样式（Overload）" class="headerlink" title="在使用重载时只能通过不同的参数样式（Overload）"></a>在使用重载时只能通过不同的参数样式（Overload）</h3><h4 id="1、参数的个数不同"><a href="#1、参数的个数不同" class="headerlink" title="1、参数的个数不同"></a>1、参数的个数不同</h4><pre><code>public static void get(int a){
+
+}
+public static void get(int a, int b){
+
+}
+</code></pre><h4 id="2、参数的类型不同"><a href="#2、参数的类型不同" class="headerlink" title="2、参数的类型不同"></a>2、参数的类型不同</h4><pre><code>public static void get(int a){
+
+}
+public static void get(double a){
+
+}
+</code></pre><h4 id="3、参数的顺序不同"><a href="#3、参数的顺序不同" class="headerlink" title="3、参数的顺序不同"></a>3、参数的顺序不同</h4><pre><code>public static void get(int a,double b){
+
+}
+public static void get(double a,int b){
+
+}
+</code></pre><h4 id="4、与参数的返回值类型无关"><a href="#4、与参数的返回值类型无关" class="headerlink" title="4、与参数的返回值类型无关"></a>4、与参数的返回值类型无关</h4><pre><code>public static void get(int a){
+
+}
+public static int get(int a){
+
+}
+</code></pre><h4 id="重载的时候，方法名要一样，但是参数类型和个数不一样，返回值类型可以相同也可以不相同。无法以返回型别作为重载函数的区分标准。"><a href="#重载的时候，方法名要一样，但是参数类型和个数不一样，返回值类型可以相同也可以不相同。无法以返回型别作为重载函数的区分标准。" class="headerlink" title="重载的时候，方法名要一样，但是参数类型和个数不一样，返回值类型可以相同也可以不相同。无法以返回型别作为重载函数的区分标准。"></a>重载的时候，方法名要一样，但是参数类型和个数不一样，返回值类型可以相同也可以不相同。无法以返回型别作为重载函数的区分标准。</h4><h2 id="覆盖重写"><a href="#覆盖重写" class="headerlink" title="覆盖重写"></a>覆盖重写</h2><h3 id="如果子类父类中出现重名的成员方法，这时的访问是一种特殊情况，叫做方法重写-Override-。"><a href="#如果子类父类中出现重名的成员方法，这时的访问是一种特殊情况，叫做方法重写-Override-。" class="headerlink" title="如果子类父类中出现重名的成员方法，这时的访问是一种特殊情况，叫做方法重写 (Override)。"></a>如果子类父类中出现重名的成员方法，这时的访问是一种特殊情况，叫做方法重写 (Override)。</h3><h4 id="1、覆盖重写必须存在父与子类的继承关系中"><a href="#1、覆盖重写必须存在父与子类的继承关系中" class="headerlink" title="1、覆盖重写必须存在父与子类的继承关系中"></a>1、覆盖重写必须存在父与子类的继承关系中</h4><pre><code>class Fu { 
+    public void show() { 
+         System.out.println(&quot;Fu show&quot;);         
+     }     
+ } 
+class Zi extends Fu { //子类重写了父类的show方法     
+     public void show() {     
+             System.out.println(&quot;Zi show&quot;);       
+       }     
+ }
+ public class ExtendsDemo05{ 
+        public static void main(String[] args) {  
+                Zi z = new Zi();  // 子类中有show方法，只执行重写后的show方法     
+                z.show();  // Zi show         
+    }      
+} 
+</code></pre><h4 id="2、方法名必修相同参数也必修相同"><a href="#2、方法名必修相同参数也必修相同" class="headerlink" title="2、方法名必修相同参数也必修相同"></a>2、方法名必修相同参数也必修相同</h4><h4 id="3、访问修饰符的限制一定要大于被重写方法的访问修饰符（public-gt-protected-gt-（default）-gt-private）"><a href="#3、访问修饰符的限制一定要大于被重写方法的访问修饰符（public-gt-protected-gt-（default）-gt-private）" class="headerlink" title="3、访问修饰符的限制一定要大于被重写方法的访问修饰符（public&gt;protected&gt;（default）&gt;private）"></a>3、访问修饰符的限制一定要大于被重写方法的访问修饰符（public&gt;protected&gt;（default）&gt;private）</h4><pre><code>//就是子类的方法的修饰符必须大于父类的修饰
+class Fu { 
+    public void show() { 
+         System.out.println(&quot;Fu show&quot;);         
+     }     
+ } 
+class Zi extends Fu { //子类重写了父类的show方法     
+     protected void show() { //报错    
+             System.out.println(&quot;Zi show&quot;);       
+       }     
+ }
+</code></pre><h4 id="4、重写的应用"><a href="#4、重写的应用" class="headerlink" title="4、重写的应用"></a>4、重写的应用</h4><pre><code>子类可以根据需要，定义特定于自己的行为。既沿袭了父类的功能名称，又根据子类的需要重新实现父类方法，从 而进行扩展增强。比如新的手机增加来电显示头像的功能，代码如下：
+
+
+public class Phone {
+    public void  call(){
+        System.out.println(&quot;打电话&quot;);
+    }
+    public void messige(){
+        System.out.println(&quot;发短信&quot;);
+    }
+    public void show(){
+        System.out.println(&quot;显示号码&quot;);
+    }
+}
+//智能手机
+public class NewPhone extends Phone {
+    public void show(){
+        super.show();//调用父类的show()方法
+        System.out.println(&quot;显示姓名&quot;);
+        System.out.println(&quot;显示头像&quot;);
+    }
+
+}
+</code></pre><h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><h3 id="1-子类方法覆盖父类方法，必须要保证权限大于等于父类权限。"><a href="#1-子类方法覆盖父类方法，必须要保证权限大于等于父类权限。" class="headerlink" title="1.子类方法覆盖父类方法，必须要保证权限大于等于父类权限。"></a>1.子类方法覆盖父类方法，必须要保证权限大于等于父类权限。</h3><h3 id="2-子类方法覆盖父类方法，返回值类型、函数名和参数列表都要一模一样。"><a href="#2-子类方法覆盖父类方法，返回值类型、函数名和参数列表都要一模一样。" class="headerlink" title="2. 子类方法覆盖父类方法，返回值类型、函数名和参数列表都要一模一样。"></a>2. 子类方法覆盖父类方法，返回值类型、函数名和参数列表都要一模一样。</h3>
+      
+    </div>
+    
+    
+    
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/weixing.png" alt="TomorrowLi 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/zhifu.jpg" alt="TomorrowLi 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javaEE/" rel="tag"><i class="fa fa-tag"></i>javaEE</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/29/javaee_day03/" rel="next" title="javaEE 之 static 关键字的说明">
+                <i class="fa fa-chevron-left"></i> javaEE 之 static 关键字的说明
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
 
 
           </div>
@@ -360,6 +641,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -380,8 +665,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -508,6 +802,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#重载"><span class="nav-number">1.</span> <span class="nav-text">重载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#在使用重载时只能通过不同的参数样式（Overload）"><span class="nav-number">1.1.</span> <span class="nav-text">在使用重载时只能通过不同的参数样式（Overload）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、参数的个数不同"><span class="nav-number">1.1.1.</span> <span class="nav-text">1、参数的个数不同</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、参数的类型不同"><span class="nav-number">1.1.2.</span> <span class="nav-text">2、参数的类型不同</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、参数的顺序不同"><span class="nav-number">1.1.3.</span> <span class="nav-text">3、参数的顺序不同</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、与参数的返回值类型无关"><span class="nav-number">1.1.4.</span> <span class="nav-text">4、与参数的返回值类型无关</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重载的时候，方法名要一样，但是参数类型和个数不一样，返回值类型可以相同也可以不相同。无法以返回型别作为重载函数的区分标准。"><span class="nav-number">1.1.5.</span> <span class="nav-text">重载的时候，方法名要一样，但是参数类型和个数不一样，返回值类型可以相同也可以不相同。无法以返回型别作为重载函数的区分标准。</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#覆盖重写"><span class="nav-number">2.</span> <span class="nav-text">覆盖重写</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如果子类父类中出现重名的成员方法，这时的访问是一种特殊情况，叫做方法重写-Override-。"><span class="nav-number">2.1.</span> <span class="nav-text">如果子类父类中出现重名的成员方法，这时的访问是一种特殊情况，叫做方法重写 (Override)。</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、覆盖重写必须存在父与子类的继承关系中"><span class="nav-number">2.1.1.</span> <span class="nav-text">1、覆盖重写必须存在父与子类的继承关系中</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、方法名必修相同参数也必修相同"><span class="nav-number">2.1.2.</span> <span class="nav-text">2、方法名必修相同参数也必修相同</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、访问修饰符的限制一定要大于被重写方法的访问修饰符（public-gt-protected-gt-（default）-gt-private）"><span class="nav-number">2.1.3.</span> <span class="nav-text">3、访问修饰符的限制一定要大于被重写方法的访问修饰符（public>protected>（default）>private）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、重写的应用"><span class="nav-number">2.1.4.</span> <span class="nav-text">4、重写的应用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意事项"><span class="nav-number">3.</span> <span class="nav-text">注意事项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-子类方法覆盖父类方法，必须要保证权限大于等于父类权限。"><span class="nav-number">3.1.</span> <span class="nav-text">1.子类方法覆盖父类方法，必须要保证权限大于等于父类权限。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-子类方法覆盖父类方法，返回值类型、函数名和参数列表都要一模一样。"><span class="nav-number">3.2.</span> <span class="nav-text">2. 子类方法覆盖父类方法，返回值类型、函数名和参数列表都要一模一样。</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -658,6 +968,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 
