@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-10-09T02:45:12.851Z</updated>
+  <updated>2018-10-21T02:07:18.631Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,13 +17,65 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>javaEE之重载和覆盖重写的区别</title>
-    <link href="http://yoursite.com/2018/10/09/lavaEE_day04/"/>
-    <id>http://yoursite.com/2018/10/09/lavaEE_day04/</id>
-    <published>2018-10-09T02:10:07.936Z</published>
-    <updated>2018-10-09T02:45:12.851Z</updated>
+    <title>javaEE之Set集合和List集合的区别</title>
+    <link href="http://yoursite.com/2018/10/21/javaEE_day06_ListAndSet/"/>
+    <id>http://yoursite.com/2018/10/21/javaEE_day06_ListAndSet/</id>
+    <published>2018-10-21T01:41:26.427Z</published>
+    <updated>2018-10-21T02:07:18.631Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="重载"><a href="#重载" class="headerlink" title="重载"></a>重载</h2><h3 id="在使用重载时只能通过不同的参数样式（Overload）"><a href="#在使用重载时只能通过不同的参数样式（Overload）" class="headerlink" title="在使用重载时只能通过不同的参数样式（Overload）"></a>在使用重载时只能通过不同的参数样式（Overload）</h3><h4 id="1、参数的个数不同"><a href="#1、参数的个数不同" class="headerlink" title="1、参数的个数不同"></a>1、参数的个数不同</h4><pre><code>public static void get(int a){}public static void get(int a, int b){}</code></pre><h4 id="2、参数的类型不同"><a href="#2、参数的类型不同" class="headerlink" title="2、参数的类型不同"></a>2、参数的类型不同</h4><pre><code>public static void get(int a){}public static void get(double a){}</code></pre><h4 id="3、参数的顺序不同"><a href="#3、参数的顺序不同" class="headerlink" title="3、参数的顺序不同"></a>3、参数的顺序不同</h4><pre><code>public static void get(int a,double b){}public static void get(double a,int b){}</code></pre><h4 id="4、与参数的返回值类型无关"><a href="#4、与参数的返回值类型无关" class="headerlink" title="4、与参数的返回值类型无关"></a>4、与参数的返回值类型无关</h4><pre><code>public static void get(int a){}public static int get(int a){}</code></pre><h4 id="重载的时候，方法名要一样，但是参数类型和个数不一样，返回值类型可以相同也可以不相同。无法以返回型别作为重载函数的区分标准。"><a href="#重载的时候，方法名要一样，但是参数类型和个数不一样，返回值类型可以相同也可以不相同。无法以返回型别作为重载函数的区分标准。" class="headerlink" title="重载的时候，方法名要一样，但是参数类型和个数不一样，返回值类型可以相同也可以不相同。无法以返回型别作为重载函数的区分标准。"></a>重载的时候，方法名要一样，但是参数类型和个数不一样，返回值类型可以相同也可以不相同。无法以返回型别作为重载函数的区分标准。</h4><h2 id="覆盖重写"><a href="#覆盖重写" class="headerlink" title="覆盖重写"></a>覆盖重写</h2><h3 id="如果子类父类中出现重名的成员方法，这时的访问是一种特殊情况，叫做方法重写-Override-。"><a href="#如果子类父类中出现重名的成员方法，这时的访问是一种特殊情况，叫做方法重写-Override-。" class="headerlink" title="如果子类父类中出现重名的成员方法，这时的访问是一种特殊情况，叫做方法重写 (Override)。"></a>如果子类父类中出现重名的成员方法，这时的访问是一种特殊情况，叫做方法重写 (Override)。</h3><h4 id="1、覆盖重写必须存在父与子类的继承关系中"><a href="#1、覆盖重写必须存在父与子类的继承关系中" class="headerlink" title="1、覆盖重写必须存在父与子类的继承关系中"></a>1、覆盖重写必须存在父与子类的继承关系中</h4><pre><code>class Fu {     public void show() {          System.out.println(&quot;Fu show&quot;);              }      } class Zi extends Fu { //子类重写了父类的show方法          public void show() {                  System.out.println(&quot;Zi show&quot;);              }      } public class ExtendsDemo05{         public static void main(String[] args) {                  Zi z = new Zi();  // 子类中有show方法，只执行重写后的show方法                     z.show();  // Zi show             }      } </code></pre><h4 id="2、方法名必修相同参数也必修相同"><a href="#2、方法名必修相同参数也必修相同" class="headerlink" title="2、方法名必修相同参数也必修相同"></a>2、方法名必修相同参数也必修相同</h4><h4 id="3、访问修饰符的限制一定要大于被重写方法的访问修饰符（public-gt-protected-gt-（default）-gt-private）"><a href="#3、访问修饰符的限制一定要大于被重写方法的访问修饰符（public-gt-protected-gt-（default）-gt-private）" class="headerlink" title="3、访问修饰符的限制一定要大于被重写方法的访问修饰符（public&gt;protected&gt;（default）&gt;private）"></a>3、访问修饰符的限制一定要大于被重写方法的访问修饰符（public&gt;protected&gt;（default）&gt;private）</h4><pre><code>//就是子类的方法的修饰符必须大于父类的修饰class Fu {     public void show() {          System.out.println(&quot;Fu show&quot;);              }      } class Zi extends Fu { //子类重写了父类的show方法          protected void show() { //报错                 System.out.println(&quot;Zi show&quot;);              }      }</code></pre><h4 id="4、重写的应用"><a href="#4、重写的应用" class="headerlink" title="4、重写的应用"></a>4、重写的应用</h4><pre><code>子类可以根据需要，定义特定于自己的行为。既沿袭了父类的功能名称，又根据子类的需要重新实现父类方法，从 而进行扩展增强。比如新的手机增加来电显示头像的功能，代码如下：public class Phone {    public void  call(){        System.out.println(&quot;打电话&quot;);    }    public void messige(){        System.out.println(&quot;发短信&quot;);    }    public void show(){        System.out.println(&quot;显示号码&quot;);    }}//智能手机public class NewPhone extends Phone {    public void show(){        super.show();//调用父类的show()方法        System.out.println(&quot;显示姓名&quot;);        System.out.println(&quot;显示头像&quot;);    }}</code></pre><h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><h3 id="1-子类方法覆盖父类方法，必须要保证权限大于等于父类权限。"><a href="#1-子类方法覆盖父类方法，必须要保证权限大于等于父类权限。" class="headerlink" title="1.子类方法覆盖父类方法，必须要保证权限大于等于父类权限。"></a>1.子类方法覆盖父类方法，必须要保证权限大于等于父类权限。</h3><h3 id="2-子类方法覆盖父类方法，返回值类型、函数名和参数列表都要一模一样。"><a href="#2-子类方法覆盖父类方法，返回值类型、函数名和参数列表都要一模一样。" class="headerlink" title="2. 子类方法覆盖父类方法，返回值类型、函数名和参数列表都要一模一样。"></a>2. 子类方法覆盖父类方法，返回值类型、函数名和参数列表都要一模一样。</h3>]]></content>
+    <content type="html"><![CDATA[<h1 id="Collection：单列集合类的根接口，用于存储一系列符合某种规则的元素，它有两个重要的子接口，分别是-java-util-List和java-util-Set。"><a href="#Collection：单列集合类的根接口，用于存储一系列符合某种规则的元素，它有两个重要的子接口，分别是-java-util-List和java-util-Set。" class="headerlink" title="Collection：单列集合类的根接口，用于存储一系列符合某种规则的元素，它有两个重要的子接口，分别是 java.util.List和java.util.Set。"></a><strong>Collection</strong>：单列集合类的根接口，用于存储一系列符合某种规则的元素，它有两个重要的子接口，分别是 <code>java.util.List</code>和<code>java.util.Set</code>。</h1><p>##<code>java.util.List</code><arraylist,linkedlist,vector></arraylist,linkedlist,vector></p><pre><code>特点：    1. 是一个有序集合,存储和遍历的顺序是一样的2. 可以存储重复元素3. 可以用普通for循环遍历</code></pre><p>##<code>java.util.Set</code><hashset,treeset,linkedhashset></hashset,treeset,linkedhashset></p><pre><code>特点：    1. 是一个无序集合2. 不可以存储重复元素3. 不可以用普通for循环遍历</code></pre><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/ListAndSet.jpg?raw=true" alt="image"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Collection：单列集合类的根接口，用于存储一系列符合某种规则的元素，它有两个重要的子接口，分别是-java-util-List和java-util-Set。&quot;&gt;&lt;a href=&quot;#Collection：单列集合类的根接口，用于存储一系列符合某种规则的元素，
+      
+    
+    </summary>
+    
+      <category term="javaEE" scheme="http://yoursite.com/categories/javaEE/"/>
+    
+    
+      <category term="javaEE" scheme="http://yoursite.com/tags/javaEE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>javaEE之Integer的自动装箱和自动拆箱</title>
+    <link href="http://yoursite.com/2018/10/20/javaEE_day05_Inteage/"/>
+    <id>http://yoursite.com/2018/10/20/javaEE_day05_Inteage/</id>
+    <published>2018-10-20T11:30:38.220Z</published>
+    <updated>2018-10-20T12:15:20.905Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="1、自动装箱"><a href="#1、自动装箱" class="headerlink" title="1、自动装箱"></a>1、自动装箱</h2><pre><code>Integer i1=100;Integer i2=100;System.out.println(i1==i2);//trueInteger i1=200;Integer i2=200;System.out.println(i1==i2);//false/*自动装箱调用的是valueOf()方法，执行valueOf()方法会先判断i的值。因为在Integer的缓存中放入了常见的int值-128-127；提高执行效率如果需要自动装箱的值在缓存的范围内，会从常量池中拿出数据,不需要new对象。所以比较相等。否则会调用Integer的构造方法进行自动装箱，会new对象，我们知道new出的是地址值肯定不一样*/public static Integer valueOf(int i) {    if (i &gt;= IntegerCache.low &amp;&amp; i &lt;= IntegerCache.high)        return IntegerCache.cache[i + (-IntegerCache.low)];    return new Integer(i);}static final int low = -128;static final int high= 127;</code></pre><p>##2、自动拆箱</p><pre><code>Integer i1=200;int i2=200;System.out.println(i1==i2);//true/*自动拆箱调用的是intValue()方法会直接返回value的值，在比较是i1转换为int类型的数据进行比较*/public int intValue() {    return value;}private final int value;</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;1、自动装箱&quot;&gt;&lt;a href=&quot;#1、自动装箱&quot; class=&quot;headerlink&quot; title=&quot;1、自动装箱&quot;&gt;&lt;/a&gt;1、自动装箱&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;Integer i1=100;
+Integer i2=100;
+System.out.pri
+      
+    
+    </summary>
+    
+      <category term="javaEE" scheme="http://yoursite.com/categories/javaEE/"/>
+    
+    
+      <category term="javaEE" scheme="http://yoursite.com/tags/javaEE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>javaEE之重载和覆盖重写的区别</title>
+    <link href="http://yoursite.com/2018/10/09/javaEE_day04_OverLoadAndOverride/"/>
+    <id>http://yoursite.com/2018/10/09/javaEE_day04_OverLoadAndOverride/</id>
+    <published>2018-10-09T02:10:07.936Z</published>
+    <updated>2018-10-20T11:33:48.653Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="重载"><a href="#重载" class="headerlink" title="重载"></a>重载</h2><h3 id="在使用重载时只能通过不同的参数样式（Overload）"><a href="#在使用重载时只能通过不同的参数样式（Overload）" class="headerlink" title="在使用重载时只能通过不同的参数样式（Overload）"></a>在使用重载时只能通过不同的参数样式（Overload）</h3><h4 id="1、参数的个数不同"><a href="#1、参数的个数不同" class="headerlink" title="1、参数的个数不同"></a>1、参数的个数不同</h4><pre><code>public static void get(int a){}public static void get(int a, int b){}</code></pre><h4 id="2、参数的类型不同"><a href="#2、参数的类型不同" class="headerlink" title="2、参数的类型不同"></a>2、参数的类型不同</h4><pre><code>public static void get(int a){}public static void get(double a){}</code></pre><h4 id="3、参数的顺序不同"><a href="#3、参数的顺序不同" class="headerlink" title="3、参数的顺序不同"></a>3、参数的顺序不同</h4><pre><code>public static void get(int a,double b){}public static void get(double a,int b){}</code></pre><h4 id="4、与参数的返回值类型无关"><a href="#4、与参数的返回值类型无关" class="headerlink" title="4、与参数的返回值类型无关"></a>4、与参数的返回值类型无关</h4><pre><code>public static void get(int a){}public static int get(int a){}</code></pre><h4 id="重载的时候，方法名要一样，但是参数类型和个数不一样，返回值类型可以相同也可以不相同。无法以返回型别作为重载函数的区分标准。"><a href="#重载的时候，方法名要一样，但是参数类型和个数不一样，返回值类型可以相同也可以不相同。无法以返回型别作为重载函数的区分标准。" class="headerlink" title="重载的时候，方法名要一样，但是参数类型和个数不一样，返回值类型可以相同也可以不相同。无法以返回型别作为重载函数的区分标准。"></a>重载的时候，方法名要一样，但是参数类型和个数不一样，返回值类型可以相同也可以不相同。无法以返回型别作为重载函数的区分标准。</h4><h2 id="覆盖重写-Override"><a href="#覆盖重写-Override" class="headerlink" title="覆盖重写(Override)"></a>覆盖重写(Override)</h2><h3 id="如果子类父类中出现重名的成员方法，这时的访问是一种特殊情况，叫做方法重写-Override-。"><a href="#如果子类父类中出现重名的成员方法，这时的访问是一种特殊情况，叫做方法重写-Override-。" class="headerlink" title="如果子类父类中出现重名的成员方法，这时的访问是一种特殊情况，叫做方法重写 (Override)。"></a>如果子类父类中出现重名的成员方法，这时的访问是一种特殊情况，叫做方法重写 (Override)。</h3><h4 id="1、覆盖重写必须存在父与子类的继承关系中"><a href="#1、覆盖重写必须存在父与子类的继承关系中" class="headerlink" title="1、覆盖重写必须存在父与子类的继承关系中"></a>1、覆盖重写必须存在父与子类的继承关系中</h4><pre><code>class Fu {     public void show() {          System.out.println(&quot;Fu show&quot;);              }      } class Zi extends Fu { //子类重写了父类的show方法          public void show() {                  System.out.println(&quot;Zi show&quot;);              }      } public class ExtendsDemo05{         public static void main(String[] args) {                  Zi z = new Zi();  // 子类中有show方法，只执行重写后的show方法                     z.show();  // Zi show             }      } </code></pre><h4 id="2、方法名必修相同参数也必修相同"><a href="#2、方法名必修相同参数也必修相同" class="headerlink" title="2、方法名必修相同参数也必修相同"></a>2、方法名必修相同参数也必修相同</h4><h4 id="3、访问修饰符的限制一定要大于被重写方法的访问修饰符（public-gt-protected-gt-（default）-gt-private）"><a href="#3、访问修饰符的限制一定要大于被重写方法的访问修饰符（public-gt-protected-gt-（default）-gt-private）" class="headerlink" title="3、访问修饰符的限制一定要大于被重写方法的访问修饰符（public&gt;protected&gt;（default）&gt;private）"></a>3、访问修饰符的限制一定要大于被重写方法的访问修饰符（public&gt;protected&gt;（default）&gt;private）</h4><pre><code>//就是子类的方法的修饰符必须大于父类的修饰class Fu {     public void show() {          System.out.println(&quot;Fu show&quot;);              }      } class Zi extends Fu { //子类重写了父类的show方法          protected void show() { //报错                 System.out.println(&quot;Zi show&quot;);              }      }</code></pre><h4 id="4、重写的应用"><a href="#4、重写的应用" class="headerlink" title="4、重写的应用"></a>4、重写的应用</h4><pre><code>子类可以根据需要，定义特定于自己的行为。既沿袭了父类的功能名称，又根据子类的需要重新实现父类方法，从 而进行扩展增强。比如新的手机增加来电显示头像的功能，代码如下：public class Phone {    public void  call(){        System.out.println(&quot;打电话&quot;);    }    public void messige(){        System.out.println(&quot;发短信&quot;);    }    public void show(){        System.out.println(&quot;显示号码&quot;);    }}//智能手机public class NewPhone extends Phone {    public void show(){        super.show();//调用父类的show()方法        System.out.println(&quot;显示姓名&quot;);        System.out.println(&quot;显示头像&quot;);    }}</code></pre><h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><h3 id="1-子类方法覆盖父类方法，必须要保证权限大于等于父类权限。"><a href="#1-子类方法覆盖父类方法，必须要保证权限大于等于父类权限。" class="headerlink" title="1.子类方法覆盖父类方法，必须要保证权限大于等于父类权限。"></a>1.子类方法覆盖父类方法，必须要保证权限大于等于父类权限。</h3><h3 id="2-子类方法覆盖父类方法，返回值类型、函数名和参数列表都要一模一样。"><a href="#2-子类方法覆盖父类方法，返回值类型、函数名和参数列表都要一模一样。" class="headerlink" title="2. 子类方法覆盖父类方法，返回值类型、函数名和参数列表都要一模一样。"></a>2. 子类方法覆盖父类方法，返回值类型、函数名和参数列表都要一模一样。</h3>]]></content>
     
     <summary type="html">
     
@@ -43,8 +95,8 @@
   
   <entry>
     <title>javaEE 之 static 关键字的说明</title>
-    <link href="http://yoursite.com/2018/09/29/javaee_day03/"/>
-    <id>http://yoursite.com/2018/09/29/javaee_day03/</id>
+    <link href="http://yoursite.com/2018/09/29/javaee_day03_Static/"/>
+    <id>http://yoursite.com/2018/09/29/javaee_day03_Static/</id>
     <published>2018-09-29T05:57:39.650Z</published>
     <updated>2018-09-29T06:42:51.135Z</updated>
     
@@ -68,8 +120,8 @@
   
   <entry>
     <title>javaEE 之 this的使用</title>
-    <link href="http://yoursite.com/2018/09/28/javaEE_day02/"/>
-    <id>http://yoursite.com/2018/09/28/javaEE_day02/</id>
+    <link href="http://yoursite.com/2018/09/28/javaEE_day02_This/"/>
+    <id>http://yoursite.com/2018/09/28/javaEE_day02_This/</id>
     <published>2018-09-28T14:01:57.480Z</published>
     <updated>2018-09-28T14:25:24.903Z</updated>
     
@@ -93,8 +145,8 @@
   
   <entry>
     <title>JavaEE 之 &amp;和&amp;&amp; |和||</title>
-    <link href="http://yoursite.com/2018/09/20/javaEE_day01/"/>
-    <id>http://yoursite.com/2018/09/20/javaEE_day01/</id>
+    <link href="http://yoursite.com/2018/09/20/javaEE_day01_&amp;&amp;/"/>
+    <id>http://yoursite.com/2018/09/20/javaEE_day01_&amp;&amp;/</id>
     <published>2018-09-20T08:03:56.035Z</published>
     <updated>2018-09-28T13:35:22.084Z</updated>
     
@@ -493,9 +545,9 @@ ROBOTSTXT_OBEY = True
       <category term="google插件" scheme="http://yoursite.com/categories/google%E6%8F%92%E4%BB%B6/"/>
     
     
-      <category term="vip视频观看" scheme="http://yoursite.com/tags/vip%E8%A7%86%E9%A2%91%E8%A7%82%E7%9C%8B/"/>
-    
       <category term="Google插件" scheme="http://yoursite.com/tags/Google%E6%8F%92%E4%BB%B6/"/>
+    
+      <category term="vip视频观看" scheme="http://yoursite.com/tags/vip%E8%A7%86%E9%A2%91%E8%A7%82%E7%9C%8B/"/>
     
   </entry>
   
@@ -516,57 +568,6 @@ ROBOTSTXT_OBEY = True
     
     
       <category term="知乎" scheme="http://yoursite.com/tags/%E7%9F%A5%E4%B9%8E/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>用selenium自动爬取天眼查上的公司信息</title>
-    <link href="http://yoursite.com/2018/03/13/tianyancha/"/>
-    <id>http://yoursite.com/2018/03/13/tianyancha/</id>
-    <published>2018-03-13T01:07:45.812Z</published>
-    <updated>2018-03-31T07:41:32.752Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Quict-Start"><a href="#Quict-Start" class="headerlink" title="Quict Start"></a>Quict Start</h2><h3 id="1、需要的库"><a href="#1、需要的库" class="headerlink" title="1、需要的库"></a>1、需要的库</h3><p>re、selenium、pymysql</p><h3 id="2、程序前的准备"><a href="#2、程序前的准备" class="headerlink" title="2、程序前的准备"></a>2、程序前的准备</h3><p>首先在自己的python路径下放入 <a href="http://npm.taobao.org/mirrors/chromedriver/" target="_blank" rel="external">chromedriver.exe</a> 选择自己浏览器合适的版本下载</p><h3 id="代码展示"><a href="#代码展示" class="headerlink" title="代码展示"></a>代码展示</h3><pre><code>from selenium import webdriverfrom selenium.webdriver.common.by import Byfrom selenium.webdriver.support.ui import WebDriverWaitfrom selenium.webdriver.support import expected_conditions as ECimport reimport MySQLdbhost=&apos;localhost&apos;#主机名user=&apos;root&apos;#数据库的用户名passwd=&apos;&apos;#数据库的密码db=&apos;test&apos;#数据库的名字conn=MySQLdb.connect(host,user,passwd,db,charset=&apos;utf8&apos;)cursor = conn.cursor()boser=webdriver.Chrome()boser.maximize_window()wait=WebDriverWait(boser , 10)def getlogin():    boser.get(&apos;https://www.tianyancha.com/login&apos;)    user = wait.until(        EC.presence_of_element_located((By.CSS_SELECTOR, &quot;#web-content &gt; div &gt; div &gt; div &gt; div.position-rel.container.company_container &gt; div &gt; div.in-block.vertical-top.float-right.right_content.mt50.mr5.mb5 &gt; div.module.module1.module2.loginmodule.collapse.in &gt; div.modulein.modulein1.mobile_box.pl30.pr30.f14.collapse.in &gt; div.pb30.position-rel &gt; input&quot;))    )    password=wait.until(        EC.presence_of_element_located((By.CSS_SELECTOR, &apos;#web-content &gt; div &gt; div &gt; div &gt; div.position-rel.container.company_container &gt; div &gt; div.in-block.vertical-top.float-right.right_content.mt50.mr5.mb5 &gt; div.module.module1.module2.loginmodule.collapse.in &gt; div.modulein.modulein1.mobile_box.pl30.pr30.f14.collapse.in &gt; div.pb40.position-rel &gt; input&apos;))    )    submit = wait.until(        EC.element_to_be_clickable((By.CSS_SELECTOR , &apos;#web-content &gt; div &gt; div &gt; div &gt; div.position-rel.container.company_container &gt; div &gt; div.in-block.vertical-top.float-right.right_content.mt50.mr5.mb5 &gt; div.module.module1.module2.loginmodule.collapse.in &gt; div.modulein.modulein1.mobile_box.pl30.pr30.f14.collapse.in &gt; div.c-white.b-c9.pt8.f18.text-center.login_btn&apos;))    )    user.send_keys(&apos;用户名&apos;)    password.send_keys(&apos;密码&apos;)    submit.click()    getSearch()def getSearch():    user = wait.until(        EC.presence_of_element_located((By.CSS_SELECTOR , &quot;#home-main-search&quot;))    )    submit = wait.until(        EC.element_to_be_clickable((By.CSS_SELECTOR ,                                    &apos;#web-content &gt; div &gt; div.mainV3_tab1_enter.position-rel &gt; div.mainv2_tab1.position-rel &gt; div &gt; div.main-tab-outer &gt; div:nth-child(2) &gt; div &gt; div:nth-child(1) &gt; div.input-group.inputV2 &gt; div &gt; span&apos;))    )    key=&apos;佛山市顺德区&apos;    user.send_keys(key)    submit.click()    html=boser.page_source    geturl(html)    getUrlNext()def getUrlNext():    for i in range(2,5):        boser.get(r&apos;https://www.tianyancha.com/search/p%s?key=佛山市顺德区&apos;% i)        html=boser.page_source        geturl(html)def geturl(html):    try:        reg=r&apos;&lt;a href=&quot;.*?&quot; target=&quot;_blank&quot; tyc-event-click=&quot;&quot; tyc-event-ch=&quot;CompanySearch.Company&quot; style=&quot;word-break: break-all;font-weight: 600;&quot; class=&quot;query_name sv-search-company f18 in-block vertical-middle&quot;&gt;&lt;span&gt;(.*?)&lt;/span&gt;&lt;/a&gt;&apos;        names=re.findall(reg,html,re.S)        reg=r&apos;&lt;a title=&quot;.*?&quot; class=&quot;legalPersonName hover_underline&quot; target=&quot;_blank&quot; href=&quot;.*?&quot;&gt;(.*?)&lt;/a&gt;&apos;        daibiao=re.findall(reg,html,re.S)        reg=r&apos;&lt;div class=&quot;title overflow-width&quot; style=&quot;border-right: none&quot;&gt;.*?&lt;span title=&quot;.*?&quot;&gt;(.*?)&lt;/span&gt;&lt;/div&gt;&apos;        days = re.findall(reg,html,re.S)        reg=r&apos;&lt;span class=&quot;sec-c3&quot;&gt;联系电话：&lt;/span&gt;&lt;span class=&quot;overflow-width over-hide vertical-bottom in-block&quot; style=&quot;max-width:500px;&quot;&gt;(.*?)&lt;/span&gt;&apos;        phones = re.findall(reg , html , re.S)        reg=r&apos;&lt;div class=&quot;add&quot;&gt;&lt;span class=&quot;sec-c3&quot;&gt;.*?&lt;/span&gt;&lt;span&gt;：&lt;/span&gt;&lt;span class=&quot;overflow-width over-hide vertical-bottom in-block&quot; style=&quot;max-width:500px;&quot;&gt;(.*?)&lt;/span&gt;&apos;        location=re.findall(reg,html,re.S)        for i in range(20):            data={                &apos;name&apos;:names[i].replace(&apos;&lt;em&gt;&apos;,&apos;&apos;).replace(&apos;&lt;/em&gt;&apos;,&apos;&apos;),                &apos;daibiao&apos;:daibiao[i],                &apos;day&apos;:days[i].replace(&apos;&lt;em&gt;&apos;,&apos;&apos;).replace(&apos;&lt;/em&gt;&apos;,&apos;&apos;),                &apos;phone&apos;:phones[i].replace(&apos;&lt;em&gt;&apos;,&apos;&apos;).replace(&apos;&lt;/em&gt;&apos;,&apos;&apos;),                &apos;location&apos;: location[i].replace(&apos;&lt;em&gt;&apos;, &apos;&apos;).replace(&apos;&lt;/em&gt;&apos;,&apos;&apos;)            }            print(data)            cursor.execute(&quot;insert into tianyancha(name,daibiao,day,phone,location) values(&apos;{}&apos;,&apos;{}&apos;,&apos;{}&apos;,&apos;{}&apos;,&apos;{}&apos;)&quot;.format(data[&apos;name&apos;],data[&apos;daibiao&apos;],data[&apos;day&apos;],data[&apos;phone&apos;],data[&apos;location&apos;]))            print(data[&apos;daibiao&apos;],&apos;成功存入数据库&apos;)            conn.commit()    except:        return Nonedef main():    getlogin()if __name__ == &apos;__main__&apos;:    main()</code></pre><p>结果展示</p><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/%E5%A4%A9%E7%9C%BC%E6%9F%A5.PNG?raw=true" alt="image"></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;Quict-Start&quot;&gt;&lt;a href=&quot;#Quict-Start&quot; class=&quot;headerlink&quot; title=&quot;Quict Start&quot;&gt;&lt;/a&gt;Quict Start&lt;/h2&gt;&lt;h3 id=&quot;1、需要的库&quot;&gt;&lt;a href=&quot;#1、需要的库&quot; cla
-      
-    
-    </summary>
-    
-      <category term="爬虫" scheme="http://yoursite.com/categories/%E7%88%AC%E8%99%AB/"/>
-    
-    
-      <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
-    
-      <category term="信息" scheme="http://yoursite.com/tags/%E4%BF%A1%E6%81%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>爬取网站的种子链接并下载视频到本地</title>
-    <link href="http://yoursite.com/2018/02/28/zhongzi/"/>
-    <id>http://yoursite.com/2018/02/28/zhongzi/</id>
-    <published>2018-02-28T03:44:43.685Z</published>
-    <updated>2018-03-05T08:16:56.967Z</updated>
-    
-    <content type="html"><![CDATA[<p>首先读取网站的链接存到txt文件中</p><pre><code>import reimport urllib.requestfrom selenium import webdriverfrom selenium.common.exceptions import TimeoutExceptionfrom selenium.webdriver.support.ui import WebDriverWaitfrom multiprocessing import Poolbrowser = webdriver.Chrome()wait=WebDriverWait(browser, 10)def search(url,next_title):    try:        browser.get(url)        html = browser.page_source        reg = r&apos;&lt;span style=&quot;&quot; id=&quot;streamurj&quot;&gt;(.*?)&lt;/span&gt;&apos;        wang = re.findall(reg, html)        for i in wang:            zhongzi=&apos;https://openload.co/stream/&apos; +i            print(zhongzi)            with open(&apos;lianjie.txt&apos;, &apos;a+&apos;) as f:                f.write(str(zhongzi) + &apos;\n&apos;)                f.close()            #load(product[&apos;url&apos;],product[&apos;title&apos;])    except TimeoutException:        return search(url,next_title)def load(url,title):    print(&apos;正在下载&apos;,url)    urllib.request.urlretrieve(url,&apos;mp4/%s.mp4&apos;% title)    print(&apos;下载成功&apos;,title)def index_page(url):    try:        browser.get(url)        html = browser.page_source        reg = r&apos;&lt;td class=&quot;mytd-padding&quot;&gt;&lt;a href=&quot;(.*?)&quot;&gt;&apos;        video = re.findall(reg, html)        for age in video:            next_url = &apos;http://ourjav.com/&apos; + age.split(&apos;[&apos;)[0]            next_title=age.split(&apos;[&apos;)[-1]            next_page(next_url,next_title)    except TimeoutException:        index_page(url)def next_page(url,next_title):    try:        browser.get(url)        html = browser.page_source        age=r&apos;&lt;iframe id=&quot;flash_game_object&quot; name=&quot;flash_game_object&quot; frameborder=&quot;no&quot; scrolling=&quot;no&quot; width=&quot;650&quot; height=&quot;500&quot; src=&quot;(.*?)&quot; allowfullscreen=&quot;true&quot; webkitallowfullscreen=&quot;true&quot; mozallowfullscreen=&quot;true&quot;&gt;&lt;/iframe&gt;&apos;        video=re.findall(age,html,re.S)        for image in video:            search(image,next_title)    except TimeoutException:        next_page(url, next_title)def read_load():    f2 = open(&quot;lianjie.txt&quot;,&quot;r&quot;)    lines = f2.readlines()    count=0    for line3 in lines:        print(line3)        respon=browser.get(line3)        count=count+1        if count==5:            break    print(count)def main(offset):    url = &apos;http://ourjav.com/&apos;+&apos;index.php?&amp;page=%s&apos; % offset    index_page(url)if __name__ == &apos;__main__&apos;:    group = [x for x in range(1, 11)]    pool = Pool()    pool.map(main, group)</code></pre><p>其次从txt文件中读取url进行下载</p><pre><code>from selenium import webdriverfrom selenium.webdriver.support.ui import WebDriverWaitbrowser = webdriver.Chrome()wait=WebDriverWait(browser, 10)def read_load():    f2 = open(&quot;lianjie.txt&quot;,&quot;r&quot;)    lines = f2.readlines()    count=0    for line3 in lines:        print(line3)        browser.get(line3)        count=count+1        if count==5:            break    print(count)def main():    read_load()if __name__ == &apos;__main__&apos;:    main()</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      想要密码,请联系我
-    
-    </summary>
-    
-      <category term="爬虫" scheme="http://yoursite.com/categories/%E7%88%AC%E8%99%AB/"/>
-    
-    
-      <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
-    
-      <category term="种子" scheme="http://yoursite.com/tags/%E7%A7%8D%E5%AD%90/"/>
     
   </entry>
   

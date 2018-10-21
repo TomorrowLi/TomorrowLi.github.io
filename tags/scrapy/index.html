@@ -108,7 +108,7 @@
 </script>
 <meta property="og:type" content="website">
 <meta property="og:title" content="TomorrowLi&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/tags/scrapy/index.html">
+<meta property="og:url" content="http://yoursite.com/tags/Scrapy/index.html">
 <meta property="og:site_name" content="TomorrowLi&#39;s Blog">
 <meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
@@ -142,13 +142,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/scrapy/"/>
+  <link rel="canonical" href="http://yoursite.com/tags/Scrapy/"/>
 
 
 
 
 
-  <title>标签: scrapy | TomorrowLi's Blog</title>
+  <title>标签: Scrapy | TomorrowLi's Blog</title>
   
 
 
@@ -312,7 +312,7 @@
 
     <div id="posts" class="posts-collapse">
       <div class="collection-title">
-        <h1>scrapy<small>标签</small>
+        <h1>Scrapy<small>标签</small>
         </h1>
       </div>
 
@@ -324,37 +324,9 @@
 
       <h2 class="post-title">
         
-            <a class="post-title-link" href="/2018/05/23/crawl_spider_99/" itemprop="url">
+            <a class="post-title-link" href="/2018/04/16/ScrapyZufang/" itemprop="url">
               
-                <span itemprop="name">用scrapy的crawlspider全站爬去数据</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-23T17:32:21+08:00"
-              content="2018-05-23" >
-          05-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/04/24/scrapy_python/" itemprop="url">
-              
-                <span itemprop="name">利用scrapy爬取伯乐在线的所有文章</span>
+                <span itemprop="name">爬取房天下的租房信息，并对数据进行可视化展示</span>
               
             </a>
         
@@ -362,65 +334,9 @@
 
       <div class="post-meta">
         <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-24T09:11:05+08:00"
-              content="2018-04-24" >
-          04-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/03/31/scrapyZhihu/" itemprop="url">
-              
-                <span itemprop="name">利用scrapy爬取知乎用户信息并存储在mongodb数据库中</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-31T14:26:24+08:00"
-              content="2018-03-31" >
-          03-31
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/03/29/scrapy/" itemprop="url">
-              
-                <span itemprop="name">scrapy爬虫框架的简介</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-29T22:43:47+08:00"
-              content="2018-03-29" >
-          03-29
+              datetime="2018-04-16T20:28:34+08:00"
+              content="2018-04-16" >
+          04-16
         </time>
       </div>
 
@@ -484,7 +400,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -636,7 +552,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共12.2k字</span>
+  <span class="post-count">博客全站共12.6k字</span>
 </div>
 
         
@@ -1044,6 +960,88 @@
               resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
             } else {
               resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+ft, resultRight) {
                 if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
                   return resultRight.searchTextCount - resultLeft.searchTextCount;
                 } else if (resultLeft.hitCount !== resultRight.hitCount) {
