@@ -3,9 +3,17 @@
   
     
     <entry>
+      <title></title>
+      <link href="/2018/10/23/google6d91070c6e324f34/"/>
+      <content type="html"><![CDATA[google-site-verification: google6d91070c6e324f34.html]]></content>
+      
+      
+    </entry>
+    
+    <entry>
       <title>java有关线程的几种区别</title>
       <link href="/2018/10/23/javaEE_day07_Collection/"/>
-      <content type="html"><![CDATA[<h2 id="Vector和ArrayList的区别"><a href="#Vector和ArrayList的区别" class="headerlink" title="Vector和ArrayList的区别"></a>Vector和ArrayList的区别</h2><h3 id="1-Vector原来的方法的名称比较长，ArrayList的方法名比较短"><a href="#1-Vector原来的方法的名称比较长，ArrayList的方法名比较短" class="headerlink" title="1. Vector原来的方法的名称比较长，ArrayList的方法名比较短"></a>1. Vector原来的方法的名称比较长，ArrayList的方法名比较短</h3><h3 id="2-Vector是线程安全的（同步）加的同步锁，效率低"><a href="#2-Vector是线程安全的（同步）加的同步锁，效率低" class="headerlink" title="2. Vector是线程安全的（同步）加的同步锁，效率低"></a>2. Vector是线程安全的（同步）加的同步锁，效率低</h3><h3 id="ArrayList是线程不安全的（不同步），没有加锁，效率高"><a href="#ArrayList是线程不安全的（不同步），没有加锁，效率高" class="headerlink" title="ArrayList是线程不安全的（不同步），没有加锁，效率高"></a>ArrayList是线程不安全的（不同步），没有加锁，效率高</h3><h2 id="StringBuilder和StringBuffer的区别"><a href="#StringBuilder和StringBuffer的区别" class="headerlink" title="StringBuilder和StringBuffer的区别"></a>StringBuilder和StringBuffer的区别</h2><h3 id="1、StringBuilder-一个可变的字符序列。此类提供一个与-StringBuffer-兼容的-API，但不保证同步。该类被设计用作-StringBuffer-的一个简易替换，用在字符串缓冲区被单个线程使用的时候（这种情况很普遍）。如果可能，建议优先采用该类，因为在大多数实现中，它比-StringBuffer-要快。线程不安全的（不同步），没有加锁，效率高"><a href="#1、StringBuilder-一个可变的字符序列。此类提供一个与-StringBuffer-兼容的-API，但不保证同步。该类被设计用作-StringBuffer-的一个简易替换，用在字符串缓冲区被单个线程使用的时候（这种情况很普遍）。如果可能，建议优先采用该类，因为在大多数实现中，它比-StringBuffer-要快。线程不安全的（不同步），没有加锁，效率高" class="headerlink" title="1、StringBuilder 一个可变的字符序列。此类提供一个与 StringBuffer 兼容的 API，但不保证同步。该类被设计用作 StringBuffer 的一个简易替换，用在字符串缓冲区被单个线程使用的时候（这种情况很普遍）。如果可能，建议优先采用该类，因为在大多数实现中，它比 StringBuffer 要快。线程不安全的（不同步），没有加锁，效率高"></a>1、StringBuilder 一个可变的字符序列。此类提供一个与 StringBuffer 兼容的 API，但不保证同步。该类被设计用作 StringBuffer 的一个简易替换，用在字符串缓冲区被单个线程使用的时候（这种情况很普遍）。如果可能，建议优先采用该类，因为在大多数实现中，它比 StringBuffer 要快。线程不安全的（不同步），没有加锁，效率高</h3><h3 id="2、StringBuffer线程安全的可变字符序列。一个类似于-String-的字符串缓冲区，但不能修改。虽然在任意时间点上它都包含某种特定的字符序列，但通过某些方法调用可以改变该序列的长度和内容。-线程安全的（同步）加的同步锁，效率低"><a href="#2、StringBuffer线程安全的可变字符序列。一个类似于-String-的字符串缓冲区，但不能修改。虽然在任意时间点上它都包含某种特定的字符序列，但通过某些方法调用可以改变该序列的长度和内容。-线程安全的（同步）加的同步锁，效率低" class="headerlink" title="2、StringBuffer线程安全的可变字符序列。一个类似于 String 的字符串缓冲区，但不能修改。虽然在任意时间点上它都包含某种特定的字符序列，但通过某些方法调用可以改变该序列的长度和内容。 线程安全的（同步）加的同步锁，效率低"></a>2、StringBuffer线程安全的可变字符序列。一个类似于 String 的字符串缓冲区，但不能修改。虽然在任意时间点上它都包含某种特定的字符序列，但通过某些方法调用可以改变该序列的长度和内容。 线程安全的（同步）加的同步锁，效率低</h3><h2 id="数组（Array）和集合（List）的区别"><a href="#数组（Array）和集合（List）的区别" class="headerlink" title="数组（Array）和集合（List）的区别"></a>数组（Array）和集合（List）的区别</h2><h3 id="（1）数组的长度固定，集合的长度可变"><a href="#（1）数组的长度固定，集合的长度可变" class="headerlink" title="（1）数组的长度固定，集合的长度可变"></a>（1）数组的长度固定，集合的长度可变</h3><h3 id="（2）数组既可以存储基本数据类型数据，也可以存储引用数据类型"><a href="#（2）数组既可以存储基本数据类型数据，也可以存储引用数据类型" class="headerlink" title="（2）数组既可以存储基本数据类型数据，也可以存储引用数据类型"></a>（2）数组既可以存储基本数据类型数据，也可以存储引用数据类型</h3><h3 id="集合只能存储引用数据类型"><a href="#集合只能存储引用数据类型" class="headerlink" title="集合只能存储引用数据类型"></a>集合只能存储引用数据类型</h3>]]></content>
+      <content type="html"><![CDATA[<h2 id="Vector和ArrayList的区别"><a href="#Vector和ArrayList的区别" class="headerlink" title="Vector和ArrayList的区别"></a>Vector和ArrayList的区别</h2><p>（1）Vector原来的方法的名称比较长，ArrayList的方法名比较短<br>（2）Vector是线程安全的（同步）加的同步锁，效率低<br>ArrayList是线程不安全的（不同步），没有加锁，效率高</p><h2 id="StringBuilder和StringBuffer的区别"><a href="#StringBuilder和StringBuffer的区别" class="headerlink" title="StringBuilder和StringBuffer的区别"></a>StringBuilder和StringBuffer的区别</h2><p>（1）StringBuilder 一个可变的字符序列。此类提供一个与 StringBuffer 兼容的 API，但不保证同步。该类被设计用作 StringBuffer 的一个简易替换，用在字符串缓冲区被单个线程使用的时候（这种情况很普遍）。如果可能，建议优先采用该类，因为在大多数实现中，它比 StringBuffer 要快。线程不安全的（不同步），没有加锁，效率高</p><p>（2）StringBuffer线程安全的可变字符序列。一个类似于 String 的字符串缓冲区，但不能修改。虽然在任意时间点上它都包含某种特定的字符序列，但通过某些方法调用可以改变该序列的长度和内容。 线程安全的（同步）加的同步锁，效率低</p><h2 id="数组（Array）和集合（List）的区别"><a href="#数组（Array）和集合（List）的区别" class="headerlink" title="数组（Array）和集合（List）的区别"></a>数组（Array）和集合（List）的区别</h2><p>（1）数组的长度固定，集合的长度可变<br>（2）数组既可以存储基本数据类型数据，也可以存储引用数据类型<br>集合只能存储引用数据类型</p>]]></content>
       
       <categories>
           
@@ -414,9 +422,9 @@
       
         <tags>
             
-            <tag> vip视频观看 </tag>
-            
             <tag> Google插件 </tag>
+            
+            <tag> vip视频观看 </tag>
             
         </tags>
       
