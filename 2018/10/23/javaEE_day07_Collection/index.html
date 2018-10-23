@@ -106,18 +106,18 @@
         }
     })();
 </script>
-<meta name="description" content="重载在使用重载时只能通过不同的参数样式（Overload）1、参数的个数不同public static void get(int a){  } public static void get(int a, int b){  } 2、参数的类型不同public static void get(int a){  } public static void get(double a){  } 3、参数的顺序">
+<meta name="description" content="Vector和ArrayList的区别1. Vector原来的方法的名称比较长，ArrayList的方法名比较短2. Vector是线程安全的（同步）加的同步锁，效率低ArrayList是线程不安全的（不同步），没有加锁，效率高StringBuilder和StringBuffer的区别1、StringBuilder 一个可变的字符序列。此类提供一个与 StringBuffer 兼容的 API，但不">
 <meta name="keywords" content="javaEE">
 <meta property="og:type" content="article">
-<meta property="og:title" content="javaEE之重载和覆盖重写的区别">
-<meta property="og:url" content="http://yoursite.com/2018/10/09/javaEE_day04_OverLoadAndOverride/index.html">
+<meta property="og:title" content="java有关线程的几种区别">
+<meta property="og:url" content="http://yoursite.com/2018/10/23/javaEE_day07_Collection/index.html">
 <meta property="og:site_name" content="TomorrowLi&#39;s Blog">
-<meta property="og:description" content="重载在使用重载时只能通过不同的参数样式（Overload）1、参数的个数不同public static void get(int a){  } public static void get(int a, int b){  } 2、参数的类型不同public static void get(int a){  } public static void get(double a){  } 3、参数的顺序">
+<meta property="og:description" content="Vector和ArrayList的区别1. Vector原来的方法的名称比较长，ArrayList的方法名比较短2. Vector是线程安全的（同步）加的同步锁，效率低ArrayList是线程不安全的（不同步），没有加锁，效率高StringBuilder和StringBuffer的区别1、StringBuilder 一个可变的字符序列。此类提供一个与 StringBuffer 兼容的 API，但不">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-20T11:33:48.653Z">
+<meta property="og:updated_time" content="2018-10-23T13:11:39.456Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="javaEE之重载和覆盖重写的区别">
-<meta name="twitter:description" content="重载在使用重载时只能通过不同的参数样式（Overload）1、参数的个数不同public static void get(int a){  } public static void get(int a, int b){  } 2、参数的类型不同public static void get(int a){  } public static void get(double a){  } 3、参数的顺序">
+<meta name="twitter:title" content="java有关线程的几种区别">
+<meta name="twitter:description" content="Vector和ArrayList的区别1. Vector原来的方法的名称比较长，ArrayList的方法名比较短2. Vector是线程安全的（同步）加的同步锁，效率低ArrayList是线程不安全的（不同步），没有加锁，效率高StringBuilder和StringBuffer的区别1、StringBuilder 一个可变的字符序列。此类提供一个与 StringBuffer 兼容的 API，但不">
 
 
 
@@ -147,13 +147,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/10/09/javaEE_day04_OverLoadAndOverride/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/10/23/javaEE_day07_Collection/"/>
 
 
 
 
 
-  <title>javaEE之重载和覆盖重写的区别 | TomorrowLi's Blog</title>
+  <title>java有关线程的几种区别 | TomorrowLi's Blog</title>
   
 
 
@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/09/javaEE_day04_OverLoadAndOverride/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/23/javaEE_day07_Collection/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="TomorrowLi">
@@ -341,7 +341,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">javaEE之重载和覆盖重写的区别</h1>
+          <h1 class="post-title" itemprop="name headline">java有关线程的几种区别</h1>
         
 
         <div class="post-meta">
@@ -353,8 +353,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-09T10:10:07+08:00">
-                2018-10-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-23T20:46:48+08:00">
+                2018-10-23
               </time>
             
 
@@ -407,7 +407,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  598
+                  332
                 </span>
               
 
@@ -423,7 +423,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3
+                  1
                 </span>
               
             </div>
@@ -444,81 +444,7 @@
       
 
       
-        <h2 id="重载"><a href="#重载" class="headerlink" title="重载"></a>重载</h2><h3 id="在使用重载时只能通过不同的参数样式（Overload）"><a href="#在使用重载时只能通过不同的参数样式（Overload）" class="headerlink" title="在使用重载时只能通过不同的参数样式（Overload）"></a>在使用重载时只能通过不同的参数样式（Overload）</h3><h4 id="1、参数的个数不同"><a href="#1、参数的个数不同" class="headerlink" title="1、参数的个数不同"></a>1、参数的个数不同</h4><pre><code>public static void get(int a){
-
-}
-public static void get(int a, int b){
-
-}
-</code></pre><h4 id="2、参数的类型不同"><a href="#2、参数的类型不同" class="headerlink" title="2、参数的类型不同"></a>2、参数的类型不同</h4><pre><code>public static void get(int a){
-
-}
-public static void get(double a){
-
-}
-</code></pre><h4 id="3、参数的顺序不同"><a href="#3、参数的顺序不同" class="headerlink" title="3、参数的顺序不同"></a>3、参数的顺序不同</h4><pre><code>public static void get(int a,double b){
-
-}
-public static void get(double a,int b){
-
-}
-</code></pre><h4 id="4、与参数的返回值类型无关"><a href="#4、与参数的返回值类型无关" class="headerlink" title="4、与参数的返回值类型无关"></a>4、与参数的返回值类型无关</h4><pre><code>public static void get(int a){
-
-}
-public static int get(int a){
-
-}
-</code></pre><h4 id="重载的时候，方法名要一样，但是参数类型和个数不一样，返回值类型可以相同也可以不相同。无法以返回型别作为重载函数的区分标准。"><a href="#重载的时候，方法名要一样，但是参数类型和个数不一样，返回值类型可以相同也可以不相同。无法以返回型别作为重载函数的区分标准。" class="headerlink" title="重载的时候，方法名要一样，但是参数类型和个数不一样，返回值类型可以相同也可以不相同。无法以返回型别作为重载函数的区分标准。"></a>重载的时候，方法名要一样，但是参数类型和个数不一样，返回值类型可以相同也可以不相同。无法以返回型别作为重载函数的区分标准。</h4><h2 id="覆盖重写-Override"><a href="#覆盖重写-Override" class="headerlink" title="覆盖重写(Override)"></a>覆盖重写(Override)</h2><h3 id="如果子类父类中出现重名的成员方法，这时的访问是一种特殊情况，叫做方法重写-Override-。"><a href="#如果子类父类中出现重名的成员方法，这时的访问是一种特殊情况，叫做方法重写-Override-。" class="headerlink" title="如果子类父类中出现重名的成员方法，这时的访问是一种特殊情况，叫做方法重写 (Override)。"></a>如果子类父类中出现重名的成员方法，这时的访问是一种特殊情况，叫做方法重写 (Override)。</h3><h4 id="1、覆盖重写必须存在父与子类的继承关系中"><a href="#1、覆盖重写必须存在父与子类的继承关系中" class="headerlink" title="1、覆盖重写必须存在父与子类的继承关系中"></a>1、覆盖重写必须存在父与子类的继承关系中</h4><pre><code>class Fu { 
-    public void show() { 
-         System.out.println(&quot;Fu show&quot;);         
-     }     
- } 
-class Zi extends Fu { //子类重写了父类的show方法     
-     public void show() {     
-             System.out.println(&quot;Zi show&quot;);       
-       }     
- }
- public class ExtendsDemo05{ 
-        public static void main(String[] args) {  
-                Zi z = new Zi();  // 子类中有show方法，只执行重写后的show方法     
-                z.show();  // Zi show         
-    }      
-} 
-</code></pre><h4 id="2、方法名必修相同参数也必修相同"><a href="#2、方法名必修相同参数也必修相同" class="headerlink" title="2、方法名必修相同参数也必修相同"></a>2、方法名必修相同参数也必修相同</h4><h4 id="3、访问修饰符的限制一定要大于被重写方法的访问修饰符（public-gt-protected-gt-（default）-gt-private）"><a href="#3、访问修饰符的限制一定要大于被重写方法的访问修饰符（public-gt-protected-gt-（default）-gt-private）" class="headerlink" title="3、访问修饰符的限制一定要大于被重写方法的访问修饰符（public&gt;protected&gt;（default）&gt;private）"></a>3、访问修饰符的限制一定要大于被重写方法的访问修饰符（public&gt;protected&gt;（default）&gt;private）</h4><pre><code>//就是子类的方法的修饰符必须大于父类的修饰
-class Fu { 
-    public void show() { 
-         System.out.println(&quot;Fu show&quot;);         
-     }     
- } 
-class Zi extends Fu { //子类重写了父类的show方法     
-     protected void show() { //报错    
-             System.out.println(&quot;Zi show&quot;);       
-       }     
- }
-</code></pre><h4 id="4、重写的应用"><a href="#4、重写的应用" class="headerlink" title="4、重写的应用"></a>4、重写的应用</h4><pre><code>子类可以根据需要，定义特定于自己的行为。既沿袭了父类的功能名称，又根据子类的需要重新实现父类方法，从 而进行扩展增强。比如新的手机增加来电显示头像的功能，代码如下：
-
-
-public class Phone {
-    public void  call(){
-        System.out.println(&quot;打电话&quot;);
-    }
-    public void messige(){
-        System.out.println(&quot;发短信&quot;);
-    }
-    public void show(){
-        System.out.println(&quot;显示号码&quot;);
-    }
-}
-//智能手机
-public class NewPhone extends Phone {
-    public void show(){
-        super.show();//调用父类的show()方法
-        System.out.println(&quot;显示姓名&quot;);
-        System.out.println(&quot;显示头像&quot;);
-    }
-
-}
-</code></pre><h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><h3 id="1-子类方法覆盖父类方法，必须要保证权限大于等于父类权限。"><a href="#1-子类方法覆盖父类方法，必须要保证权限大于等于父类权限。" class="headerlink" title="1.子类方法覆盖父类方法，必须要保证权限大于等于父类权限。"></a>1.子类方法覆盖父类方法，必须要保证权限大于等于父类权限。</h3><h3 id="2-子类方法覆盖父类方法，返回值类型、函数名和参数列表都要一模一样。"><a href="#2-子类方法覆盖父类方法，返回值类型、函数名和参数列表都要一模一样。" class="headerlink" title="2. 子类方法覆盖父类方法，返回值类型、函数名和参数列表都要一模一样。"></a>2. 子类方法覆盖父类方法，返回值类型、函数名和参数列表都要一模一样。</h3>
+        <h2 id="Vector和ArrayList的区别"><a href="#Vector和ArrayList的区别" class="headerlink" title="Vector和ArrayList的区别"></a>Vector和ArrayList的区别</h2><h3 id="1-Vector原来的方法的名称比较长，ArrayList的方法名比较短"><a href="#1-Vector原来的方法的名称比较长，ArrayList的方法名比较短" class="headerlink" title="1. Vector原来的方法的名称比较长，ArrayList的方法名比较短"></a>1. Vector原来的方法的名称比较长，ArrayList的方法名比较短</h3><h3 id="2-Vector是线程安全的（同步）加的同步锁，效率低"><a href="#2-Vector是线程安全的（同步）加的同步锁，效率低" class="headerlink" title="2. Vector是线程安全的（同步）加的同步锁，效率低"></a>2. Vector是线程安全的（同步）加的同步锁，效率低</h3><h3 id="ArrayList是线程不安全的（不同步），没有加锁，效率高"><a href="#ArrayList是线程不安全的（不同步），没有加锁，效率高" class="headerlink" title="ArrayList是线程不安全的（不同步），没有加锁，效率高"></a>ArrayList是线程不安全的（不同步），没有加锁，效率高</h3><h2 id="StringBuilder和StringBuffer的区别"><a href="#StringBuilder和StringBuffer的区别" class="headerlink" title="StringBuilder和StringBuffer的区别"></a>StringBuilder和StringBuffer的区别</h2><h3 id="1、StringBuilder-一个可变的字符序列。此类提供一个与-StringBuffer-兼容的-API，但不保证同步。该类被设计用作-StringBuffer-的一个简易替换，用在字符串缓冲区被单个线程使用的时候（这种情况很普遍）。如果可能，建议优先采用该类，因为在大多数实现中，它比-StringBuffer-要快。线程不安全的（不同步），没有加锁，效率高"><a href="#1、StringBuilder-一个可变的字符序列。此类提供一个与-StringBuffer-兼容的-API，但不保证同步。该类被设计用作-StringBuffer-的一个简易替换，用在字符串缓冲区被单个线程使用的时候（这种情况很普遍）。如果可能，建议优先采用该类，因为在大多数实现中，它比-StringBuffer-要快。线程不安全的（不同步），没有加锁，效率高" class="headerlink" title="1、StringBuilder 一个可变的字符序列。此类提供一个与 StringBuffer 兼容的 API，但不保证同步。该类被设计用作 StringBuffer 的一个简易替换，用在字符串缓冲区被单个线程使用的时候（这种情况很普遍）。如果可能，建议优先采用该类，因为在大多数实现中，它比 StringBuffer 要快。线程不安全的（不同步），没有加锁，效率高"></a>1、StringBuilder 一个可变的字符序列。此类提供一个与 StringBuffer 兼容的 API，但不保证同步。该类被设计用作 StringBuffer 的一个简易替换，用在字符串缓冲区被单个线程使用的时候（这种情况很普遍）。如果可能，建议优先采用该类，因为在大多数实现中，它比 StringBuffer 要快。线程不安全的（不同步），没有加锁，效率高</h3><h3 id="2、StringBuffer线程安全的可变字符序列。一个类似于-String-的字符串缓冲区，但不能修改。虽然在任意时间点上它都包含某种特定的字符序列，但通过某些方法调用可以改变该序列的长度和内容。-线程安全的（同步）加的同步锁，效率低"><a href="#2、StringBuffer线程安全的可变字符序列。一个类似于-String-的字符串缓冲区，但不能修改。虽然在任意时间点上它都包含某种特定的字符序列，但通过某些方法调用可以改变该序列的长度和内容。-线程安全的（同步）加的同步锁，效率低" class="headerlink" title="2、StringBuffer线程安全的可变字符序列。一个类似于 String 的字符串缓冲区，但不能修改。虽然在任意时间点上它都包含某种特定的字符序列，但通过某些方法调用可以改变该序列的长度和内容。 线程安全的（同步）加的同步锁，效率低"></a>2、StringBuffer线程安全的可变字符序列。一个类似于 String 的字符串缓冲区，但不能修改。虽然在任意时间点上它都包含某种特定的字符序列，但通过某些方法调用可以改变该序列的长度和内容。 线程安全的（同步）加的同步锁，效率低</h3><h2 id="数组（Array）和集合（List）的区别"><a href="#数组（Array）和集合（List）的区别" class="headerlink" title="数组（Array）和集合（List）的区别"></a>数组（Array）和集合（List）的区别</h2><h3 id="（1）数组的长度固定，集合的长度可变"><a href="#（1）数组的长度固定，集合的长度可变" class="headerlink" title="（1）数组的长度固定，集合的长度可变"></a>（1）数组的长度固定，集合的长度可变</h3><h3 id="（2）数组既可以存储基本数据类型数据，也可以存储引用数据类型"><a href="#（2）数组既可以存储基本数据类型数据，也可以存储引用数据类型" class="headerlink" title="（2）数组既可以存储基本数据类型数据，也可以存储引用数据类型"></a>（2）数组既可以存储基本数据类型数据，也可以存储引用数据类型</h3><h3 id="集合只能存储引用数据类型"><a href="#集合只能存储引用数据类型" class="headerlink" title="集合只能存储引用数据类型"></a>集合只能存储引用数据类型</h3>
       
     </div>
     
@@ -579,8 +505,8 @@ public class NewPhone extends Phone {
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/29/javaee_day03_Static/" rel="next" title="javaEE 之 static 关键字的说明">
-                <i class="fa fa-chevron-left"></i> javaEE 之 static 关键字的说明
+              <a href="/2018/10/21/javaEE_day06_ListAndSet/" rel="next" title="javaEE之Set集合和List集合的区别">
+                <i class="fa fa-chevron-left"></i> javaEE之Set集合和List集合的区别
               </a>
             
           </div>
@@ -588,10 +514,6 @@ public class NewPhone extends Phone {
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/10/20/javaEE_day05_Inteage/" rel="prev" title="javaEE之Integer的自动装箱和自动拆箱">
-                javaEE之Integer的自动装箱和自动拆箱 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -816,7 +738,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#重载"><span class="nav-number">1.</span> <span class="nav-text">重载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#在使用重载时只能通过不同的参数样式（Overload）"><span class="nav-number">1.1.</span> <span class="nav-text">在使用重载时只能通过不同的参数样式（Overload）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、参数的个数不同"><span class="nav-number">1.1.1.</span> <span class="nav-text">1、参数的个数不同</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、参数的类型不同"><span class="nav-number">1.1.2.</span> <span class="nav-text">2、参数的类型不同</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、参数的顺序不同"><span class="nav-number">1.1.3.</span> <span class="nav-text">3、参数的顺序不同</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、与参数的返回值类型无关"><span class="nav-number">1.1.4.</span> <span class="nav-text">4、与参数的返回值类型无关</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重载的时候，方法名要一样，但是参数类型和个数不一样，返回值类型可以相同也可以不相同。无法以返回型别作为重载函数的区分标准。"><span class="nav-number">1.1.5.</span> <span class="nav-text">重载的时候，方法名要一样，但是参数类型和个数不一样，返回值类型可以相同也可以不相同。无法以返回型别作为重载函数的区分标准。</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#覆盖重写-Override"><span class="nav-number">2.</span> <span class="nav-text">覆盖重写(Override)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如果子类父类中出现重名的成员方法，这时的访问是一种特殊情况，叫做方法重写-Override-。"><span class="nav-number">2.1.</span> <span class="nav-text">如果子类父类中出现重名的成员方法，这时的访问是一种特殊情况，叫做方法重写 (Override)。</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、覆盖重写必须存在父与子类的继承关系中"><span class="nav-number">2.1.1.</span> <span class="nav-text">1、覆盖重写必须存在父与子类的继承关系中</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、方法名必修相同参数也必修相同"><span class="nav-number">2.1.2.</span> <span class="nav-text">2、方法名必修相同参数也必修相同</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、访问修饰符的限制一定要大于被重写方法的访问修饰符（public-gt-protected-gt-（default）-gt-private）"><span class="nav-number">2.1.3.</span> <span class="nav-text">3、访问修饰符的限制一定要大于被重写方法的访问修饰符（public>protected>（default）>private）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、重写的应用"><span class="nav-number">2.1.4.</span> <span class="nav-text">4、重写的应用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意事项"><span class="nav-number">3.</span> <span class="nav-text">注意事项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-子类方法覆盖父类方法，必须要保证权限大于等于父类权限。"><span class="nav-number">3.1.</span> <span class="nav-text">1.子类方法覆盖父类方法，必须要保证权限大于等于父类权限。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-子类方法覆盖父类方法，返回值类型、函数名和参数列表都要一模一样。"><span class="nav-number">3.2.</span> <span class="nav-text">2. 子类方法覆盖父类方法，返回值类型、函数名和参数列表都要一模一样。</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vector和ArrayList的区别"><span class="nav-number">1.</span> <span class="nav-text">Vector和ArrayList的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Vector原来的方法的名称比较长，ArrayList的方法名比较短"><span class="nav-number">1.1.</span> <span class="nav-text">1. Vector原来的方法的名称比较长，ArrayList的方法名比较短</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Vector是线程安全的（同步）加的同步锁，效率低"><span class="nav-number">1.2.</span> <span class="nav-text">2. Vector是线程安全的（同步）加的同步锁，效率低</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ArrayList是线程不安全的（不同步），没有加锁，效率高"><span class="nav-number">1.3.</span> <span class="nav-text">ArrayList是线程不安全的（不同步），没有加锁，效率高</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#StringBuilder和StringBuffer的区别"><span class="nav-number">2.</span> <span class="nav-text">StringBuilder和StringBuffer的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、StringBuilder-一个可变的字符序列。此类提供一个与-StringBuffer-兼容的-API，但不保证同步。该类被设计用作-StringBuffer-的一个简易替换，用在字符串缓冲区被单个线程使用的时候（这种情况很普遍）。如果可能，建议优先采用该类，因为在大多数实现中，它比-StringBuffer-要快。线程不安全的（不同步），没有加锁，效率高"><span class="nav-number">2.1.</span> <span class="nav-text">1、StringBuilder 一个可变的字符序列。此类提供一个与 StringBuffer 兼容的 API，但不保证同步。该类被设计用作 StringBuffer 的一个简易替换，用在字符串缓冲区被单个线程使用的时候（这种情况很普遍）。如果可能，建议优先采用该类，因为在大多数实现中，它比 StringBuffer 要快。线程不安全的（不同步），没有加锁，效率高</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、StringBuffer线程安全的可变字符序列。一个类似于-String-的字符串缓冲区，但不能修改。虽然在任意时间点上它都包含某种特定的字符序列，但通过某些方法调用可以改变该序列的长度和内容。-线程安全的（同步）加的同步锁，效率低"><span class="nav-number">2.2.</span> <span class="nav-text">2、StringBuffer线程安全的可变字符序列。一个类似于 String 的字符串缓冲区，但不能修改。虽然在任意时间点上它都包含某种特定的字符序列，但通过某些方法调用可以改变该序列的长度和内容。 线程安全的（同步）加的同步锁，效率低</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组（Array）和集合（List）的区别"><span class="nav-number">3.</span> <span class="nav-text">数组（Array）和集合（List）的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#（1）数组的长度固定，集合的长度可变"><span class="nav-number">3.1.</span> <span class="nav-text">（1）数组的长度固定，集合的长度可变</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（2）数组既可以存储基本数据类型数据，也可以存储引用数据类型"><span class="nav-number">3.2.</span> <span class="nav-text">（2）数组既可以存储基本数据类型数据，也可以存储引用数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集合只能存储引用数据类型"><span class="nav-number">3.3.</span> <span class="nav-text">集合只能存储引用数据类型</span></a></li></ol></li></ol></div>
             
 
           </div>

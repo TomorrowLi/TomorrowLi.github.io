@@ -320,6 +320,178 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/23/javaEE_day07_Collection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TomorrowLi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://7xrvas.com1.z0.glb.clouddn.com/16-4-6/38502140.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TomorrowLi's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/23/javaEE_day07_Collection/" itemprop="url">java有关线程的几种区别</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-23T20:46:48+08:00">
+                2018-10-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javaEE/" itemprop="url" rel="index">
+                    <span itemprop="name">javaEE</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  332
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Vector和ArrayList的区别"><a href="#Vector和ArrayList的区别" class="headerlink" title="Vector和ArrayList的区别"></a>Vector和ArrayList的区别</h2><h3 id="1-Vector原来的方法的名称比较长，ArrayList的方法名比较短"><a href="#1-Vector原来的方法的名称比较长，ArrayList的方法名比较短" class="headerlink" title="1. Vector原来的方法的名称比较长，ArrayList的方法名比较短"></a>1. Vector原来的方法的名称比较长，ArrayList的方法名比较短</h3><h3 id="2-Vector是线程安全的（同步）加的同步锁，效率低"><a href="#2-Vector是线程安全的（同步）加的同步锁，效率低" class="headerlink" title="2. Vector是线程安全的（同步）加的同步锁，效率低"></a>2. Vector是线程安全的（同步）加的同步锁，效率低</h3><h3 id="ArrayList是线程不安全的（不同步），没有加锁，效率高"><a href="#ArrayList是线程不安全的（不同步），没有加锁，效率高" class="headerlink" title="ArrayList是线程不安全的（不同步），没有加锁，效率高"></a>ArrayList是线程不安全的（不同步），没有加锁，效率高</h3><h2 id="StringBuilder和StringBuffer的区别"><a href="#StringBuilder和StringBuffer的区别" class="headerlink" title="StringBuilder和StringBuffer的区别"></a>StringBuilder和StringBuffer的区别</h2><h3 id="1、StringBuilder-一个可变的字符序列。此类提供一个与-StringBuffer-兼容的-API，但不保证同步。该类被设计用作-StringBuffer-的一个简易替换，用在字符串缓冲区被单个线程使用的时候（这种情况很普遍）。如果可能，建议优先采用该类，因为在大多数实现中，它比-StringBuffer-要快。线程不安全的（不同步），没有加锁，效率高"><a href="#1、StringBuilder-一个可变的字符序列。此类提供一个与-StringBuffer-兼容的-API，但不保证同步。该类被设计用作-StringBuffer-的一个简易替换，用在字符串缓冲区被单个线程使用的时候（这种情况很普遍）。如果可能，建议优先采用该类，因为在大多数实现中，它比-StringBuffer-要快。线程不安全的（不同步），没有加锁，效率高" class="headerlink" title="1、StringBuilder 一个可变的字符序列。此类提供一个与 StringBuffer 兼容的 API，但不保证同步。该类被设计用作 StringBuffer 的一个简易替换，用在字符串缓冲区被单个线程使用的时候（这种情况很普遍）。如果可能，建议优先采用该类，因为在大多数实现中，它比 StringBuffer 要快。线程不安全的（不同步），没有加锁，效率高"></a>1、StringBuilder 一个可变的字符序列。此类提供一个与 StringBuffer 兼容的 API，但不保证同步。该类被设计用作 StringBuffer 的一个简易替换，用在字符串缓冲区被单个线程使用的时候（这种情况很普遍）。如果可能，建议优先采用该类，因为在大多数实现中，它比 StringBuffer 要快。线程不安全的（不同步），没有加锁，效率高</h3><h3 id="2、StringBuffer线程安全的可变字符序列。一个类似于-String-的字符串缓冲区，但不能修改。虽然在任意时间点上它都包含某种特定的字符序列，但通过某些方法调用可以改变该序列的长度和内容。-线程安全的（同步）加的同步锁，效率低"><a href="#2、StringBuffer线程安全的可变字符序列。一个类似于-String-的字符串缓冲区，但不能修改。虽然在任意时间点上它都包含某种特定的字符序列，但通过某些方法调用可以改变该序列的长度和内容。-线程安全的（同步）加的同步锁，效率低" class="headerlink" title="2、StringBuffer线程安全的可变字符序列。一个类似于 String 的字符串缓冲区，但不能修改。虽然在任意时间点上它都包含某种特定的字符序列，但通过某些方法调用可以改变该序列的长度和内容。 线程安全的（同步）加的同步锁，效率低"></a>2、StringBuffer线程安全的可变字符序列。一个类似于 String 的字符串缓冲区，但不能修改。虽然在任意时间点上它都包含某种特定的字符序列，但通过某些方法调用可以改变该序列的长度和内容。 线程安全的（同步）加的同步锁，效率低</h3><h2 id="数组（Array）和集合（List）的区别"><a href="#数组（Array）和集合（List）的区别" class="headerlink" title="数组（Array）和集合（List）的区别"></a>数组（Array）和集合（List）的区别</h2><h3 id="（1）数组的长度固定，集合的长度可变"><a href="#（1）数组的长度固定，集合的长度可变" class="headerlink" title="（1）数组的长度固定，集合的长度可变"></a>（1）数组的长度固定，集合的长度可变</h3><h3 id="（2）数组既可以存储基本数据类型数据，也可以存储引用数据类型"><a href="#（2）数组既可以存储基本数据类型数据，也可以存储引用数据类型" class="headerlink" title="（2）数组既可以存储基本数据类型数据，也可以存储引用数据类型"></a>（2）数组既可以存储基本数据类型数据，也可以存储引用数据类型</h3><h3 id="集合只能存储引用数据类型"><a href="#集合只能存储引用数据类型" class="headerlink" title="集合只能存储引用数据类型"></a>集合只能存储引用数据类型</h3>
+          
+        
+      
+    </div>
+    
+    
+    
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/21/javaEE_day06_ListAndSet/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -444,13 +616,11 @@
       
         
           
-            <h1 id="Collection：单列集合类的根接口，用于存储一系列符合某种规则的元素，它有两个重要的子接口，分别是-java-util-List和java-util-Set。"><a href="#Collection：单列集合类的根接口，用于存储一系列符合某种规则的元素，它有两个重要的子接口，分别是-java-util-List和java-util-Set。" class="headerlink" title="Collection：单列集合类的根接口，用于存储一系列符合某种规则的元素，它有两个重要的子接口，分别是 java.util.List和java.util.Set。"></a><strong>Collection</strong>：单列集合类的根接口，用于存储一系列符合某种规则的元素，它有两个重要的子接口，分别是 <code>java.util.List</code>和<code>java.util.Set</code>。</h1><p>##<code>java.util.List</code><arraylist,linkedlist,vector></arraylist,linkedlist,vector></p>
-<pre><code>特点：    
+            <h2 id="Collection-：单列集合类的根接口，用于存储一系列符合某种规则的元素，它有两个重要的子接口，分别是-java-util-List和java-util-Set。"><a href="#Collection-：单列集合类的根接口，用于存储一系列符合某种规则的元素，它有两个重要的子接口，分别是-java-util-List和java-util-Set。" class="headerlink" title="Collection ：单列集合类的根接口，用于存储一系列符合某种规则的元素，它有两个重要的子接口，分别是 java.util.List和java.util.Set。"></a>Collection ：单列集合类的根接口，用于存储一系列符合某种规则的元素，它有两个重要的子接口，分别是 java.util.List和java.util.Set。</h2><h2 id="java-util-List"><a href="#java-util-List" class="headerlink" title="java.util.List"></a>java.util.List<arraylist,linkedlist,vector></arraylist,linkedlist,vector></h2><pre><code>特点：    
 1. 是一个有序集合,存储和遍历的顺序是一样的
 2. 可以存储重复元素
 3. 可以用普通for循环遍历
-</code></pre><p>##<code>java.util.Set</code><hashset,treeset,linkedhashset></hashset,treeset,linkedhashset></p>
-<pre><code>特点：    
+</code></pre><h2 id="java-util-Set"><a href="#java-util-Set" class="headerlink" title="java.util.Set"></a>java.util.Set<hashset,treeset,linkedhashset></hashset,treeset,linkedhashset></h2><pre><code>特点：    
 1. 是一个无序集合
 2. 不可以存储重复元素
 3. 不可以用普通for循环遍历
@@ -646,8 +816,7 @@ public static Integer valueOf(int i) {
 
 static final int low = -128;
 static final int high= 127;
-</code></pre><p>##2、自动拆箱</p>
-<pre><code>Integer i1=200;
+</code></pre><h2 id="2、自动拆箱"><a href="#2、自动拆箱" class="headerlink" title="2、自动拆箱"></a>2、自动拆箱</h2><pre><code>Integer i1=200;
 int i2=200;
 System.out.println(i1==i2);//true
 
@@ -2195,280 +2364,6 @@ IMAGES_STORE=os.path.join(object_url,&apos;image&apos;)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/03/loginZhihu/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="TomorrowLi">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://7xrvas.com1.z0.glb.clouddn.com/16-4-6/38502140.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="TomorrowLi's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/03/loginZhihu/" itemprop="url">最新的模拟知乎登陆</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-03T23:26:01+08:00">
-                2018-05-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/爬虫/" itemprop="url" rel="index">
-                    <span itemprop="name">爬虫</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  882
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  4
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>&#160;&#160;&#160;&#160;首先我们知道随着知乎页面的不断改版，以前的模拟登陆以不能用了，以下是对知乎改版之后的最新登陆方法</p>
-<p>一、首先我们所需要的库</p>
-<pre><code>import requests
-import time
-import re
-#用于下载验证码图片
-import base64
-#通过 Hmac 算法计算返回签名。实际是几个固定字符串加时间戳
-import hmac
-import hashlib
-import json
-import matplotlib.pyplot as plt
-#保存cookie
-from http import cookiejar
-#打开图片
-from PIL import Image
-</code></pre><p>二、所需要的头信息</p>
-<pre><code>#所需要的头部信息
-HEADERS = {
-&apos;Connection&apos;: &apos;keep-alive&apos;,
-&apos;Host&apos;: &apos;www.zhihu.com&apos;,
-&apos;Referer&apos;: &apos;https://www.zhihu.com/&apos;,
-&apos;User-Agent&apos;: &apos;Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 &apos;
-              &apos;(KHTML, like Gecko) Chrome/56.0.2924.87 Mobile Safari/537.36&apos;
-}
-#登陆使的url
-LOGIN_URL = &apos;https://www.zhihu.com/signup&apos;
-LOGIN_API = &apos;https://www.zhihu.com/api/v3/oauth/sign_in&apos;
-FORM_DATA = {
-    #客户端id基本不会改变
-    &apos;client_id&apos;: &apos;c3cef7c66a1843f8b3a9e6a1e3160e20&apos;,
-    &apos;grant_type&apos;: &apos;password&apos;,
-    &apos;source&apos;: &apos;com.zhihu.web&apos;,
-    &apos;username&apos;: &apos;用户名&apos;,
-    &apos;password&apos;: &apos;密码&apos;,
-    # 改为&apos;cn&apos;是倒立汉字验证码
-    &apos;lang&apos;: &apos;en&apos;,
-    &apos;ref_source&apos;: &apos;homepage&apos;
-}
-</code></pre><p>&#160;&#160;&#160;&#160;要想登陆成功，header里必须还要俩个参数</p>
-<pre><code>#经过大量的验证，这个参数必须有，这个值基本不变
-&apos;authorization&apos;: &apos;oauth c3cef7c66a1843f8b3a9e6a1e3160e20&apos;,
-#X-Xsrftoken则是防 Xsrf 跨站的 Token 认证，在Response Headers的Set-Cookie字段中可以找到。所以我们需要先请求一次登录页面，然后用正则把这一段匹配出来。注意需要无 Cookies 请求才会返回 Set-Cookie
-&apos;X-Xsrftoken&apos;: _xsrf
-</code></pre><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/set_cookie%E6%8D%95%E8%8E%B7.PNG?raw=true" alt="Set-Cookie"></p>
-<p>&#160;&#160;&#160;&#160;要想登陆成功，form_data也里必须还要俩个参数</p>
-<pre><code>&apos;captcha&apos;: 验证码,
-&apos;timestamp&apos;: 时间戳,
-&apos;signature&apos;: 是通过 Hmac 算法对几个固定值和时间戳进行加密
-</code></pre><p>&#160;&#160;&#160;&#160;timestamp 时间戳，这个很好解决，区别是这里是13位整数，Python 生成的整数部分只有10位，需要额外乘以1000</p>
-<pre><code>timestamp = str(int(time.time()*1000))
-</code></pre><p>&#160;&#160;&#160;&#160;captcha 验证码，是通过 GET 请求单独的 API 接口返回是否需要验证码（无论是否需要，都要请求一次），如果是 True 则需要再次 PUT 请求获取图片的 base64 编码。</p>
-<pre><code>def _get_captcha(self, headers):
-   &quot;&quot;&quot;
-   请求验证码的 API 接口，无论是否需要验证码都需要请求一次
-   如果需要验证码会返回图片的 base64 编码
-   根据头部 lang 字段匹配验证码，需要人工输入
-   :param headers: 带授权信息的请求头部
-   :return: 验证码的 POST 参数
-   &quot;&quot;&quot;
-   lang = headers.get(&apos;lang&apos;, &apos;en&apos;)
-   if lang == &apos;cn&apos;:
-       api = &apos;https://www.zhihu.com/api/v3/oauth/captcha?lang=cn&apos;
-   else:
-       api = &apos;https://www.zhihu.com/api/v3/oauth/captcha?lang=en&apos;
-   resp = self.session.get(api, headers=headers)
-   show_captcha = re.search(r&apos;true&apos;, resp.text)
-   if show_captcha:
-       put_resp = self.session.put(api, headers=headers)
-       img_base64 = re.findall(
-           r&apos;&quot;img_base64&quot;:&quot;(.+)&quot;&apos;, put_resp.text, re.S)[0].replace(r&apos;\n&apos;, &apos;&apos;)
-       with open(&apos;./captcha.jpg&apos;, &apos;wb&apos;) as f:
-           f.write(base64.b64decode(img_base64))
-       img = Image.open(&apos;./captcha.jpg&apos;)
-       if lang == &apos;cn&apos;:
-           plt.imshow(img)
-           print(&apos;点击所有倒立的汉字，按回车提交&apos;)
-           points = plt.ginput(7)
-           capt = json.dumps({&apos;img_size&apos;: [200, 44],
-                              &apos;input_points&apos;: [[i[0]/2, i[1]/2] for i in points]})
-       else:
-           img.show()
-           capt = input(&apos;请输入图片里的验证码：&apos;)
-       # 这里必须先把参数 POST 验证码接口
-       self.session.post(api, data={&apos;input_text&apos;: capt}, headers=headers)
-       return capt
-   return &apos;&apos;
-</code></pre><p>&#160;&#160;&#160;&#160;signature 通过 Crtl+Shift+F 搜索找到是在一个 JS 里生成的，是通过 Hmac 算法对几个固定值和时间戳进行加密，那么只需要在 Python 里也模拟一次这个加密即可。</p>
-<pre><code>def _get_signature(self, timestamp):
-    &quot;&quot;&quot;
-    通过 Hmac 算法计算返回签名
-    实际是几个固定字符串加时间戳
-    :param timestamp: 时间戳
-    :return: 签名
-    &quot;&quot;&quot;
-    ha = hmac.new(b&apos;d1b964811afb40118a12068ff74a12f4&apos;, digestmod=hashlib.sha1)
-    grant_type = self.login_data[&apos;grant_type&apos;]
-    client_id = self.login_data[&apos;client_id&apos;]
-    source = self.login_data[&apos;source&apos;]
-    ha.update(bytes((grant_type + client_id + source + timestamp), &apos;utf-8&apos;))
-    return ha.hexdigest()
-</code></pre><p>文章出自   <a href="https://zhuanlan.zhihu.com/p/34073256" target="_blank" rel="external">知乎</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-    
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2523,7 +2418,7 @@ FORM_DATA = {
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">28</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2675,7 +2570,7 @@ FORM_DATA = {
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共12.6k字</span>
+  <span class="post-count">博客全站共12.9k字</span>
 </div>
 
         

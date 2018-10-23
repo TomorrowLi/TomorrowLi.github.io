@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-10-21T02:07:18.631Z</updated>
+  <updated>2018-10-23T13:11:39.456Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,19 +17,44 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>javaEE之Set集合和List集合的区别</title>
-    <link href="http://yoursite.com/2018/10/21/javaEE_day06_ListAndSet/"/>
-    <id>http://yoursite.com/2018/10/21/javaEE_day06_ListAndSet/</id>
-    <published>2018-10-21T01:41:26.427Z</published>
-    <updated>2018-10-21T02:07:18.631Z</updated>
+    <title>java有关线程的几种区别</title>
+    <link href="http://yoursite.com/2018/10/23/javaEE_day07_Collection/"/>
+    <id>http://yoursite.com/2018/10/23/javaEE_day07_Collection/</id>
+    <published>2018-10-23T12:46:48.436Z</published>
+    <updated>2018-10-23T13:11:39.456Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="Collection：单列集合类的根接口，用于存储一系列符合某种规则的元素，它有两个重要的子接口，分别是-java-util-List和java-util-Set。"><a href="#Collection：单列集合类的根接口，用于存储一系列符合某种规则的元素，它有两个重要的子接口，分别是-java-util-List和java-util-Set。" class="headerlink" title="Collection：单列集合类的根接口，用于存储一系列符合某种规则的元素，它有两个重要的子接口，分别是 java.util.List和java.util.Set。"></a><strong>Collection</strong>：单列集合类的根接口，用于存储一系列符合某种规则的元素，它有两个重要的子接口，分别是 <code>java.util.List</code>和<code>java.util.Set</code>。</h1><p>##<code>java.util.List</code><arraylist,linkedlist,vector></arraylist,linkedlist,vector></p><pre><code>特点：    1. 是一个有序集合,存储和遍历的顺序是一样的2. 可以存储重复元素3. 可以用普通for循环遍历</code></pre><p>##<code>java.util.Set</code><hashset,treeset,linkedhashset></hashset,treeset,linkedhashset></p><pre><code>特点：    1. 是一个无序集合2. 不可以存储重复元素3. 不可以用普通for循环遍历</code></pre><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/ListAndSet.jpg?raw=true" alt="image"></p>]]></content>
+    <content type="html"><![CDATA[<h2 id="Vector和ArrayList的区别"><a href="#Vector和ArrayList的区别" class="headerlink" title="Vector和ArrayList的区别"></a>Vector和ArrayList的区别</h2><h3 id="1-Vector原来的方法的名称比较长，ArrayList的方法名比较短"><a href="#1-Vector原来的方法的名称比较长，ArrayList的方法名比较短" class="headerlink" title="1. Vector原来的方法的名称比较长，ArrayList的方法名比较短"></a>1. Vector原来的方法的名称比较长，ArrayList的方法名比较短</h3><h3 id="2-Vector是线程安全的（同步）加的同步锁，效率低"><a href="#2-Vector是线程安全的（同步）加的同步锁，效率低" class="headerlink" title="2. Vector是线程安全的（同步）加的同步锁，效率低"></a>2. Vector是线程安全的（同步）加的同步锁，效率低</h3><h3 id="ArrayList是线程不安全的（不同步），没有加锁，效率高"><a href="#ArrayList是线程不安全的（不同步），没有加锁，效率高" class="headerlink" title="ArrayList是线程不安全的（不同步），没有加锁，效率高"></a>ArrayList是线程不安全的（不同步），没有加锁，效率高</h3><h2 id="StringBuilder和StringBuffer的区别"><a href="#StringBuilder和StringBuffer的区别" class="headerlink" title="StringBuilder和StringBuffer的区别"></a>StringBuilder和StringBuffer的区别</h2><h3 id="1、StringBuilder-一个可变的字符序列。此类提供一个与-StringBuffer-兼容的-API，但不保证同步。该类被设计用作-StringBuffer-的一个简易替换，用在字符串缓冲区被单个线程使用的时候（这种情况很普遍）。如果可能，建议优先采用该类，因为在大多数实现中，它比-StringBuffer-要快。线程不安全的（不同步），没有加锁，效率高"><a href="#1、StringBuilder-一个可变的字符序列。此类提供一个与-StringBuffer-兼容的-API，但不保证同步。该类被设计用作-StringBuffer-的一个简易替换，用在字符串缓冲区被单个线程使用的时候（这种情况很普遍）。如果可能，建议优先采用该类，因为在大多数实现中，它比-StringBuffer-要快。线程不安全的（不同步），没有加锁，效率高" class="headerlink" title="1、StringBuilder 一个可变的字符序列。此类提供一个与 StringBuffer 兼容的 API，但不保证同步。该类被设计用作 StringBuffer 的一个简易替换，用在字符串缓冲区被单个线程使用的时候（这种情况很普遍）。如果可能，建议优先采用该类，因为在大多数实现中，它比 StringBuffer 要快。线程不安全的（不同步），没有加锁，效率高"></a>1、StringBuilder 一个可变的字符序列。此类提供一个与 StringBuffer 兼容的 API，但不保证同步。该类被设计用作 StringBuffer 的一个简易替换，用在字符串缓冲区被单个线程使用的时候（这种情况很普遍）。如果可能，建议优先采用该类，因为在大多数实现中，它比 StringBuffer 要快。线程不安全的（不同步），没有加锁，效率高</h3><h3 id="2、StringBuffer线程安全的可变字符序列。一个类似于-String-的字符串缓冲区，但不能修改。虽然在任意时间点上它都包含某种特定的字符序列，但通过某些方法调用可以改变该序列的长度和内容。-线程安全的（同步）加的同步锁，效率低"><a href="#2、StringBuffer线程安全的可变字符序列。一个类似于-String-的字符串缓冲区，但不能修改。虽然在任意时间点上它都包含某种特定的字符序列，但通过某些方法调用可以改变该序列的长度和内容。-线程安全的（同步）加的同步锁，效率低" class="headerlink" title="2、StringBuffer线程安全的可变字符序列。一个类似于 String 的字符串缓冲区，但不能修改。虽然在任意时间点上它都包含某种特定的字符序列，但通过某些方法调用可以改变该序列的长度和内容。 线程安全的（同步）加的同步锁，效率低"></a>2、StringBuffer线程安全的可变字符序列。一个类似于 String 的字符串缓冲区，但不能修改。虽然在任意时间点上它都包含某种特定的字符序列，但通过某些方法调用可以改变该序列的长度和内容。 线程安全的（同步）加的同步锁，效率低</h3><h2 id="数组（Array）和集合（List）的区别"><a href="#数组（Array）和集合（List）的区别" class="headerlink" title="数组（Array）和集合（List）的区别"></a>数组（Array）和集合（List）的区别</h2><h3 id="（1）数组的长度固定，集合的长度可变"><a href="#（1）数组的长度固定，集合的长度可变" class="headerlink" title="（1）数组的长度固定，集合的长度可变"></a>（1）数组的长度固定，集合的长度可变</h3><h3 id="（2）数组既可以存储基本数据类型数据，也可以存储引用数据类型"><a href="#（2）数组既可以存储基本数据类型数据，也可以存储引用数据类型" class="headerlink" title="（2）数组既可以存储基本数据类型数据，也可以存储引用数据类型"></a>（2）数组既可以存储基本数据类型数据，也可以存储引用数据类型</h3><h3 id="集合只能存储引用数据类型"><a href="#集合只能存储引用数据类型" class="headerlink" title="集合只能存储引用数据类型"></a>集合只能存储引用数据类型</h3>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h1 id=&quot;Collection：单列集合类的根接口，用于存储一系列符合某种规则的元素，它有两个重要的子接口，分别是-java-util-List和java-util-Set。&quot;&gt;&lt;a href=&quot;#Collection：单列集合类的根接口，用于存储一系列符合某种规则的元素，
+        &lt;h2 id=&quot;Vector和ArrayList的区别&quot;&gt;&lt;a href=&quot;#Vector和ArrayList的区别&quot; class=&quot;headerlink&quot; title=&quot;Vector和ArrayList的区别&quot;&gt;&lt;/a&gt;Vector和ArrayList的区别&lt;/h2&gt;&lt;h3 i
+      
+    
+    </summary>
+    
+      <category term="javaEE" scheme="http://yoursite.com/categories/javaEE/"/>
+    
+    
+      <category term="javaEE" scheme="http://yoursite.com/tags/javaEE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>javaEE之Set集合和List集合的区别</title>
+    <link href="http://yoursite.com/2018/10/21/javaEE_day06_ListAndSet/"/>
+    <id>http://yoursite.com/2018/10/21/javaEE_day06_ListAndSet/</id>
+    <published>2018-10-21T01:41:26.427Z</published>
+    <updated>2018-10-21T05:59:14.312Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Collection-：单列集合类的根接口，用于存储一系列符合某种规则的元素，它有两个重要的子接口，分别是-java-util-List和java-util-Set。"><a href="#Collection-：单列集合类的根接口，用于存储一系列符合某种规则的元素，它有两个重要的子接口，分别是-java-util-List和java-util-Set。" class="headerlink" title="Collection ：单列集合类的根接口，用于存储一系列符合某种规则的元素，它有两个重要的子接口，分别是 java.util.List和java.util.Set。"></a>Collection ：单列集合类的根接口，用于存储一系列符合某种规则的元素，它有两个重要的子接口，分别是 java.util.List和java.util.Set。</h2><h2 id="java-util-List"><a href="#java-util-List" class="headerlink" title="java.util.List"></a>java.util.List<arraylist,linkedlist,vector></arraylist,linkedlist,vector></h2><pre><code>特点：    1. 是一个有序集合,存储和遍历的顺序是一样的2. 可以存储重复元素3. 可以用普通for循环遍历</code></pre><h2 id="java-util-Set"><a href="#java-util-Set" class="headerlink" title="java.util.Set"></a>java.util.Set<hashset,treeset,linkedhashset></hashset,treeset,linkedhashset></h2><pre><code>特点：    1. 是一个无序集合2. 不可以存储重复元素3. 不可以用普通for循环遍历</code></pre><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/ListAndSet.jpg?raw=true" alt="image"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;Collection-：单列集合类的根接口，用于存储一系列符合某种规则的元素，它有两个重要的子接口，分别是-java-util-List和java-util-Set。&quot;&gt;&lt;a href=&quot;#Collection-：单列集合类的根接口，用于存储一系列符合某种规则的元
       
     
     </summary>
@@ -46,9 +71,9 @@
     <link href="http://yoursite.com/2018/10/20/javaEE_day05_Inteage/"/>
     <id>http://yoursite.com/2018/10/20/javaEE_day05_Inteage/</id>
     <published>2018-10-20T11:30:38.220Z</published>
-    <updated>2018-10-20T12:15:20.905Z</updated>
+    <updated>2018-10-21T05:59:46.298Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="1、自动装箱"><a href="#1、自动装箱" class="headerlink" title="1、自动装箱"></a>1、自动装箱</h2><pre><code>Integer i1=100;Integer i2=100;System.out.println(i1==i2);//trueInteger i1=200;Integer i2=200;System.out.println(i1==i2);//false/*自动装箱调用的是valueOf()方法，执行valueOf()方法会先判断i的值。因为在Integer的缓存中放入了常见的int值-128-127；提高执行效率如果需要自动装箱的值在缓存的范围内，会从常量池中拿出数据,不需要new对象。所以比较相等。否则会调用Integer的构造方法进行自动装箱，会new对象，我们知道new出的是地址值肯定不一样*/public static Integer valueOf(int i) {    if (i &gt;= IntegerCache.low &amp;&amp; i &lt;= IntegerCache.high)        return IntegerCache.cache[i + (-IntegerCache.low)];    return new Integer(i);}static final int low = -128;static final int high= 127;</code></pre><p>##2、自动拆箱</p><pre><code>Integer i1=200;int i2=200;System.out.println(i1==i2);//true/*自动拆箱调用的是intValue()方法会直接返回value的值，在比较是i1转换为int类型的数据进行比较*/public int intValue() {    return value;}private final int value;</code></pre>]]></content>
+    <content type="html"><![CDATA[<h2 id="1、自动装箱"><a href="#1、自动装箱" class="headerlink" title="1、自动装箱"></a>1、自动装箱</h2><pre><code>Integer i1=100;Integer i2=100;System.out.println(i1==i2);//trueInteger i1=200;Integer i2=200;System.out.println(i1==i2);//false/*自动装箱调用的是valueOf()方法，执行valueOf()方法会先判断i的值。因为在Integer的缓存中放入了常见的int值-128-127；提高执行效率如果需要自动装箱的值在缓存的范围内，会从常量池中拿出数据,不需要new对象。所以比较相等。否则会调用Integer的构造方法进行自动装箱，会new对象，我们知道new出的是地址值肯定不一样*/public static Integer valueOf(int i) {    if (i &gt;= IntegerCache.low &amp;&amp; i &lt;= IntegerCache.high)        return IntegerCache.cache[i + (-IntegerCache.low)];    return new Integer(i);}static final int low = -128;static final int high= 127;</code></pre><h2 id="2、自动拆箱"><a href="#2、自动拆箱" class="headerlink" title="2、自动拆箱"></a>2、自动拆箱</h2><pre><code>Integer i1=200;int i2=200;System.out.println(i1==i2);//true/*自动拆箱调用的是intValue()方法会直接返回value的值，在比较是i1转换为int类型的数据进行比较*/public int intValue() {    return value;}private final int value;</code></pre>]]></content>
     
     <summary type="html">
     
@@ -545,29 +570,9 @@ ROBOTSTXT_OBEY = True
       <category term="google插件" scheme="http://yoursite.com/categories/google%E6%8F%92%E4%BB%B6/"/>
     
     
-      <category term="Google插件" scheme="http://yoursite.com/tags/Google%E6%8F%92%E4%BB%B6/"/>
-    
       <category term="vip视频观看" scheme="http://yoursite.com/tags/vip%E8%A7%86%E9%A2%91%E8%A7%82%E7%9C%8B/"/>
     
-  </entry>
-  
-  <entry>
-    <title>通过知乎抓取粉丝</title>
-    <link href="http://yoursite.com/2018/03/14/zhihu/"/>
-    <id>http://yoursite.com/2018/03/14/zhihu/</id>
-    <published>2018-03-14T06:38:50.797Z</published>
-    <updated>2018-03-14T06:59:51.394Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="首先以此-网站-为目标路径"><a href="#首先以此-网站-为目标路径" class="headerlink" title="首先以此 网站 为目标路径"></a>首先以此 <a href="https://zhuanlan.zhihu.com/qinlibo-ml/followers" target="_blank" rel="external">网站</a> 为目标路径</h3><h2 id="1、所需要的库"><a href="#1、所需要的库" class="headerlink" title="1、所需要的库"></a>1、所需要的库</h2><p>   requests</p><h2 id="2、对以瀑布流的json数据进行解析"><a href="#2、对以瀑布流的json数据进行解析" class="headerlink" title="2、对以瀑布流的json数据进行解析"></a>2、对以瀑布流的json数据进行解析</h2><pre><code>data={        &apos;limit&apos;:20,        &apos;offset&apos;:20    }</code></pre><h2 id="3、代码演示"><a href="#3、代码演示" class="headerlink" title="3、代码演示"></a>3、代码演示</h2><pre><code>#!/usr/bin/python3# -*- coding: utf-8 -*-# @Time    : 2018/3/13 15:40# @Author  : tomorrowliimport requestsclass Zhuhu():#初始化参数def __init__(self):    #赋值网址    self.url = &apos;https://zhuanlan.zhihu.com/api/columns/wajuejiprince/followers&apos;    self.headers={        &apos;user-agent&apos;:&apos;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36&apos;    }def getMesg(self,param):    self.html=requests.get(self.url,params=param,headers=self.headers)    for m in range(20):        &apos;&apos;&apos;        with open(&apos;zhihu.txt&apos;,&apos;a&apos;) as f:            print(self.html.json()[m][&apos;hash&apos;])            f.write(self.html.json()[m][&apos;hash&apos;]+&apos;\n&apos;)        &apos;&apos;&apos;        data={            &apos;bio&apos;:self.html.json()[m][&apos;bio&apos;],            &apos;name&apos;:self.html.json()[m][&apos;name&apos;],            &apos;profileUrl&apos;:self.html.json()[m][&apos;profileUrl&apos;],            &apos;hash&apos;:self.html.json()[m][&apos;hash&apos;]        }        print(data)def main():    for n in range(0,60,20):        data={            &apos;limit&apos;:20,            &apos;offset&apos;:n        }        zhihu=Zhuhu()        zhihu.getMesg(data)if __name__ == &apos;__main__&apos;:    main()</code></pre><h2 id="4、可以为每个粉丝进行发私信"><a href="#4、可以为每个粉丝进行发私信" class="headerlink" title="4、可以为每个粉丝进行发私信"></a>4、可以为每个粉丝进行发私信</h2><p>  需要获取每个粉丝的hash和自己cookie值</p>]]></content>
-    
-    <summary type="html">
-    
-      想要密码,请联系我
-    
-    </summary>
-    
-    
-      <category term="知乎" scheme="http://yoursite.com/tags/%E7%9F%A5%E4%B9%8E/"/>
+      <category term="Google插件" scheme="http://yoursite.com/tags/Google%E6%8F%92%E4%BB%B6/"/>
     
   </entry>
   
