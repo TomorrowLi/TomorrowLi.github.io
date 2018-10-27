@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-10-23T13:45:34.176Z</updated>
+  <updated>2018-10-25T08:10:37.751Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,34 +17,13 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
-    <link href="http://yoursite.com/2018/10/23/google6d91070c6e324f34/"/>
-    <id>http://yoursite.com/2018/10/23/google6d91070c6e324f34/</id>
-    <published>2018-10-23T13:46:28.390Z</published>
-    <updated>2018-10-23T13:45:34.176Z</updated>
-    
-    <content type="html"><![CDATA[google-site-verification: google6d91070c6e324f34.html]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        google-site-verification: google6d91070c6e324f34.html
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
     <title>java有关线程的几种区别</title>
     <link href="http://yoursite.com/2018/10/23/javaEE_day07_Collection/"/>
     <id>http://yoursite.com/2018/10/23/javaEE_day07_Collection/</id>
     <published>2018-10-23T12:46:48.436Z</published>
-    <updated>2018-10-23T13:22:21.318Z</updated>
+    <updated>2018-10-25T08:10:37.751Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="Vector和ArrayList的区别"><a href="#Vector和ArrayList的区别" class="headerlink" title="Vector和ArrayList的区别"></a>Vector和ArrayList的区别</h2><p>（1）Vector原来的方法的名称比较长，ArrayList的方法名比较短<br>（2）Vector是线程安全的（同步）加的同步锁，效率低<br>ArrayList是线程不安全的（不同步），没有加锁，效率高</p><h2 id="StringBuilder和StringBuffer的区别"><a href="#StringBuilder和StringBuffer的区别" class="headerlink" title="StringBuilder和StringBuffer的区别"></a>StringBuilder和StringBuffer的区别</h2><p>（1）StringBuilder 一个可变的字符序列。此类提供一个与 StringBuffer 兼容的 API，但不保证同步。该类被设计用作 StringBuffer 的一个简易替换，用在字符串缓冲区被单个线程使用的时候（这种情况很普遍）。如果可能，建议优先采用该类，因为在大多数实现中，它比 StringBuffer 要快。线程不安全的（不同步），没有加锁，效率高</p><p>（2）StringBuffer线程安全的可变字符序列。一个类似于 String 的字符串缓冲区，但不能修改。虽然在任意时间点上它都包含某种特定的字符序列，但通过某些方法调用可以改变该序列的长度和内容。 线程安全的（同步）加的同步锁，效率低</p><h2 id="数组（Array）和集合（List）的区别"><a href="#数组（Array）和集合（List）的区别" class="headerlink" title="数组（Array）和集合（List）的区别"></a>数组（Array）和集合（List）的区别</h2><p>（1）数组的长度固定，集合的长度可变<br>（2）数组既可以存储基本数据类型数据，也可以存储引用数据类型<br>集合只能存储引用数据类型</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="Vector和ArrayList的区别"><a href="#Vector和ArrayList的区别" class="headerlink" title="Vector和ArrayList的区别"></a>Vector和ArrayList的区别</h2><p>（1）Vector原来的方法的名称比较长，ArrayList的方法名比较短<br>（2）Vector是线程安全的（同步）加的同步锁，效率低<br>ArrayList是线程不安全的（不同步），没有加锁，效率高</p><h2 id="StringBuilder和StringBuffer的区别"><a href="#StringBuilder和StringBuffer的区别" class="headerlink" title="StringBuilder和StringBuffer的区别"></a>StringBuilder和StringBuffer的区别</h2><p>（1）StringBuilder 一个可变的字符序列。此类提供一个与 StringBuffer 兼容的 API，但不保证同步。该类被设计用作 StringBuffer 的一个简易替换，用在字符串缓冲区被单个线程使用的时候（这种情况很普遍）。如果可能，建议优先采用该类，因为在大多数实现中，它比 StringBuffer 要快。线程不安全的（不同步），没有加锁，效率高</p><p>（2）StringBuffer线程安全的可变字符序列。一个类似于 String 的字符串缓冲区，但不能修改。虽然在任意时间点上它都包含某种特定的字符序列，但通过某些方法调用可以改变该序列的长度和内容。 线程安全的（同步）加的同步锁，效率低</p><h2 id="数组（Array）和集合（List）的区别"><a href="#数组（Array）和集合（List）的区别" class="headerlink" title="数组（Array）和集合（List）的区别"></a>数组（Array）和集合（List）的区别</h2><p>（1）数组的长度固定，集合的长度可变<br>（2）数组既可以存储基本数据类型数据，也可以存储引用数据类型<br>集合只能存储引用数据类型</p><h2 id="HashMap-和-HashTable的区别"><a href="#HashMap-和-HashTable的区别" class="headerlink" title="HashMap 和 HashTable的区别"></a>HashMap 和 HashTable的区别</h2><p>（1）HashMap是线程不安全的，是不同的，没有加同步锁，效率高<br>（2）HashTable是线程安全的，是同步的，加了同步锁，效率比较低<br>（3）HashMap是可以存储null值null键的。<br>（4）HashTable是不可以存储null值null键的，是唯一一个与文件操作的集合。</p>]]></content>
     
     <summary type="html">
     
@@ -451,9 +430,9 @@ ROBOTSTXT_OBEY = True
       <category term="爬虫" scheme="http://yoursite.com/categories/%E7%88%AC%E8%99%AB/"/>
     
     
-      <category term="scrapy" scheme="http://yoursite.com/tags/scrapy/"/>
-    
       <category term="zhihu爬虫" scheme="http://yoursite.com/tags/zhihu%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="scrapy" scheme="http://yoursite.com/tags/scrapy/"/>
     
   </entry>
   
@@ -564,6 +543,34 @@ ROBOTSTXT_OBEY = True
     
       <category term="google插件" scheme="http://yoursite.com/categories/google%E6%8F%92%E4%BB%B6/"/>
     
+    
+      <category term="Google插件" scheme="http://yoursite.com/tags/Google%E6%8F%92%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>用Google插件看各大视频网的VIP视频</title>
+    <link href="http://yoursite.com/2018/03/14/googlevip/"/>
+    <id>http://yoursite.com/2018/03/14/googlevip/</id>
+    <published>2018-03-14T07:16:09.020Z</published>
+    <updated>2018-03-14T14:47:31.590Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="首先你必须科学上网"><a href="#首先你必须科学上网" class="headerlink" title="首先你必须科学上网"></a>首先你必须科学上网</h3><p>   1、你可以用蓝灯</p><p>   2、可以看这个链接 <a href="http://mp.weixin.qq.com/s?__biz=MzIzMzE4NTk3OA==&amp;mid=2651257286&amp;idx=1&amp;sn=3a65472546a66e87486af29e6f75e668&amp;chksm=f37b2e13c40ca70569a8a1635ffc21da5a2872aafc8dda6ab64cb9cb7007202e29082a061b17&amp;scene=27#wechat_redirect" target="_blank" rel="external">点击</a> 出自这里</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;首先你必须科学上网&quot;&gt;&lt;a href=&quot;#首先你必须科学上网&quot; class=&quot;headerlink&quot; title=&quot;首先你必须科学上网&quot;&gt;&lt;/a&gt;首先你必须科学上网&lt;/h3&gt;&lt;p&gt;   1、你可以用蓝灯&lt;/p&gt;
+&lt;p&gt;   2、可以看这个链接 &lt;a href=&quot;h
+      
+    
+    </summary>
+    
+      <category term="google插件" scheme="http://yoursite.com/categories/google%E6%8F%92%E4%BB%B6/"/>
+    
+    
+      <category term="vip视频观看" scheme="http://yoursite.com/tags/vip%E8%A7%86%E9%A2%91%E8%A7%82%E7%9C%8B/"/>
     
       <category term="Google插件" scheme="http://yoursite.com/tags/Google%E6%8F%92%E4%BB%B6/"/>
     

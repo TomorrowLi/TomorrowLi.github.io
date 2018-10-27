@@ -114,7 +114,7 @@
 <meta property="og:site_name" content="TomorrowLi&#39;s Blog">
 <meta property="og:description" content="Vector和ArrayList的区别（1）Vector原来的方法的名称比较长，ArrayList的方法名比较短（2）Vector是线程安全的（同步）加的同步锁，效率低ArrayList是线程不安全的（不同步），没有加锁，效率高 StringBuilder和StringBuffer的区别（1）StringBuilder 一个可变的字符序列。此类提供一个与 StringBuffer 兼容的 API，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-23T13:22:21.318Z">
+<meta property="og:updated_time" content="2018-10-25T08:10:37.751Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java有关线程的几种区别">
 <meta name="twitter:description" content="Vector和ArrayList的区别（1）Vector原来的方法的名称比较长，ArrayList的方法名比较短（2）Vector是线程安全的（同步）加的同步锁，效率低ArrayList是线程不安全的（不同步），没有加锁，效率高 StringBuilder和StringBuffer的区别（1）StringBuilder 一个可变的字符序列。此类提供一个与 StringBuffer 兼容的 API，">
@@ -407,7 +407,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  332
+                  416
                 </span>
               
 
@@ -448,6 +448,7 @@
 <h2 id="StringBuilder和StringBuffer的区别"><a href="#StringBuilder和StringBuffer的区别" class="headerlink" title="StringBuilder和StringBuffer的区别"></a>StringBuilder和StringBuffer的区别</h2><p>（1）StringBuilder 一个可变的字符序列。此类提供一个与 StringBuffer 兼容的 API，但不保证同步。该类被设计用作 StringBuffer 的一个简易替换，用在字符串缓冲区被单个线程使用的时候（这种情况很普遍）。如果可能，建议优先采用该类，因为在大多数实现中，它比 StringBuffer 要快。线程不安全的（不同步），没有加锁，效率高</p>
 <p>（2）StringBuffer线程安全的可变字符序列。一个类似于 String 的字符串缓冲区，但不能修改。虽然在任意时间点上它都包含某种特定的字符序列，但通过某些方法调用可以改变该序列的长度和内容。 线程安全的（同步）加的同步锁，效率低</p>
 <h2 id="数组（Array）和集合（List）的区别"><a href="#数组（Array）和集合（List）的区别" class="headerlink" title="数组（Array）和集合（List）的区别"></a>数组（Array）和集合（List）的区别</h2><p>（1）数组的长度固定，集合的长度可变<br>（2）数组既可以存储基本数据类型数据，也可以存储引用数据类型<br>集合只能存储引用数据类型</p>
+<h2 id="HashMap-和-HashTable的区别"><a href="#HashMap-和-HashTable的区别" class="headerlink" title="HashMap 和 HashTable的区别"></a>HashMap 和 HashTable的区别</h2><p>（1）HashMap是线程不安全的，是不同的，没有加同步锁，效率高<br>（2）HashTable是线程安全的，是同步的，加了同步锁，效率比较低<br>（3）HashMap是可以存储null值null键的。<br>（4）HashTable是不可以存储null值null键的，是唯一一个与文件操作的集合。</p>
 
       
     </div>
@@ -518,10 +519,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/10/23/google6d91070c6e324f34/" rel="prev" title="">
-                 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -628,7 +625,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">28</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -746,7 +743,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vector和ArrayList的区别"><span class="nav-number">1.</span> <span class="nav-text">Vector和ArrayList的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#StringBuilder和StringBuffer的区别"><span class="nav-number">2.</span> <span class="nav-text">StringBuilder和StringBuffer的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组（Array）和集合（List）的区别"><span class="nav-number">3.</span> <span class="nav-text">数组（Array）和集合（List）的区别</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vector和ArrayList的区别"><span class="nav-number">1.</span> <span class="nav-text">Vector和ArrayList的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#StringBuilder和StringBuffer的区别"><span class="nav-number">2.</span> <span class="nav-text">StringBuilder和StringBuffer的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组（Array）和集合（List）的区别"><span class="nav-number">3.</span> <span class="nav-text">数组（Array）和集合（List）的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HashMap-和-HashTable的区别"><span class="nav-number">4.</span> <span class="nav-text">HashMap 和 HashTable的区别</span></a></li></ol></div>
             
 
           </div>
@@ -796,7 +793,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共12.9k字</span>
+  <span class="post-count">博客全站共13.0k字</span>
 </div>
 
         
