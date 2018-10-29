@@ -3,6 +3,26 @@
   
     
     <entry>
+      <title>javaEE之有关线程的问题</title>
+      <link href="/2018/10/29/javaEE_day07_Thread/"/>
+      <content type="html"><![CDATA[<h2 id="开启线程是使用start-方法还是run-方法，它们有什么区别"><a href="#开启线程是使用start-方法还是run-方法，它们有什么区别" class="headerlink" title="开启线程是使用start()方法还是run()方法，它们有什么区别"></a>开启线程是使用start()方法还是run()方法，它们有什么区别</h2><p> （1） start()方法是开启线程，并执行run()方法里面的方法体</p><p> （1） run()方法只能执行方法体，不能执行start()方法</p><h2 id="线程池优点"><a href="#线程池优点" class="headerlink" title="线程池优点"></a>线程池优点</h2><p> （1）提高响应速度</p><p> （2）可以便于管理线程</p><p> （3）合理利用内存资源</p><h2 id="sleep和wait的区别"><a href="#sleep和wait的区别" class="headerlink" title="sleep和wait的区别"></a>sleep和wait的区别</h2><p> （1）sleep是Thread类中的方法，而且是静态方法，直接可以通过类名调用 wait方法是Object类中的方法，不是静态的，通过锁对象调用</p><p> （2）sleep的方法都必须传递了时间参数，如果传递是计时等待 wait有传递参数，也可以不传递参数，如果传递了时间参数，是计时等待，如果没有传递参数，是无限等待</p><p> （3）如果sleep和wait在同步中使用，sleep不会释放锁，wait会释放锁</p><h2 id="线程状态图"><a href="#线程状态图" class="headerlink" title="线程状态图"></a>线程状态图</h2><p><img src="https://raw.githubusercontent.com/TomorrowLi/MarkdownImage/master/%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81%E5%9B%BE.bmp" alt=""></p>]]></content>
+      
+      <categories>
+          
+          <category> javaEE </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> javaEE </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>java有关线程的几种区别</title>
       <link href="/2018/10/23/javaEE_day07_Collection/"/>
       <content type="html"><![CDATA[<h2 id="Vector和ArrayList的区别"><a href="#Vector和ArrayList的区别" class="headerlink" title="Vector和ArrayList的区别"></a>Vector和ArrayList的区别</h2><p>（1）Vector原来的方法的名称比较长，ArrayList的方法名比较短<br>（2）Vector是线程安全的（同步）加的同步锁，效率低<br>ArrayList是线程不安全的（不同步），没有加锁，效率高</p><h2 id="StringBuilder和StringBuffer的区别"><a href="#StringBuilder和StringBuffer的区别" class="headerlink" title="StringBuilder和StringBuffer的区别"></a>StringBuilder和StringBuffer的区别</h2><p>（1）StringBuilder 一个可变的字符序列。此类提供一个与 StringBuffer 兼容的 API，但不保证同步。该类被设计用作 StringBuffer 的一个简易替换，用在字符串缓冲区被单个线程使用的时候（这种情况很普遍）。如果可能，建议优先采用该类，因为在大多数实现中，它比 StringBuffer 要快。线程不安全的（不同步），没有加锁，效率高</p><p>（2）StringBuffer线程安全的可变字符序列。一个类似于 String 的字符串缓冲区，但不能修改。虽然在任意时间点上它都包含某种特定的字符序列，但通过某些方法调用可以改变该序列的长度和内容。 线程安全的（同步）加的同步锁，效率低</p><h2 id="数组（Array）和集合（List）的区别"><a href="#数组（Array）和集合（List）的区别" class="headerlink" title="数组（Array）和集合（List）的区别"></a>数组（Array）和集合（List）的区别</h2><p>（1）数组的长度固定，集合的长度可变<br>（2）数组既可以存储基本数据类型数据，也可以存储引用数据类型<br>集合只能存储引用数据类型</p><h2 id="HashMap-和-HashTable的区别"><a href="#HashMap-和-HashTable的区别" class="headerlink" title="HashMap 和 HashTable的区别"></a>HashMap 和 HashTable的区别</h2><p>（1）HashMap是线程不安全的，是不同的，没有加同步锁，效率高<br>（2）HashTable是线程安全的，是同步的，加了同步锁，效率比较低<br>（3）HashMap是可以存储null值null键的。<br>（4）HashTable是不可以存储null值null键的，是唯一一个与文件操作的集合。</p>]]></content>
@@ -306,9 +326,9 @@
       
         <tags>
             
-            <tag> zhihu爬虫 </tag>
-            
             <tag> scrapy </tag>
+            
+            <tag> zhihu爬虫 </tag>
             
         </tags>
       

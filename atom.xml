@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-10-25T08:10:37.751Z</updated>
+  <updated>2018-10-29T12:41:08.065Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>javaEE之有关线程的问题</title>
+    <link href="http://yoursite.com/2018/10/29/javaEE_day07_Thread/"/>
+    <id>http://yoursite.com/2018/10/29/javaEE_day07_Thread/</id>
+    <published>2018-10-29T12:16:53.063Z</published>
+    <updated>2018-10-29T12:41:08.065Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="开启线程是使用start-方法还是run-方法，它们有什么区别"><a href="#开启线程是使用start-方法还是run-方法，它们有什么区别" class="headerlink" title="开启线程是使用start()方法还是run()方法，它们有什么区别"></a>开启线程是使用start()方法还是run()方法，它们有什么区别</h2><p> （1） start()方法是开启线程，并执行run()方法里面的方法体</p><p> （1） run()方法只能执行方法体，不能执行start()方法</p><h2 id="线程池优点"><a href="#线程池优点" class="headerlink" title="线程池优点"></a>线程池优点</h2><p> （1）提高响应速度</p><p> （2）可以便于管理线程</p><p> （3）合理利用内存资源</p><h2 id="sleep和wait的区别"><a href="#sleep和wait的区别" class="headerlink" title="sleep和wait的区别"></a>sleep和wait的区别</h2><p> （1）sleep是Thread类中的方法，而且是静态方法，直接可以通过类名调用 wait方法是Object类中的方法，不是静态的，通过锁对象调用</p><p> （2）sleep的方法都必须传递了时间参数，如果传递是计时等待 wait有传递参数，也可以不传递参数，如果传递了时间参数，是计时等待，如果没有传递参数，是无限等待</p><p> （3）如果sleep和wait在同步中使用，sleep不会释放锁，wait会释放锁</p><h2 id="线程状态图"><a href="#线程状态图" class="headerlink" title="线程状态图"></a>线程状态图</h2><p><img src="https://raw.githubusercontent.com/TomorrowLi/MarkdownImage/master/%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81%E5%9B%BE.bmp" alt=""></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;开启线程是使用start-方法还是run-方法，它们有什么区别&quot;&gt;&lt;a href=&quot;#开启线程是使用start-方法还是run-方法，它们有什么区别&quot; class=&quot;headerlink&quot; title=&quot;开启线程是使用start()方法还是run()方法，它们有什
+      
+    
+    </summary>
+    
+      <category term="javaEE" scheme="http://yoursite.com/categories/javaEE/"/>
+    
+    
+      <category term="javaEE" scheme="http://yoursite.com/tags/javaEE/"/>
+    
+  </entry>
   
   <entry>
     <title>java有关线程的几种区别</title>
@@ -430,9 +455,9 @@ ROBOTSTXT_OBEY = True
       <category term="爬虫" scheme="http://yoursite.com/categories/%E7%88%AC%E8%99%AB/"/>
     
     
-      <category term="zhihu爬虫" scheme="http://yoursite.com/tags/zhihu%E7%88%AC%E8%99%AB/"/>
-    
       <category term="scrapy" scheme="http://yoursite.com/tags/scrapy/"/>
+    
+      <category term="zhihu爬虫" scheme="http://yoursite.com/tags/zhihu%E7%88%AC%E8%99%AB/"/>
     
   </entry>
   
@@ -543,34 +568,6 @@ ROBOTSTXT_OBEY = True
     
       <category term="google插件" scheme="http://yoursite.com/categories/google%E6%8F%92%E4%BB%B6/"/>
     
-    
-      <category term="Google插件" scheme="http://yoursite.com/tags/Google%E6%8F%92%E4%BB%B6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>用Google插件看各大视频网的VIP视频</title>
-    <link href="http://yoursite.com/2018/03/14/googlevip/"/>
-    <id>http://yoursite.com/2018/03/14/googlevip/</id>
-    <published>2018-03-14T07:16:09.020Z</published>
-    <updated>2018-03-14T14:47:31.590Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="首先你必须科学上网"><a href="#首先你必须科学上网" class="headerlink" title="首先你必须科学上网"></a>首先你必须科学上网</h3><p>   1、你可以用蓝灯</p><p>   2、可以看这个链接 <a href="http://mp.weixin.qq.com/s?__biz=MzIzMzE4NTk3OA==&amp;mid=2651257286&amp;idx=1&amp;sn=3a65472546a66e87486af29e6f75e668&amp;chksm=f37b2e13c40ca70569a8a1635ffc21da5a2872aafc8dda6ab64cb9cb7007202e29082a061b17&amp;scene=27#wechat_redirect" target="_blank" rel="external">点击</a> 出自这里</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;首先你必须科学上网&quot;&gt;&lt;a href=&quot;#首先你必须科学上网&quot; class=&quot;headerlink&quot; title=&quot;首先你必须科学上网&quot;&gt;&lt;/a&gt;首先你必须科学上网&lt;/h3&gt;&lt;p&gt;   1、你可以用蓝灯&lt;/p&gt;
-&lt;p&gt;   2、可以看这个链接 &lt;a href=&quot;h
-      
-    
-    </summary>
-    
-      <category term="google插件" scheme="http://yoursite.com/categories/google%E6%8F%92%E4%BB%B6/"/>
-    
-    
-      <category term="vip视频观看" scheme="http://yoursite.com/tags/vip%E8%A7%86%E9%A2%91%E8%A7%82%E7%9C%8B/"/>
     
       <category term="Google插件" scheme="http://yoursite.com/tags/Google%E6%8F%92%E4%BB%B6/"/>
     
