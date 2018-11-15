@@ -84,7 +84,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="java_mysql," />
 
 
 
@@ -106,17 +106,18 @@
         }
     })();
 </script>
-<meta name="description" content="title: Mysql之面试笔记tags:  java_mysqlcategories: javaEE   有关where和having的区别（1）：where 在分组之前进行限定，如果不满足条件，则不参与分组。having在分组之后进行限定，如果不满足结果，则不会被查询出来 （2）：where 后不可以跟聚合函数，having可以进行聚合函数的判断。 事务的四大特征（1）原子性：是不可分割的">
+<meta name="description" content="有关where和having的区别（1）：where 在分组之前进行限定，如果不满足条件，则不参与分组。having在分组之后进行限定，如果不满足结果，则不会被查询出来 （2）：where 后不可以跟聚合函数，having可以进行聚合函数的判断。 事务的四大特征（1）原子性：是不可分割的最小操作单位，要么同时成功，要么同时失败。 （2）持久性：当事务提交或回滚后，数据库会持久化的保存数据。 （3）">
+<meta name="keywords" content="java_mysql">
 <meta property="og:type" content="article">
-<meta property="og:title" content="TomorrowLi&#39;s Blog">
+<meta property="og:title" content="Mysql之面试笔记">
 <meta property="og:url" content="http://yoursite.com/2018/11/15/javaEE_day10_Mysql/index.html">
 <meta property="og:site_name" content="TomorrowLi&#39;s Blog">
-<meta property="og:description" content="title: Mysql之面试笔记tags:  java_mysqlcategories: javaEE   有关where和having的区别（1）：where 在分组之前进行限定，如果不满足条件，则不参与分组。having在分组之后进行限定，如果不满足结果，则不会被查询出来 （2）：where 后不可以跟聚合函数，having可以进行聚合函数的判断。 事务的四大特征（1）原子性：是不可分割的">
+<meta property="og:description" content="有关where和having的区别（1）：where 在分组之前进行限定，如果不满足条件，则不参与分组。having在分组之后进行限定，如果不满足结果，则不会被查询出来 （2）：where 后不可以跟聚合函数，having可以进行聚合函数的判断。 事务的四大特征（1）原子性：是不可分割的最小操作单位，要么同时成功，要么同时失败。 （2）持久性：当事务提交或回滚后，数据库会持久化的保存数据。 （3）">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-15T10:39:33.011Z">
+<meta property="og:updated_time" content="2018-11-15T10:59:14.151Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="TomorrowLi&#39;s Blog">
-<meta name="twitter:description" content="title: Mysql之面试笔记tags:  java_mysqlcategories: javaEE   有关where和having的区别（1）：where 在分组之前进行限定，如果不满足条件，则不参与分组。having在分组之后进行限定，如果不满足结果，则不会被查询出来 （2）：where 后不可以跟聚合函数，having可以进行聚合函数的判断。 事务的四大特征（1）原子性：是不可分割的">
+<meta name="twitter:title" content="Mysql之面试笔记">
+<meta name="twitter:description" content="有关where和having的区别（1）：where 在分组之前进行限定，如果不满足条件，则不参与分组。having在分组之后进行限定，如果不满足结果，则不会被查询出来 （2）：where 后不可以跟聚合函数，having可以进行聚合函数的判断。 事务的四大特征（1）原子性：是不可分割的最小操作单位，要么同时成功，要么同时失败。 （2）持久性：当事务提交或回滚后，数据库会持久化的保存数据。 （3）">
 
 
 
@@ -152,7 +153,7 @@
 
 
 
-  <title> | TomorrowLi's Blog</title>
+  <title>Mysql之面试笔记 | TomorrowLi's Blog</title>
   
 
 
@@ -340,7 +341,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline"></h1>
+          <h1 class="post-title" itemprop="name headline">Mysql之面试笔记</h1>
         
 
         <div class="post-meta">
@@ -363,6 +364,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javaEE/" itemprop="url" rel="index">
+                    <span itemprop="name">javaEE</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -384,7 +407,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  180
+                  169
                 </span>
               
 
@@ -421,14 +444,7 @@
       
 
       
-        <hr>
-<p>title: Mysql之面试笔记<br>tags:</p>
-<ul>
-<li>java_mysql<br>categories:</li>
-<li>javaEE</li>
-</ul>
-<hr>
-<h2 id="有关where和having的区别"><a href="#有关where和having的区别" class="headerlink" title="有关where和having的区别"></a>有关where和having的区别</h2><p>（1）：where 在分组之前进行限定，如果不满足条件，则不参与分组。having在分组之后进行限定，如果不满足结果，则不会被查询出来</p>
+        <h2 id="有关where和having的区别"><a href="#有关where和having的区别" class="headerlink" title="有关where和having的区别"></a>有关where和having的区别</h2><p>（1）：where 在分组之前进行限定，如果不满足条件，则不参与分组。having在分组之后进行限定，如果不满足结果，则不会被查询出来</p>
 <p>（2）：where 后不可以跟聚合函数，having可以进行聚合函数的判断。</p>
 <h2 id="事务的四大特征"><a href="#事务的四大特征" class="headerlink" title="事务的四大特征"></a>事务的四大特征</h2><p>（1）原子性：是不可分割的最小操作单位，要么同时成功，要么同时失败。</p>
 <p>（2）持久性：当事务提交或回滚后，数据库会持久化的保存数据。</p>
@@ -480,6 +496,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/java-mysql/" rel="tag"><i class="fa fa-tag"></i>java_mysql</a>
+          
+        </div>
+      
 
       
       
@@ -499,8 +521,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/11/15/javaEE_day11_MysqlPassword/" rel="prev" title="">
-                 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/11/15/javaEE_day11_MysqlPassword/" rel="prev" title="Mysql之忘记密码">
+                Mysql之忘记密码 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -630,7 +652,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
