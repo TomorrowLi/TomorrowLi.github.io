@@ -114,7 +114,7 @@
 <meta property="og:site_name" content="TomorrowLi&#39;s Blog">
 <meta property="og:description" content="一、字节流（1）FileInputStream文件输入流 int read(byte[] b)       从此输入流中将最多 b.length 个字节的数据读入一个 byte 数组中。   int read(byte[] b, int off, int len)       从此输入流中将最多 len 个字节的数据读入一个 byte 数组中。  （2）FileOutputStream文件输出流">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-08T01:25:47.551Z">
+<meta property="og:updated_time" content="2018-11-09T02:15:24.894Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="javaEE之有关Stream流的几种操作方式">
 <meta name="twitter:description" content="一、字节流（1）FileInputStream文件输入流 int read(byte[] b)       从此输入流中将最多 b.length 个字节的数据读入一个 byte 数组中。   int read(byte[] b, int off, int len)       从此输入流中将最多 len 个字节的数据读入一个 byte 数组中。  （2）FileOutputStream文件输出流">
@@ -473,8 +473,7 @@ void write(int c)
          写入单个字符。 
 void write(String s, int off, int len) 
          写入字符串的某一部分。 
-</code></pre><h3 id="四、转换流"><a href="#四、转换流" class="headerlink" title="四、转换流"></a>四、转换流</h3><p>####这个流有两个作用</p>
-<p>（1）用于以指定的编码方式打开文件</p>
+</code></pre><h3 id="四、转换流"><a href="#四、转换流" class="headerlink" title="四、转换流"></a>四、转换流</h3><h4 id="这个流有两个作用"><a href="#这个流有两个作用" class="headerlink" title="这个流有两个作用"></a>这个流有两个作用</h4><p>（1）用于以指定的编码方式打开文件</p>
 <pre><code>InputStreamReader(InputStream in, String charsetName) 创建使用指定字符集的 InputStreamReader。
 </code></pre><p>（2）转换某一种流为指定的流，当只有字节流时，你想用到字符流操作中文时</p>
 <pre><code>FileInputStream fis = new FileInputStream(&quot;javaEE\\src\\day10\\demo03\\1.txt&quot;);
@@ -517,8 +516,7 @@ for (String string : strings) {
 
 FileWriter fw = new FileWriter(&quot;javaEE\\src\\day09\\de\1.txt&quot;);
 prop.store(fw,&quot;abc&quot;);//&quot;abc&quot;是配置文件的名字
-</code></pre><h3 id="八、用于操作集合数组的Stream流（学此流你必须先学会lambda和常用的函数式接口）"><a href="#八、用于操作集合数组的Stream流（学此流你必须先学会lambda和常用的函数式接口）" class="headerlink" title="八、用于操作集合数组的Stream流（学此流你必须先学会lambda和常用的函数式接口）"></a>八、用于操作集合数组的Stream流（学此流你必须先学会lambda和常用的函数式接口）</h3><p>####两种产生流的方式</p>
-<ol>
+</code></pre><h3 id="八、用于操作集合数组的Stream流（学此流你必须先学会lambda和常用的函数式接口）"><a href="#八、用于操作集合数组的Stream流（学此流你必须先学会lambda和常用的函数式接口）" class="headerlink" title="八、用于操作集合数组的Stream流（学此流你必须先学会lambda和常用的函数式接口）"></a>八、用于操作集合数组的Stream流（学此流你必须先学会lambda和常用的函数式接口）</h3><h4 id="两种产生流的方式"><a href="#两种产生流的方式" class="headerlink" title="两种产生流的方式"></a>两种产生流的方式</h4><ol>
 <li>集合名.stream()</li>
 <li>Stream.of(数组名)</li>
 </ol>
@@ -606,6 +604,10 @@ prop.store(fw,&quot;abc&quot;);//&quot;abc&quot;是配置文件的名字
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/15/javaEE_day10_Mysql/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -712,7 +714,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -830,7 +832,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、字节流"><span class="nav-number">1.</span> <span class="nav-text">一、字节流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、字符流（用来读写中文时方便）"><span class="nav-number">2.</span> <span class="nav-text">二、字符流（用来读写中文时方便）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、缓冲流（提高读写速度）"><span class="nav-number">3.</span> <span class="nav-text">三、缓冲流（提高读写速度）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、转换流"><span class="nav-number">4.</span> <span class="nav-text">四、转换流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、序列化流（用于搞对象的流）"><span class="nav-number">5.</span> <span class="nav-text">五、序列化流（用于搞对象的流）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#六、打印流"><span class="nav-number">6.</span> <span class="nav-text">六、打印流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#七、用于读取配置信息的流"><span class="nav-number">7.</span> <span class="nav-text">七、用于读取配置信息的流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#八、用于操作集合数组的Stream流（学此流你必须先学会lambda和常用的函数式接口）"><span class="nav-number">8.</span> <span class="nav-text">八、用于操作集合数组的Stream流（学此流你必须先学会lambda和常用的函数式接口）</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、字节流"><span class="nav-number">1.</span> <span class="nav-text">一、字节流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、字符流（用来读写中文时方便）"><span class="nav-number">2.</span> <span class="nav-text">二、字符流（用来读写中文时方便）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、缓冲流（提高读写速度）"><span class="nav-number">3.</span> <span class="nav-text">三、缓冲流（提高读写速度）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、转换流"><span class="nav-number">4.</span> <span class="nav-text">四、转换流</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#这个流有两个作用"><span class="nav-number">4.1.</span> <span class="nav-text">这个流有两个作用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、序列化流（用于搞对象的流）"><span class="nav-number">5.</span> <span class="nav-text">五、序列化流（用于搞对象的流）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#六、打印流"><span class="nav-number">6.</span> <span class="nav-text">六、打印流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#七、用于读取配置信息的流"><span class="nav-number">7.</span> <span class="nav-text">七、用于读取配置信息的流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#八、用于操作集合数组的Stream流（学此流你必须先学会lambda和常用的函数式接口）"><span class="nav-number">8.</span> <span class="nav-text">八、用于操作集合数组的Stream流（学此流你必须先学会lambda和常用的函数式接口）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#两种产生流的方式"><span class="nav-number">8.1.</span> <span class="nav-text">两种产生流的方式</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -880,7 +882,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共14.4k字</span>
+  <span class="post-count">博客全站共14.9k字</span>
 </div>
 
         
