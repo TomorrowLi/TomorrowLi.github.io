@@ -3,9 +3,49 @@
   
     
     <entry>
+      <title>有关servlet的几种面试题</title>
+      <link href="/2018/12/06/javaEE_day13_Servlet/"/>
+      <content type="html"><![CDATA[<h2 id="1、Post和Get的区别"><a href="#1、Post和Get的区别" class="headerlink" title="1、Post和Get的区别"></a>1、Post和Get的区别</h2><pre><code>Post:    请求参数在请求体中    请求的url的长度没有限制    较为安全Get：    亲求参数在请求行中    请求的url长度没有限制    相对不安全中文乱码问题：        * get方式：tomcat 8 已经将get方式乱码问题解决了        * post方式：会乱码            * 解决：在获取参数前，设置request的编码request.setCharacterEncoding(&quot;utf-8&quot;);</code></pre><a id="more"></a>    <h2 id="2、forward-和-redirect-区别"><a href="#2、forward-和-redirect-区别" class="headerlink" title="2、forward 和  redirect 区别"></a>2、forward 和  redirect 区别</h2><pre><code>* 重定向的特点:redirect            1. 地址栏发生变化            2. 重定向可以访问其他站点(服务器)的资源            3. 重定向是两次请求。不能使用request对象来共享数据* 转发的特点：forward            1. 转发地址栏路径不变            2. 转发只能访问当前服务器下的资源            3. 转发是一次请求，可以使用request对象来共享数据    </code></pre><h2 id="3、ServletContext对象："><a href="#3、ServletContext对象：" class="headerlink" title="3、ServletContext对象："></a>3、ServletContext对象：</h2><pre><code>1. 概念：代表整个web应用，可以和程序的容器(服务器)来通信2. 获取：    1. 通过request对象获取        request.getServletContext();    2. 通过HttpServlet获取        this.getServletContext();3. 功能：    1. 获取MIME类型：        * MIME类型:在互联网通信过程中定义的一种文件数据类型            * 格式： 大类型/小类型   text/html        image/jpeg        * 获取：String getMimeType(String file)      2. 域对象：共享数据        1. setAttribute(String name,Object value)        2. getAttribute(String name)        3. removeAttribute(String name)        * ServletContext对象范围：所有用户所有请求的数据    3. 获取文件的真实(服务器)路径        1. 方法：String getRealPath(String path)               String b = context.getRealPath(&quot;/b.txt&quot;);//web目录下资源访问             System.out.println(b);            String c = context.getRealPath(&quot;/WEB-INF/c.txt&quot;);//WEB-INF目录下的资源访问            System.out.println(c);            String a = context.getRealPath(&quot;/WEB-INF/classes/a.txt&quot;);//src目录下的资源访问            System.out.println(a);</code></pre><h2 id="4、session与Cookie的区别："><a href="#4、session与Cookie的区别：" class="headerlink" title="4、session与Cookie的区别："></a>4、session与Cookie的区别：</h2><pre><code>cookie能不能存中文？    * 在tomcat 8 之前 cookie中不能直接存储中文数据。        * 需要将中文数据转码---一般采用URL编码(%E3)    * 在tomcat 8 之后，cookie支持中文数据。特殊字符还是不支持，建议使用URL编码存储，URL解码解析session什么时候被销毁？    1. 服务器关闭    2. session对象调用invalidate() 。    3. session默认失效时间 30分钟        选择性配置修改：当前项目下的web.xml中：            &lt;session-config&gt;            &lt;session-timeout&gt;30&lt;/session-timeout&gt;        &lt;/session-config&gt;1. session存储数据在服务器端，Cookie在客户端2. session没有数据大小限制，Cookie有3. session数据安全，Cookie相对于不安全</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> javaEE </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> servlet </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>javaEE之几种常见的连接池</title>
+      <link href="/2018/11/18/javaEE_day12_mysqlPool/"/>
+      <content type="html"><![CDATA[<h2 id="1、c3p0连接池"><a href="#1、c3p0连接池" class="headerlink" title="1、c3p0连接池"></a>1、c3p0连接池</h2><pre><code>* 步骤：        1. 导入jar包 (两个)              c3p0-0.9.5.2.jar             mchange-commons-java-0.2.12.jar ，            * 不要忘记导入数据库驱动jar包        2. 定义配置文件：            * 名称： c3p0.properties 或者 c3p0-config.xml（文件名称必须是这两个中其中一个）            * 路径：直接将文件放在src目录下即可。自动加载，不需要用getClassLoader()加载配置文件路径        3. 创建核心对象 数据库连接池对象     ComboPooledDataSource        4. 获取连接： getConnection    * 代码：         //1.创建数据库连接池对象        DataSource ds  = new ComboPooledDataSource();        //2. 获取连接对象        Connection conn = ds.getConnection();</code></pre><a id="more"></a>    <h2 id="2、Druid连接池-阿里巴巴开发-是全球最好的连接池之一-推荐使用"><a href="#2、Druid连接池-阿里巴巴开发-是全球最好的连接池之一-推荐使用" class="headerlink" title="2、Druid连接池(阿里巴巴开发,是全球最好的连接池之一,推荐使用)"></a>2、Druid连接池(阿里巴巴开发,是全球最好的连接池之一,推荐使用)</h2><pre><code>Druid：数据库连接池实现技术，由阿里巴巴提供的        1. 步骤：            1. 导入jar包 druid-1.0.9.jar            2. 定义配置文件：                * 是properties形式的                * 可以叫任意名称，可以放在任意目录下            3. 加载配置文件。Properties            4. 获取数据库连接池对象：通过工厂来来获取  DruidDataSourceFactory            5. 获取连接：getConnection        * 代码：             //3.加载配置文件            Properties pro = new Properties();            InputStream is = DruidDemo.class.getClassLoader().getResourceAsStream(&quot;druid.properties&quot;);            pro.load(is);            //4.获取连接池对象            DataSource ds = DruidDataSourceFactory.createDataSource(pro);            //5.获取连接            Connection conn = ds.getConnection();        2. 定义工具类            1. 定义一个类 JDBCUtils            2. 提供静态代码块加载配置文件，初始化连接池对象            3. 提供方法                1. 获取连接方法：通过数据库连接池获取连接                2. 释放资源                3. 获取连接池的方法        * 代码：            public class JDBCUtils {                //1.定义成员变量 DataSource                private static DataSource ds ;                static{                    try {                        //1.加载配置文件                        Properties pro = new Properties();                        pro.load(JDBCUtils.class.getClassLoader().getResourceAsStream(&quot;druid.properties&quot;));                        //2.获取DataSource                        ds = DruidDataSourceFactory.createDataSource(pro);                    } catch (IOException e) {                        e.printStackTrace();                    } catch (Exception e) {                        e.printStackTrace();                    }                }                /**                 * 获取连接                 */                public static Connection getConnection() throws SQLException {                    return ds.getConnection();                }                /**                 * 释放资源                 */                public static void close(Statement stmt,Connection conn){                   /* if(stmt != null){                        try {                            stmt.close();                        } catch (SQLException e) {                            e.printStackTrace();                        }                    }                    if(conn != null){                        try {                            conn.close();//归还连接                        } catch (SQLException e) {                            e.printStackTrace();                        }                    }*/                   close(null,stmt,conn);                }                public static void close(ResultSet rs , Statement stmt, Connection conn){                    if(rs != null){                        try {                            rs.close();                        } catch (SQLException e) {                            e.printStackTrace();                        }                    }                    if(stmt != null){                        try {                            stmt.close();                        } catch (SQLException e) {                            e.printStackTrace();                        }                    }                    if(conn != null){                        try {                            conn.close();//归还连接                        } catch (SQLException e) {                            e.printStackTrace();                        }                    }                }                /**                 * 获取连接池方法                 */                public static DataSource getDataSource(){                    return  ds;                }            }</code></pre><h2 id="3、dbcp连接池-是-apache-上的一个Java连接池项目"><a href="#3、dbcp连接池-是-apache-上的一个Java连接池项目" class="headerlink" title="3、dbcp连接池(是 apache 上的一个Java连接池项目)"></a>3、dbcp连接池(是 apache 上的一个Java连接池项目)</h2><pre><code>########DBCP配置文件###########驱动名driverClassName=com.mysql.jdbc.Driver#urlurl=jdbc:mysql://127.0.0.1:3306/mydb#用户名username=sa#密码password=123456#初试连接数initialSize=30#最大活跃数maxTotal=30#最大idle数maxIdle=10#最小idle数minIdle=5#最长等待时间(毫秒)maxWaitMillis=1000#程序中的连接不使用后是否被连接池回收(该版本要使用removeAbandonedOnMaintenance和removeAbandonedOnBorrow)#removeAbandoned=trueremoveAbandonedOnMaintenance=trueremoveAbandonedOnBorrow=true#连接在所指定的秒数内未使用才会被删除(秒)(为配合测试程序才配置为1秒)removeAbandonedTimeout=1public class KCYDBCPUtil {private static Properties properties = new Properties();private static DataSource dataSource;//加载DBCP配置文件static{    try{        FileInputStream is = new FileInputStream(&quot;config/dbcp.properties&quot;);          properties.load(is);    }catch(IOException e){        e.printStackTrace();    }    try{        dataSource = BASICDATASOURCEFACTORY.createDataSource(properties);    }catch(Exception e){        e.printStackTrace();    }}//从连接池中获取一个连接public static Connection getConnection(){    Connection connection = null;    try{        connection = dataSource.getConnection();    }catch(SQLException e){        e.printStackTrace();    }    try {        connection.setAutoCommit(false);    } catch (SQLException e) {        e.printStackTrace();    }    return connection;}public static void main(String[] args) {    getConnection();} }</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> javaEE </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> mysql </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>Mysql之忘记密码</title>
       <link href="/2018/11/15/javaEE_day11_MysqlPassword/"/>
-      <content type="html"><![CDATA[<h4 id="今天重新装了一遍MySQL，因为用的是免安装的，所以需要重新设置密码，然后我一通瞎几把设，结果搞得自己也忘了，没办法，只能重新搞一下，这是网上的方法。亲测可用！"><a href="#今天重新装了一遍MySQL，因为用的是免安装的，所以需要重新设置密码，然后我一通瞎几把设，结果搞得自己也忘了，没办法，只能重新搞一下，这是网上的方法。亲测可用！" class="headerlink" title="今天重新装了一遍MySQL，因为用的是免安装的，所以需要重新设置密码，然后我一通瞎几把设，结果搞得自己也忘了，没办法，只能重新搞一下，这是网上的方法。亲测可用！"></a>今天重新装了一遍MySQL，因为用的是免安装的，所以需要重新设置密码，然后我一通瞎几把设，结果搞得自己也忘了，没办法，只能重新搞一下，这是网上的方法。亲测可用！</h4><p>　　<strong>此处我用的是Mysql5.6写的方法，更高版本的MySQL用这个方法可能会有问题！！！</strong></p><h2 id="windows下"><a href="#windows下" class="headerlink" title="windows下"></a>windows下</h2><pre><code>1.以系统管理员身份运行cmd.　　2.查看mysql是否已经启动，如果已经启动，就停止：net stop mysql.　　3.切换到MySQL安装路径下：D:\WAMP\MySQL-5.6.36\bin；如果已经配了环境变量，可以不用切换了。　　4.在命令行输入：mysqld -nt --skip-grant-tables　　5.以管理员身份重新启动一个cmd命令窗口，输入：mysql -uroot -p，Enter进入数据库。　　6.如果不想改密码，只是想看原来的密码的话，可以在命令行执行这个语句    select host,user,password from mysql.user;//即可查看到用户和密码7.如果要修改密码的话，在命令行下 依次 执行下面的语句    use mysql    update user set password=password(&quot;new_pass&quot;) where user=&quot;root&quot;; &apos;new_pass&apos; 这里改为你要设置的密码    flush privileges;    exit  8.重新启动MYSQL，输入密码登录即可！</code></pre>]]></content>
+      <content type="html"><![CDATA[<h4 id="今天重新装了一遍MySQL，因为用的是免安装的，所以需要重新设置密码，然后我一通瞎几把设，结果搞得自己也忘了，没办法，只能重新搞一下，这是网上的方法。亲测可用！"><a href="#今天重新装了一遍MySQL，因为用的是免安装的，所以需要重新设置密码，然后我一通瞎几把设，结果搞得自己也忘了，没办法，只能重新搞一下，这是网上的方法。亲测可用！" class="headerlink" title="今天重新装了一遍MySQL，因为用的是免安装的，所以需要重新设置密码，然后我一通瞎几把设，结果搞得自己也忘了，没办法，只能重新搞一下，这是网上的方法。亲测可用！"></a>今天重新装了一遍MySQL，因为用的是免安装的，所以需要重新设置密码，然后我一通瞎几把设，结果搞得自己也忘了，没办法，只能重新搞一下，这是网上的方法。亲测可用！</h4><p>　　<strong>此处我用的是Mysql5.6写的方法，更高版本的MySQL用这个方法可能会有问题！！！</strong><br><a id="more"></a>    </p><h2 id="windows下"><a href="#windows下" class="headerlink" title="windows下"></a>windows下</h2><pre><code>1.以系统管理员身份运行cmd.　　2.查看mysql是否已经启动，如果已经启动，就停止：net stop mysql.　　3.切换到MySQL安装路径下：D:\WAMP\MySQL-5.6.36\bin；如果已经配了环境变量，可以不用切换了。　　4.在命令行输入：mysqld -nt --skip-grant-tables　　5.以管理员身份重新启动一个cmd命令窗口，输入：mysql -uroot -p，Enter进入数据库。　　6.如果不想改密码，只是想看原来的密码的话，可以在命令行执行这个语句    select host,user,password from mysql.user;//即可查看到用户和密码7.如果要修改密码的话，在命令行下 依次 执行下面的语句    use mysql    update user set password=password(&quot;new_pass&quot;) where user=&quot;root&quot;; &apos;new_pass&apos; 这里改为你要设置的密码    flush privileges;    exit  8.重新启动MYSQL，输入密码登录即可！</code></pre>]]></content>
       
       <categories>
           
@@ -494,9 +534,9 @@
       
         <tags>
             
-            <tag> Google插件 </tag>
-            
             <tag> vip视频观看 </tag>
+            
+            <tag> Google插件 </tag>
             
         </tags>
       
