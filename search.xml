@@ -3,6 +3,46 @@
   
     
     <entry>
+      <title>Spring的AOP</title>
+      <link href="/2019/01/15/springAOP/"/>
+      <content type="html"><![CDATA[<h2 id="1、springAOP"><a href="#1、springAOP" class="headerlink" title="1、springAOP"></a>1、springAOP</h2><pre><code>作用：      在程序运行期间，不修改源码对已有方法进行增强。 优势：      减少重复代码         提高开发效率        维护方便 </code></pre><h3 id="1-1-基于接口的动态代理"><a href="#1-1-基于接口的动态代理" class="headerlink" title="1.1 基于接口的动态代理"></a>1.1 基于接口的动态代理</h3><pre><code>提供者：JDK 官方的 Proxy 类。  要求：被代理类最少实现一个接口。 </code></pre><h3 id="1，2-基于子类的动态代理"><a href="#1，2-基于子类的动态代理" class="headerlink" title="1，2 基于子类的动态代理"></a>1，2 基于子类的动态代理</h3><pre><code>提供者：第三方的 CGLib，如果报 asmxxxx 异常，需要导入 asm.jar。要求：被代理类不能用 final 修饰的类（最终类）。 </code></pre>]]></content>
+      
+      <categories>
+          
+          <category> spring </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> spring </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>Spring的IOC</title>
+      <link href="/2019/01/09/springIOC/"/>
+      <content type="html"><![CDATA[<h2 id="1、Spring的IOC"><a href="#1、Spring的IOC" class="headerlink" title="1、Spring的IOC"></a>1、Spring的IOC</h2><h3 id="1-1、实例化-Bean-的三种方式"><a href="#1-1、实例化-Bean-的三种方式" class="headerlink" title="1.1、实例化 Bean 的三种方式"></a>1.1、实例化 Bean 的三种方式</h3><pre><code>第一种方式：使用默认无参构造函数（最为常用）    &lt;!--在默认情况下：    它会根据默认无参构造函数来创建类对象。如果 bean 中没有默认无参构造函数，将会创建失败。    &lt;bean id=&quot;accountService&quot; class=&quot;com.itheima.service.impl.AccountServiceImpl&quot;/&gt;</code></pre><a id="more"></a><pre><code>第二种方式：spring 管理静态工厂-使用静态工厂的方法创建对象    /**    * 模拟一个静态工厂，创建业务层实现类    */    public class StaticFactory {    public static IAccountService createAccountService(){    return new AccountServiceImpl();    }    }    &lt;!-- 此种方式是:    使用 StaticFactory 类中的静态方法 createAccountService 创建对象，并存入 spring 容器    id 属性：指定 bean 的 id，用于从容器中获取    class 属性：指定静态工厂的全限定类名    factory-method 属性：指定生产对象的静态方法    --&gt;    &lt;bean id=&quot;accountService&quot;     class=&quot;com.itheima.factory.StaticFactory&quot;     factory-method=&quot;createAccountService&quot;&gt;&lt;/bean&gt;第三种方式：spring 管理实例工厂-使用实例工厂的方法创建对象        /**        * 模拟一个实例工厂，创建业务层实现类        * 此工厂创建对象，必须现有工厂实例对象，再调用方法        */        public class InstanceFactory {        public IAccountService createAccountService(){        return new AccountServiceImpl();        }        }        &lt;!-- 此种方式是：        先把工厂的创建交给 spring 来管理。        然后在使用工厂的 bean 来调用里面的方法        factory-bean 属性：用于指定实例工厂 bean 的 id。        factory-method 属性：用于指定实例工厂中创建对象的方法。        --&gt;        &lt;bean id=&quot;instancFactory&quot; class=&quot;com.itheima.factory.InstanceFactory&quot;&gt;&lt;/bean&gt;        &lt;bean id=&quot;accountService&quot;         factory-bean=&quot;instancFactory&quot;         factory-method=&quot;createAccountService&quot;&gt;&lt;/bean&gt;</code></pre><h3 id="1-2、依赖注入（DI）的三种方式"><a href="#1-2、依赖注入（DI）的三种方式" class="headerlink" title="1.2、依赖注入（DI）的三种方式"></a>1.2、依赖注入（DI）的三种方式</h3><pre><code>第一种方式：构造函数注入    &lt;!-- 使用构造函数的方式，给 service 中的属性传值        要求：            类中需要提供一个对应参数列表的构造函数。        涉及的标签：            constructor-arg        属性：            index:指定参数在构造函数参数列表的索引位置            type:指定参数在构造函数中的数据类型            name:指定参数在构造函数中的名称 用这个找给谁赋值            =======上面三个都是找给谁赋值，下面两个指的是赋什么值的==============            value:它能赋的值是基本数据类型和 String 类型            ref:它能赋的值是其他 bean 类型，也就是说，必须得是在配置文件中配置过的 bean        --&gt;        &lt;bean id=&quot;accountService&quot; class=&quot;com.itheima.service.impl.AccountServiceImpl&quot;&gt;            &lt;constructor-arg name=&quot;name&quot; value=&quot;张三&quot;&gt;&lt;/constructor-arg&gt;            &lt;constructor-arg name=&quot;age&quot; value=&quot;18&quot;&gt;&lt;/constructor-arg&gt;            &lt;constructor-arg name=&quot;birthday&quot; ref=&quot;now&quot;&gt;&lt;/constructor-arg&gt;        &lt;/bean&gt;        &lt;bean id=&quot;now&quot; class=&quot;java.util.Date&quot;&gt;&lt;/bean&gt;第二种方式：set 方法注入    &lt;!-- 通过配置文件给 bean 中的属性传值：使用 set 方法的方式        涉及的标签：           property        属性：            name：找的是类中 set 方法后面的部分            ref：给属性赋值是其他 bean 类型的            value：给属性赋值是基本数据类型和 string 类型的            实际开发中，此种方式用的较多。        --&gt;        &lt;bean id=&quot;accountService&quot;  class=&quot;com.itheima.service.impl.AccountServiceImpl&quot;&gt;            &lt;property name=&quot;name&quot; value=&quot;test&quot;&gt;&lt;/property&gt;            &lt;property name=&quot;age&quot; value=&quot;21&quot;&gt;&lt;/property&gt;            &lt;property name=&quot;birthday&quot; ref=&quot;now&quot;&gt;&lt;/property&gt;        &lt;/bean&gt;        &lt;bean id=&quot;now&quot; class=&quot;java.util.Date&quot;&gt;&lt;/bean&gt;</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> spring </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> spring </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>有关servlet的几种面试题</title>
       <link href="/2018/12/06/javaEE_day13_Servlet/"/>
       <content type="html"><![CDATA[<h2 id="1、Post和Get的区别"><a href="#1、Post和Get的区别" class="headerlink" title="1、Post和Get的区别"></a>1、Post和Get的区别</h2><pre><code>Post:    请求参数在请求体中    请求的url的长度没有限制    较为安全Get：    亲求参数在请求行中    请求的url长度没有限制    相对不安全中文乱码问题：        * get方式：tomcat 8 已经将get方式乱码问题解决了        * post方式：会乱码            * 解决：在获取参数前，设置request的编码request.setCharacterEncoding(&quot;utf-8&quot;);</code></pre><a id="more"></a>    <h2 id="2、forward-和-redirect-区别"><a href="#2、forward-和-redirect-区别" class="headerlink" title="2、forward 和  redirect 区别"></a>2、forward 和  redirect 区别</h2><pre><code>* 重定向的特点:redirect            1. 地址栏发生变化            2. 重定向可以访问其他站点(服务器)的资源            3. 重定向是两次请求。不能使用request对象来共享数据* 转发的特点：forward            1. 转发地址栏路径不变            2. 转发只能访问当前服务器下的资源            3. 转发是一次请求，可以使用request对象来共享数据    </code></pre><h2 id="3、ServletContext对象："><a href="#3、ServletContext对象：" class="headerlink" title="3、ServletContext对象："></a>3、ServletContext对象：</h2><pre><code>1. 概念：代表整个web应用，可以和程序的容器(服务器)来通信2. 获取：    1. 通过request对象获取        request.getServletContext();    2. 通过HttpServlet获取        this.getServletContext();3. 功能：    1. 获取MIME类型：        * MIME类型:在互联网通信过程中定义的一种文件数据类型            * 格式： 大类型/小类型   text/html        image/jpeg        * 获取：String getMimeType(String file)      2. 域对象：共享数据        1. setAttribute(String name,Object value)        2. getAttribute(String name)        3. removeAttribute(String name)        * ServletContext对象范围：所有用户所有请求的数据    3. 获取文件的真实(服务器)路径        1. 方法：String getRealPath(String path)               String b = context.getRealPath(&quot;/b.txt&quot;);//web目录下资源访问             System.out.println(b);            String c = context.getRealPath(&quot;/WEB-INF/c.txt&quot;);//WEB-INF目录下的资源访问            System.out.println(c);            String a = context.getRealPath(&quot;/WEB-INF/classes/a.txt&quot;);//src目录下的资源访问            System.out.println(a);</code></pre><h2 id="4、session与Cookie的区别："><a href="#4、session与Cookie的区别：" class="headerlink" title="4、session与Cookie的区别："></a>4、session与Cookie的区别：</h2><pre><code>cookie能不能存中文？    * 在tomcat 8 之前 cookie中不能直接存储中文数据。        * 需要将中文数据转码---一般采用URL编码(%E3)    * 在tomcat 8 之后，cookie支持中文数据。特殊字符还是不支持，建议使用URL编码存储，URL解码解析session什么时候被销毁？    1. 服务器关闭    2. session对象调用invalidate() 。    3. session默认失效时间 30分钟        选择性配置修改：当前项目下的web.xml中：            &lt;session-config&gt;            &lt;session-timeout&gt;30&lt;/session-timeout&gt;        &lt;/session-config&gt;1. session存储数据在服务器端，Cookie在客户端2. session没有数据大小限制，Cookie有3. session数据安全，Cookie相对于不安全</code></pre>]]></content>
@@ -534,9 +574,9 @@
       
         <tags>
             
-            <tag> vip视频观看 </tag>
-            
             <tag> Google插件 </tag>
+            
+            <tag> vip视频观看 </tag>
             
         </tags>
       
