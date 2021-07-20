@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-05T08:16:58.000Z</updated>
+  <updated>2021-07-20T02:58:47.282Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>2021新篇章</title>
+    <link href="http://yoursite.com/2021/07/20/Hello/"/>
+    <id>http://yoursite.com/2021/07/20/Hello/</id>
+    <published>2021-07-20T02:58:47.281Z</published>
+    <updated>2021-07-20T02:58:47.282Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="启程"><a href="#启程" class="headerlink" title="启程"></a>启程</h2><p>&#160; &#160; &#160; &#160; Hello Word。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;启程&quot;&gt;&lt;a href=&quot;#启程&quot; class=&quot;headerlink&quot; title=&quot;启程&quot;&gt;&lt;/a&gt;启程&lt;/h2&gt;&lt;p&gt;&amp;#160; &amp;#160; &amp;#160; &amp;#160; Hello Word。&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+      <category term="往事" scheme="http://yoursite.com/categories/%E5%BE%80%E4%BA%8B/"/>
+    
+    
+      <category term="回忆录" scheme="http://yoursite.com/tags/%E5%9B%9E%E5%BF%86%E5%BD%95/"/>
+    
+  </entry>
   
   <entry>
     <title>爬取网站的种子链接并下载视频到本地</title>
@@ -568,31 +594,6 @@ Get：
     <summary type="html">
     
       &lt;h4 id=&quot;今天重新装了一遍MySQL，因为用的是免安装的，所以需要重新设置密码，然后我一通瞎几把设，结果搞得自己也忘了，没办法，只能重新搞一下，这是网上的方法。亲测可用！&quot;&gt;&lt;a href=&quot;#今天重新装了一遍MySQL，因为用的是免安装的，所以需要重新设置密码，然后我一通瞎几把设，结果搞得自己也忘了，没办法，只能重新搞一下，这是网上的方法。亲测可用！&quot; class=&quot;headerlink&quot; title=&quot;今天重新装了一遍MySQL，因为用的是免安装的，所以需要重新设置密码，然后我一通瞎几把设，结果搞得自己也忘了，没办法，只能重新搞一下，这是网上的方法。亲测可用！&quot;&gt;&lt;/a&gt;今天重新装了一遍MySQL，因为用的是免安装的，所以需要重新设置密码，然后我一通瞎几把设，结果搞得自己也忘了，没办法，只能重新搞一下，这是网上的方法。亲测可用！&lt;/h4&gt;&lt;p&gt;　　&lt;strong&gt;此处我用的是Mysql5.6写的方法，更高版本的MySQL用这个方法可能会有问题！！！&lt;/strong&gt;&lt;br&gt;
-    
-    </summary>
-    
-      <category term="javaEE" scheme="http://yoursite.com/categories/javaEE/"/>
-    
-    
-      <category term="java_mysql" scheme="http://yoursite.com/tags/java-mysql/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Mysql之面试笔记</title>
-    <link href="http://yoursite.com/2021/07/18/javaEE_day10_Mysql/"/>
-    <id>http://yoursite.com/2021/07/18/javaEE_day10_Mysql/</id>
-    <published>2021-07-18T01:44:26.432Z</published>
-    <updated>2018-11-15T10:59:16.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="有关where和having的区别"><a href="#有关where和having的区别" class="headerlink" title="有关where和having的区别"></a>有关where和having的区别</h2><p>（1）：where 在分组之前进行限定，如果不满足条件，则不参与分组。having在分组之后进行限定，如果不满足结果，则不会被查询出来</p><p>（2）：where 后不可以跟聚合函数，having可以进行聚合函数的判断。</p><h2 id="事务的四大特征"><a href="#事务的四大特征" class="headerlink" title="事务的四大特征"></a>事务的四大特征</h2><p>（1）原子性：是不可分割的最小操作单位，要么同时成功，要么同时失败。</p><p>（2）持久性：当事务提交或回滚后，数据库会持久化的保存数据。</p><p>（3）隔离性：多个事务之间。相互独立。</p><p>（4）一致性：事务操作前后，数据总量不变</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;有关where和having的区别&quot;&gt;&lt;a href=&quot;#有关where和having的区别&quot; class=&quot;headerlink&quot; title=&quot;有关where和having的区别&quot;&gt;&lt;/a&gt;有关where和having的区别&lt;/h2&gt;&lt;p&gt;（1）：where 
-      
     
     </summary>
     
