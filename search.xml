@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>HashMap 与 ConcurrentHashMap 的实现原理是怎样的？ConcurrentHashMap 是如何保证线程安全的？</title>
+      <link href="/2022/05/11/%E9%9D%A2%E8%AF%95%E9%A2%98-HashMap/"/>
+      <url>/2022/05/11/%E9%9D%A2%E8%AF%95%E9%A2%98-HashMap/</url>
+      
+        <content type="html"><![CDATA[<p><a href="https://osjobs.net/topk/all/" title="Java面试题" target="_blank" rel="noopener">TopK面试题</a></p><h2 id="1、HashMap的底层数据结构？"><a href="#1、HashMap的底层数据结构？" class="headerlink" title="1、HashMap的底层数据结构？"></a>1、HashMap的底层数据结构？</h2><pre><code>HashMap底层数据结构 JDK1.7：数组+链表 JDK1.8：数组+链表+红黑树。每个数组都会有Key-value的值。java7是Entry，java8是Node。当链表长度大于8并且数组的长度大于64会转换为红黑树。</code></pre><a id="more"></a><h2 id="2、HashMap的存取原理？"><a href="#2、HashMap的存取原理？" class="headerlink" title="2、HashMap的存取原理？"></a>2、HashMap的存取原理？</h2><ul><li><p>put</p><p>  1）通过hash(Object key)算法得到hash值；</p><p>  2）判断table是否为null或者长度为0，如果是执行resize()进行扩容；</p><p>  3）通过hash值以及table数组长度得到插入的数组索引i，判断数组table[i]是否为空或为null；</p><p>  4）如果table[i] == null，直接新建节点添加，转向 8），如果table[i]不为空，转向 5）；</p><p>  5）判断table[i]的首个元素是否和key一样，如果相同直接覆盖value，这里的相同指的是hashCode以及equals，否则转向 6）；</p><p>  6）判断table[i] 是否为treeNode，即table[i] 是否是红黑树，如果是红黑树，则直接在树中插入键值对，否则转7）；</p><p>  7）遍历table[i]，判断链表长度是否大于8，大于8的话把链表转换为红黑树，在红黑树中执行插入操作，否则进行链表的插入操作；遍历过程中若发现key已经存在直接覆盖value即可；</p><p>  8）插入成功后，判断实际存在的键值对数量size是否超多了最大容量threshold，如果超过，进行扩容。</p></li><li><p>get</p><p>  我们先简单说一下get(Object key)流程，通过传入的key通过hash()算法得到hash值，在通过(n - 1) &amp; hash找到数组下标，如果数组下标所对应的node值正好key一样就返回，否则找到node.next找到下一个节点，看是否是treenNode，如果是，遍历红黑树找到对应node，如果不是遍历链表找到node</p></li></ul><h2 id="3、Java7和Java8的区别？"><a href="#3、Java7和Java8的区别？" class="headerlink" title="3、Java7和Java8的区别？"></a>3、Java7和Java8的区别？</h2><pre><code>共同点1.容量(capacity):容量为底层数组的长度,JDK7中为Entry数组,JDK8中为Node数组 a. 容量一定为2的次幂2.加载因子(Load factor)：HashMap在其容量自动增加前可达到多满的一种尺度 a. 默认加载因子 = 0.753.扩容机制：扩容时resize(2 * table.length)，扩容到原数组长度的2倍。4.key为null:若key == null，则hash(key) = 0，则将该键-值 存放到数组table 中的第1个位置，即table [0]不同点1.发生hash冲突时 JDK7:发生hash冲突时，新元素插入到链表头中，即新元素总是添加到数组中，就元素移动到链表中。 JDK8：发生hash冲突后，会优先判断该节点的数据结构式是红黑树还是链表，如果是红黑树，则在红黑树中插入数据；如果是链表，则将数据插入到链表的尾部并判断链表长度是否大于8，如果大于8要转成红黑树。2.扩容时 JDK7:在扩容resize（）过程中，采用单链表的头插入方式，在将旧数组上的数据 转移到 新数组上时，转移操作 = 按旧链表的正序遍历链表、在新链表的头部依次插入，即在转移数据、扩容后，容易出现链表逆序的情况 。 多线程下resize()容易出现死循环。此时若（多线程）并发执行 put（）操作，一旦出现扩容情况，则 容易出现 环形链表，从而在获取数据、遍历链表时 形成死循环（Infinite Loop），即 死锁的状态 。</code></pre><h2 id="4、为啥会线程不安全？"><a href="#4、为啥会线程不安全？" class="headerlink" title="4、为啥会线程不安全？"></a>4、为啥会线程不安全？</h2><pre><code>在jdk1.8中对HashMap进行了优化，在发生hash碰撞，不再采用头插法方式，而是直接插入链表尾部，因此不会出现环形链表的情况，但是在多线程的情况下仍然不安全，这里我们看jdk1.8中HashMap的put操作源码：</code></pre><h2 id="5、默认初始化大小是多少？为啥是这么多？为啥大小都是2的幂？"><a href="#5、默认初始化大小是多少？为啥是这么多？为啥大小都是2的幂？" class="headerlink" title="5、默认初始化大小是多少？为啥是这么多？为啥大小都是2的幂？"></a>5、默认初始化大小是多少？为啥是这么多？为啥大小都是2的幂？</h2><pre><code>原因有两点：1.加快哈希运算 2.减少哈希冲突1.加快哈希运算我们都知道比如向hashMap中存入一个值,通常做法是对这个值求hashCode()得到一个数hash,然后在用hash对集合长度求余数,也就是 hash%length=positon得到的结果就是存放的位置。但是求余%的运算效率比较低。有没有更快的运算呢？答案是使用&amp;运算。但是使用&amp;运算怎么样才能和使用%效果一样呢？那就是，当HashMap的长度为2的幂的时候一下公式就成立了:hash%length==hash&amp;(length-1)。所以就可以使用&amp;运算来求位置下标了。2.减少哈希冲突,保证数据分散使用2的幂为长度，则length-1后为奇数，该奇数转为2进制后最后一位肯定是1。假如长度为4,则长度-1为3,再转为2进制==0000011，该值与任何hash做&amp;运算都会形成==奇数==或者==偶数==两种情况,保证数据时分散的。可能有人会想这有什么用？那么我们假如长度不是4而是3，则3-1为2,再转为2进制==0000010，该值与任何hash做&amp;运算都会形成==偶数==,那也就是说我的奇数的下标都不能用了。这样就不仅浪费一般的空间，而且增加了hash冲突的概率.</code></pre><h2 id="6、HashMap的扩容方式？负载因子是多少？为什是这么多？"><a href="#6、HashMap的扩容方式？负载因子是多少？为什是这么多？" class="headerlink" title="6、HashMap的扩容方式？负载因子是多少？为什是这么多？"></a>6、HashMap的扩容方式？负载因子是多少？为什是这么多？</h2><pre><code>为什么负载因子是0.75也是一个综合考虑，如果设置过小，HashMap每put少量的数据，都要进行一次扩容，而扩容操作会消耗大量的性能。如果设置过大的话，如果设成1，容量还是16，假设现在数组上已经占用的15个，再要put数据进来，计算数组index时，发生hash碰撞的概率将达到15/16，这违背的HashMap减少hash碰撞的原则。</code></pre><h2 id="7、HashMap的主要参数都有哪些？"><a href="#7、HashMap的主要参数都有哪些？" class="headerlink" title="7、HashMap的主要参数都有哪些？"></a>7、HashMap的主要参数都有哪些？</h2><pre><code>1.DEFAULT_INITIAL_CAPACITY缺省table大小（也就是说table长度为指定时table的默认值）2.MAXIMUM_CAPACITYtable最大长度3.DEFAULT_LOAD_FACTOR缺省负载因子大小（默认为0.75）4.TREEIFY_THRESHOLD=8树化阈值（也就是说table的node中的链表长度超过这个阈值的时候，该链表会变成树）5.UNTREEIFY_THRESHOLD=6树降级成为链表的阈值（也就是说table的node中的树长度低于这个阈值的时候，树会变成链表）6.MIN_TREEIFY_CAPACITY=64树化的另一个参数，就是当hashmap中的node的个数大于这个值的时候，hashmap中的有些链表才会变成树。这里纠正一个误区，并不是说hashmap中的某个node链表长度大于8就一定会变成树，而是说整个hashmap的node数量大于64，node的链表长度大于8才会变成树</code></pre><h2 id="8、HashMap是怎么处理hash碰撞的？"><a href="#8、HashMap是怎么处理hash碰撞的？" class="headerlink" title="8、HashMap是怎么处理hash碰撞的？"></a>8、HashMap是怎么处理hash碰撞的？</h2><pre><code>1. 使用链地址法（使用散列表）来链接拥有相同hash值的数据；2. 使用2次扰动函数（hash函数）来降低哈希冲突的概率，使得数据分布更平均；3. 引入红黑树进一步降低遍历的时间复杂度，使得遍历更快； </code></pre><h2 id="9、hash的计算规则？"><a href="#9、hash的计算规则？" class="headerlink" title="9、hash的计算规则？"></a>9、hash的计算规则？</h2><pre><code>static final int hash(Object key) {    int h;    return (key == null) ? 0 : (h = key.hashCode()) ^ (h &gt;&gt;&gt; 16);//key如果是null 新hashcode是0 否则 计算新的hashcode}</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 面试题 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 面试题 </tag>
+            
+            <tag> Map </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Java 中垃圾回收机制中如何判断对象需要回收？常见的 GC 回收算法有哪些？</title>
       <link href="/2022/05/06/%E9%9D%A2%E8%AF%95%E9%A2%98-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/"/>
       <url>/2022/05/06/%E9%9D%A2%E8%AF%95%E9%A2%98-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/</url>
