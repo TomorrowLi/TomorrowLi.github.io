@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -36,8 +36,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -56,7 +56,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -64,9 +64,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css">
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
@@ -84,13 +84,13 @@
 
 
 
-  <meta name="keywords" content="面试题,Map,">
+  <meta name="keywords" content="Map,面试题," />
 
 
 
 
 
-  <link rel="alternate" href="/atom.xml" title="TomorrowLi's Blog" type="application/atom+xml">
+  <link rel="alternate" href="/atom.xml" title="TomorrowLi's Blog" type="application/atom+xml" />
 
 
 
@@ -107,24 +107,25 @@
     })();
 </script>
 <meta name="description" content="TopK面试题 1、HashMap的底层数据结构？HashMap底层数据结构 JDK1.7：数组+链表 JDK1.8：数组+链表+红黑树。每个数组都会有Key-value的值。java7是Entry，java8是Node。当链表长度大于8并且数组的长度大于64会转换为红黑树。">
-<meta name="keywords" content="面试题,Map">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HashMap 与 ConcurrentHashMap 的实现原理是怎样的？ConcurrentHashMap 是如何保证线程安全的？">
-<meta property="og:url" content="http://yoursite.com/2022/05/11/面试题-HashMap/index.html">
+<meta property="og:url" content="http://yoursite.com/2022/05/11/%E9%9D%A2%E8%AF%95%E9%A2%98-HashMap/index.html">
 <meta property="og:site_name" content="TomorrowLi&#39;s Blog">
 <meta property="og:description" content="TopK面试题 1、HashMap的底层数据结构？HashMap底层数据结构 JDK1.7：数组+链表 JDK1.8：数组+链表+红黑树。每个数组都会有Key-value的值。java7是Entry，java8是Node。当链表长度大于8并且数组的长度大于64会转换为红黑树。">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2022-05-11T07:09:10.591Z">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-05-11T03:14:20.861Z">
+<meta property="article:modified_time" content="2022-05-11T07:09:10.591Z">
+<meta property="article:author" content="TomorrowLi">
+<meta property="article:tag" content="Map">
+<meta property="article:tag" content="面试题">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HashMap 与 ConcurrentHashMap 的实现原理是怎样的？ConcurrentHashMap 是如何保证线程安全的？">
-<meta name="twitter:description" content="TopK面试题 1、HashMap的底层数据结构？HashMap底层数据结构 JDK1.7：数组+链表 JDK1.8：数组+链表+红黑树。每个数组都会有Key-value的值。java7是Entry，java8是Node。当链表长度大于8并且数组的长度大于64会转换为红黑树。">
 
 
 
 <script type="text/javascript" id="hexo.configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
-    root: '/',
+    root: '',
     scheme: 'Mist',
     version: '5.1.3',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
@@ -147,7 +148,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2022/05/11/面试题-HashMap/">
+  <link rel="canonical" href="http://yoursite.com/2022/05/11/面试题-HashMap/"/>
 
 
 
@@ -163,7 +164,7 @@
 
 
 
-</head>
+<meta name="generator" content="Hexo 5.4.2"><style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -174,14 +175,14 @@
 
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
-    <a href="https://github.com/TomorrowLi" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <a target="_blank" rel="noopener" href="https://github.com/TomorrowLi" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
+      <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">TomorrowLi's Blog</span>
         <span class="logo-line-after"><i></i></span>
@@ -209,9 +210,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
+          <a href="/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首页
           </a>
@@ -219,9 +220,9 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
+          <a href="/about/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
             关于
           </a>
@@ -229,9 +230,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
+          <a href="/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             标签
           </a>
@@ -239,9 +240,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
+          <a href="/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分类
           </a>
@@ -249,9 +250,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
+          <a href="/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             归档
           </a>
@@ -264,7 +265,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             搜索
           </a>
@@ -285,7 +286,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -322,11 +325,11 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/05/11/面试题-HashMap/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/05/11/%E9%9D%A2%E8%AF%95%E9%A2%98-HashMap/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="TomorrowLi">
-      <meta itemprop="description" content>
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
@@ -362,7 +365,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -374,7 +377,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/面试题/" itemprop="url" rel="index">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index">
                     <span itemprop="name">面试题</span>
                   </a>
                 </span>
@@ -442,9 +445,9 @@
       
 
       
-        <p><a href="https://osjobs.net/topk/all/" title="Java面试题" target="_blank" rel="noopener">TopK面试题</a></p>
+        <p><a target="_blank" rel="noopener" href="https://osjobs.net/topk/all/" title="Java面试题">TopK面试题</a></p>
 <h2 id="1、HashMap的底层数据结构？"><a href="#1、HashMap的底层数据结构？" class="headerlink" title="1、HashMap的底层数据结构？"></a>1、HashMap的底层数据结构？</h2><pre><code>HashMap底层数据结构 JDK1.7：数组+链表 JDK1.8：数组+链表+红黑树。每个数组都会有Key-value的值。java7是Entry，java8是Node。当链表长度大于8并且数组的长度大于64会转换为红黑树。
-</code></pre><a id="more"></a>
+</code></pre><span id="more"></span>
 <h2 id="2、HashMap的存取原理？"><a href="#2、HashMap的存取原理？" class="headerlink" title="2、HashMap的存取原理？"></a>2、HashMap的存取原理？</h2><ul>
 <li><p>put</p>
 <p>  1）通过hash(Object key)算法得到hash值；</p>
@@ -514,10 +517,10 @@ table最大长度
 2. 使用2次扰动函数（hash函数）来降低哈希冲突的概率，使得数据分布更平均；
 
 3. 引入红黑树进一步降低遍历的时间复杂度，使得遍历更快； 
-</code></pre><h2 id="9、hash的计算规则？"><a href="#9、hash的计算规则？" class="headerlink" title="9、hash的计算规则？"></a>9、hash的计算规则？</h2><pre><code>static final int hash(Object key) {
+</code></pre><h2 id="9、hash的计算规则？"><a href="#9、hash的计算规则？" class="headerlink" title="9、hash的计算规则？"></a>9、hash的计算规则？</h2><pre><code>static final int hash(Object key) &#123;
     int h;
     return (key == null) ? 0 : (h = key.hashCode()) ^ (h &gt;&gt;&gt; 16);//key如果是null 新hashcode是0 否则 计算新的hashcode
-}
+&#125;
 </code></pre>
       
     </div>
@@ -540,14 +543,14 @@ table最大长度
 
     
       <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" src="/images/weixing.png" alt="TomorrowLi 微信支付">
+        <img id="wechat_qr" src="/images/weixing.png" alt=" 微信支付"/>
         <p>微信支付</p>
       </div>
     
 
     
       <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" src="/images/zhifu.jpg" alt="TomorrowLi 支付宝">
+        <img id="alipay_qr" src="/images/zhifu.jpg" alt=" 支付宝"/>
         <p>支付宝</p>
       </div>
     
@@ -566,9 +569,9 @@ table最大长度
       
         <div class="post-tags">
           
-            <a href="/tags/面试题/" rel="tag"><i class="fa fa-tag"></i>面试题</a>
-          
             <a href="/tags/Map/" rel="tag"><i class="fa fa-tag"></i>Map</a>
+          
+            <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag"><i class="fa fa-tag"></i>面试题</a>
           
         </div>
       
@@ -581,7 +584,7 @@ table最大长度
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2022/05/06/面试题-垃圾回收/" rel="next" title="Java 中垃圾回收机制中如何判断对象需要回收？常见的 GC 回收算法有哪些？">
+              <a href="/2022/05/06/%E9%9D%A2%E8%AF%95%E9%A2%98-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" rel="next" title="Java 中垃圾回收机制中如何判断对象需要回收？常见的 GC 回收算法有哪些？">
                 <i class="fa fa-chevron-left"></i> Java 中垃圾回收机制中如何判断对象需要回收？常见的 GC 回收算法有哪些？
               </a>
             
@@ -623,7 +626,7 @@ table最大长度
 <a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
 <a class="jiathis_counter_style"></a>
 </div>
-<script type="text/javascript">
+<script type="text/javascript" >
 var jiathis_config={
   data_track_clickback:true,
   summary:"",
@@ -681,9 +684,11 @@ var jiathis_config={
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="TomorrowLi">
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="" />
             
-              <p class="site-author-name" itemprop="name">TomorrowLi</p>
+              <p class="site-author-name" itemprop="name"></p>
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
 
@@ -692,7 +697,7 @@ var jiathis_config={
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/">
+                <a href="/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">日志</span>
@@ -820,7 +825,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、HashMap的底层数据结构？"><span class="nav-number">1.</span> <span class="nav-text">1、HashMap的底层数据结构？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、HashMap的存取原理？"><span class="nav-number">2.</span> <span class="nav-text">2、HashMap的存取原理？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、Java7和Java8的区别？"><span class="nav-number">3.</span> <span class="nav-text">3、Java7和Java8的区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、为啥会线程不安全？"><span class="nav-number">4.</span> <span class="nav-text">4、为啥会线程不安全？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5、默认初始化大小是多少？为啥是这么多？为啥大小都是2的幂？"><span class="nav-number">5.</span> <span class="nav-text">5、默认初始化大小是多少？为啥是这么多？为啥大小都是2的幂？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6、HashMap的扩容方式？负载因子是多少？为什是这么多？"><span class="nav-number">6.</span> <span class="nav-text">6、HashMap的扩容方式？负载因子是多少？为什是这么多？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7、HashMap的主要参数都有哪些？"><span class="nav-number">7.</span> <span class="nav-text">7、HashMap的主要参数都有哪些？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8、HashMap是怎么处理hash碰撞的？"><span class="nav-number">8.</span> <span class="nav-text">8、HashMap是怎么处理hash碰撞的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9、hash的计算规则？"><span class="nav-number">9.</span> <span class="nav-text">9、hash的计算规则？</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81HashMap%E7%9A%84%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">1、HashMap的底层数据结构？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81HashMap%E7%9A%84%E5%AD%98%E5%8F%96%E5%8E%9F%E7%90%86%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">2、HashMap的存取原理？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81Java7%E5%92%8CJava8%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">3、Java7和Java8的区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81%E4%B8%BA%E5%95%A5%E4%BC%9A%E7%BA%BF%E7%A8%8B%E4%B8%8D%E5%AE%89%E5%85%A8%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">4、为啥会线程不安全？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%E3%80%81%E9%BB%98%E8%AE%A4%E5%88%9D%E5%A7%8B%E5%8C%96%E5%A4%A7%E5%B0%8F%E6%98%AF%E5%A4%9A%E5%B0%91%EF%BC%9F%E4%B8%BA%E5%95%A5%E6%98%AF%E8%BF%99%E4%B9%88%E5%A4%9A%EF%BC%9F%E4%B8%BA%E5%95%A5%E5%A4%A7%E5%B0%8F%E9%83%BD%E6%98%AF2%E7%9A%84%E5%B9%82%EF%BC%9F"><span class="nav-number">5.</span> <span class="nav-text">5、默认初始化大小是多少？为啥是这么多？为啥大小都是2的幂？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6%E3%80%81HashMap%E7%9A%84%E6%89%A9%E5%AE%B9%E6%96%B9%E5%BC%8F%EF%BC%9F%E8%B4%9F%E8%BD%BD%E5%9B%A0%E5%AD%90%E6%98%AF%E5%A4%9A%E5%B0%91%EF%BC%9F%E4%B8%BA%E4%BB%80%E6%98%AF%E8%BF%99%E4%B9%88%E5%A4%9A%EF%BC%9F"><span class="nav-number">6.</span> <span class="nav-text">6、HashMap的扩容方式？负载因子是多少？为什是这么多？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7%E3%80%81HashMap%E7%9A%84%E4%B8%BB%E8%A6%81%E5%8F%82%E6%95%B0%E9%83%BD%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-number">7.</span> <span class="nav-text">7、HashMap的主要参数都有哪些？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8%E3%80%81HashMap%E6%98%AF%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86hash%E7%A2%B0%E6%92%9E%E7%9A%84%EF%BC%9F"><span class="nav-number">8.</span> <span class="nav-text">8、HashMap是怎么处理hash碰撞的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9%E3%80%81hash%E7%9A%84%E8%AE%A1%E7%AE%97%E8%A7%84%E5%88%99%EF%BC%9F"><span class="nav-number">9.</span> <span class="nav-text">9、hash的计算规则？</span></a></li></ol></div>
             
 
           </div>
