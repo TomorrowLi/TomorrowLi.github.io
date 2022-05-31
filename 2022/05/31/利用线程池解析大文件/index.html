@@ -84,7 +84,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="线程池," />
 
 
 
@@ -106,12 +106,17 @@
         }
     })();
 </script>
-<meta property="og:type" content="website">
-<meta property="og:title" content="TomorrowLi&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/tags/javaEE/index.html">
+<meta name="description" content="ReadFileThread   public class ReadFileThread extends Thread &amp;#123;   private ReaderFileListener processPoiDataListeners;  private String filePath;  private long start;  private long end;   public Rea">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用线程池解析大文件">
+<meta property="og:url" content="http://yoursite.com/2022/05/31/%E5%88%A9%E7%94%A8%E7%BA%BF%E7%A8%8B%E6%B1%A0%E8%A7%A3%E6%9E%90%E5%A4%A7%E6%96%87%E4%BB%B6/index.html">
 <meta property="og:site_name" content="TomorrowLi&#39;s Blog">
+<meta property="og:description" content="ReadFileThread   public class ReadFileThread extends Thread &amp;#123;   private ReaderFileListener processPoiDataListeners;  private String filePath;  private long start;  private long end;   public Rea">
 <meta property="og:locale">
+<meta property="article:published_time" content="2022-05-31T06:31:26.285Z">
+<meta property="article:modified_time" content="2022-05-31T06:41:27.464Z">
 <meta property="article:author" content="TomorrowLi">
+<meta property="article:tag" content="线程池">
 <meta name="twitter:card" content="summary">
 
 
@@ -142,13 +147,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/javaEE/"/>
+  <link rel="canonical" href="http://yoursite.com/2022/05/31/利用线程池解析大文件/"/>
 
 
 
 
 
-  <title>标签: javaEE | TomorrowLi's Blog</title>
+  <title>利用线程池解析大文件 | TomorrowLi's Blog</title>
   
 
 
@@ -167,7 +172,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
     <a target="_blank" rel="noopener" href="https://github.com/TomorrowLi" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -305,278 +310,603 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block tag">
-
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>javaEE<small>标签</small>
-        </h1>
-      </div>
-
-      
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/05/31/%E5%88%A9%E7%94%A8%E7%BA%BF%E7%A8%8B%E6%B1%A0%E8%A7%A3%E6%9E%90%E5%A4%A7%E6%96%87%E4%BB%B6/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TomorrowLi's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2021/07/18/javaEE_day09_Stream/" itemprop="url">
-              
-                <span itemprop="name">javaEE之有关Stream流的几种操作方式</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">利用线程池解析大文件</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-07-18T09:44:26+08:00"
-              content="2021-07-18" >
-          07-18
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-31T14:31:26+08:00">
+                2022-05-31
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BA%BF%E7%A8%8B%E6%B1%A0/" itemprop="url" rel="index">
+                    <span itemprop="name">线程池</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,287
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/07/18/javaEE_day08_Thread/" itemprop="url">
-              
-                <span itemprop="name">javaEE之有关线程的问题</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-07-18T09:44:26+08:00"
-              content="2021-07-18" >
-          07-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
+        <ol>
+<li><p><strong>ReadFileThread</strong></p>
+<pre><code>  public class ReadFileThread extends Thread &#123;
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+ private ReaderFileListener processPoiDataListeners;
+ private String filePath;
+ private long start;
+ private long end;
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/07/18/javaEE_day07_Collection/" itemprop="url">
-              
-                <span itemprop="name">java有关线程的几种区别</span>
-              
-            </a>
-        
-      </h2>
+ public ReadFileThread(ReaderFileListener processPoiDataListeners,long start,long end,String file) &#123;
+     this.setName(this.getName()+&quot;-ReadFileThread&quot;);
+     System.out.println(this.getName());
+     this.start = start;
+     this.end = end;
+     this.filePath = file;
+     this.processPoiDataListeners = processPoiDataListeners;
+ &#125;
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-07-18T09:44:26+08:00"
-              content="2021-07-18" >
-          07-18
-        </time>
-      </div>
+ @Override
+ public void run() &#123;
+     ReadFile readFile = new ReadFile();
+     readFile.setReaderListener(processPoiDataListeners);
+     readFile.setEncode(processPoiDataListeners.getEncode());
+ //  readFile.addObserver();
+     try &#123;
+         readFile.readFileByLine(filePath, start, end + 1);
+     &#125; catch (Exception e) &#123;
+         e.printStackTrace();
+     &#125;
+ &#125;
+</code></pre><p>}</p>
+</li>
+</ol>
+<span id="more"></span>
+<ol>
+<li><p><strong>ReadFile</strong></p>
+<pre><code>   import java.io.*;
+ import java.nio.ByteBuffer;
+ import java.nio.channels.FileChannel;
+ import java.util.Observable;
 
-    </header>
-  </article>
+ /**
+  * @author: LiMing
+  * @since: 2022/5/27 17:43
+  **/
+ public class ReadFile extends Observable &#123;
 
+ private int bufSize = 1024;
+ // 换行符
+ private byte key = &quot;\n&quot;.getBytes()[0];
+ // 当前行数
+ private long lineNum = 0;
+ // 文件编码,默认为gb2312
+ private String encode = &quot;gb2312&quot;;
+ // 具体业务逻辑监听器
+ private ReaderFileListener readerListener;
 
-      
-        
+ public void setEncode(String encode) &#123;
+     this.encode = encode;
+ &#125;
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+ public void setReaderListener(ReaderFileListener readerListener) &#123;
+     this.readerListener = readerListener;
+ &#125;
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/07/18/javaEE_day06_ListAndSet/" itemprop="url">
-              
-                <span itemprop="name">javaEE之Set集合和List集合的区别</span>
-              
-            </a>
-        
-      </h2>
+ /**
+  * 获取准确开始位置
+  * @param file
+  * @param position
+  * @return
+  * @throws Exception
+  */
+ public long getStartNum(File file, long position) throws Exception &#123;
+     long startNum = position;
+     FileChannel fcin = new RandomAccessFile(file, &quot;r&quot;).getChannel();
+     fcin.position(position);
+     try &#123;
+         int cache = 1024;
+         ByteBuffer rBuffer = ByteBuffer.allocate(cache);
+         // 每次读取的内容
+         byte[] bs = new byte[cache];
+         // 缓存
+         byte[] tempBs = new byte[0];
+         String line = &quot;&quot;;
+         while (fcin.read(rBuffer) != -1) &#123;
+             int rSize = rBuffer.position();
+             rBuffer.rewind();
+             rBuffer.get(bs);
+             rBuffer.clear();
+             byte[] newStrByte = bs;
+             // 如果发现有上次未读完的缓存,则将它加到当前读取的内容前面
+             if (null != tempBs) &#123;
+                 int tL = tempBs.length;
+                 newStrByte = new byte[rSize + tL];
+                 System.arraycopy(tempBs, 0, newStrByte, 0, tL);
+                 System.arraycopy(bs, 0, newStrByte, tL, rSize);
+             &#125;
+             // 获取开始位置之后的第一个换行符
+             int endIndex = indexOf(newStrByte, 0);
+             if (endIndex != -1) &#123;
+                 return startNum + endIndex;
+             &#125;
+             tempBs = substring(newStrByte, 0, newStrByte.length);
+             startNum += 1024;
+         &#125;
+     &#125; catch (Exception e) &#123;
+         e.printStackTrace();
+     &#125; finally &#123;
+         fcin.close();
+     &#125;
+     return position;
+ &#125;
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-07-18T09:44:26+08:00"
-              content="2021-07-18" >
-          07-18
-        </time>
-      </div>
+ /**
+  * 从设置的开始位置读取文件，一直到结束为止。如果 end设置为负数,刚读取到文件末尾
+  * @param fullPath
+  * @param start
+  * @param end
+  * @throws Exception
+  */
+ public void readFileByLine(String fullPath, long start, long end) throws Exception &#123;
+     File fin = new File(fullPath);
+     if (fin.exists()) &#123;
+         FileChannel fcin = new RandomAccessFile(fin, &quot;r&quot;).getChannel();
+         fcin.position(start);
+         try &#123;
+             ByteBuffer rBuffer = ByteBuffer.allocate(bufSize);
+             // 每次读取的内容
+             byte[] bs = new byte[bufSize];
+             // 缓存
+             byte[] tempBs = new byte[0];
+             String line = &quot;&quot;;
+             // 当前读取文件位置
+             long nowCur = start;
+             while (fcin.read(rBuffer) != -1) &#123;
+                 nowCur += bufSize;
 
-    </header>
-  </article>
+                 int rSize = rBuffer.position();
+                 rBuffer.rewind();
+                 rBuffer.get(bs);
+                 rBuffer.clear();
+                 byte[] newStrByte = bs;
+                 // 如果发现有上次未读完的缓存,则将它加到当前读取的内容前面
+                 if (null != tempBs) &#123;
+                     int tL = tempBs.length;
+                     newStrByte = new byte[rSize + tL];
+                     System.arraycopy(tempBs, 0, newStrByte, 0, tL);
+                     System.arraycopy(bs, 0, newStrByte, tL, rSize);
+                 &#125;
+                 // 是否已经读到最后一位
+                 boolean isEnd = false;
+                 // 如果当前读取的位数已经比设置的结束位置大的时候，将读取的内容截取到设置的结束位置
+                 if (end &gt; 0 &amp;&amp; nowCur &gt; end) &#123;
+                     // 缓存长度 - 当前已经读取位数 - 最后位数
+                     int l = newStrByte.length - (int) (nowCur - end);
+                     newStrByte = substring(newStrByte, 0, l);
+                     isEnd = true;
+                 &#125;
+                 int fromIndex = 0;
+                 int endIndex = 0;
+                 // 每次读一行内容，以 key（默认为\n） 作为结束符
+                 while ((endIndex = indexOf(newStrByte, fromIndex)) != -1) &#123;
+                     byte[] bLine = substring(newStrByte, fromIndex, endIndex);
+                     line = new String(bLine, 0, bLine.length, encode);
+                     lineNum++;
+                     // 输出一行内容，处理方式由调用方提供
+                     readerListener.outLine(line.trim(), lineNum, false);
+                     fromIndex = endIndex + 1;
+                 &#125;
+                 // 将未读取完成的内容放到缓存中
+                 tempBs = substring(newStrByte, fromIndex, newStrByte.length);
+                 if (isEnd) &#123;
+                     break;
+                 &#125;
+             &#125;
+             // 将剩下的最后内容作为一行，输出，并指明这是最后一行
+             String lineStr = new String(tempBs, 0, tempBs.length, encode);
+             readerListener.outLine(lineStr.trim(), lineNum, true);
+         &#125; catch (Exception e) &#123;
+             e.printStackTrace();
+         &#125; finally &#123;
+             fcin.close();
+         &#125;
 
+     &#125; else &#123;
+         throw new FileNotFoundException(&quot;没有找到文件：&quot; + fullPath);
+     &#125;
+     // 通知观察者,当前工作已经完成
+     setChanged();
+     notifyObservers(start+&quot;-&quot;+end);
+ &#125;
 
-      
-        
+ /**
+  * 查找一个byte[]从指定位置之后的一个换行符位置
+  *
+  * @param src
+  * @param fromIndex
+  * @return
+  * @throws Exception
+  */
+ private int indexOf(byte[] src, int fromIndex) throws Exception &#123;
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+     for (int i = fromIndex; i &lt; src.length; i++) &#123;
+         if (src[i] == key) &#123;
+             return i;
+         &#125;
+     &#125;
+     return -1;
+ &#125;
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/07/18/javaEE_day05_Inteage/" itemprop="url">
-              
-                <span itemprop="name">javaEE之Integer的自动装箱和自动拆箱</span>
-              
-            </a>
-        
-      </h2>
+ /**
+  * 从指定开始位置读取一个byte[]直到指定结束位置为止生成一个全新的byte[]
+  *
+  * @param src
+  * @param fromIndex
+  * @param endIndex
+  * @return
+  * @throws Exception
+  */
+ private byte[] substring(byte[] src, int fromIndex, int endIndex) throws Exception &#123;
+     int size = endIndex - fromIndex;
+     byte[] ret = new byte[size];
+     System.arraycopy(src, fromIndex, ret, 0, size);
+     return ret;
+ &#125;
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-07-18T09:44:26+08:00"
-              content="2021-07-18" >
-          07-18
-        </time>
-      </div>
+ &#125;
+</code></pre></li>
+</ol>
+<ol>
+<li><p><strong>ReaderFileListener:</strong></p>
+<pre><code> // 一次读取行数，默认为500
+ private int readColNum = 500;
 
-    </header>
-  </article>
+ private String encode;
 
+ private List&lt;String&gt; list = new ArrayList&lt;String&gt;();
 
-      
-        
+ /**
+  * 设置一次读取行数
+  * @param readColNum
+  */
+ protected void setReadColNum(int readColNum) &#123;
+     this.readColNum = readColNum;
+ &#125;
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+ public String getEncode() &#123;
+     return encode;
+ &#125;
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/07/18/javaEE_day04_OverLoadAndOverride/" itemprop="url">
-              
-                <span itemprop="name">javaEE之重载和覆盖重写的区别</span>
-              
-            </a>
-        
-      </h2>
+ public void setEncode(String encode) &#123;
+     this.encode = encode;
+ &#125;
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-07-18T09:44:26+08:00"
-              content="2021-07-18" >
-          07-18
-        </time>
-      </div>
+ /**
+  * 每读取到一行数据，添加到缓存中
+  * @param lineStr 读取到的数据
+  * @param lineNum 行号
+  * @param over 是否读取完成
+  * @throws Exception
+  */
+ public void outLine(String lineStr, long lineNum, boolean over) throws Exception &#123;
+     if(null != lineStr)
+         list.add(lineStr);
+     if (!over &amp;&amp; (lineNum % readColNum == 0)) &#123;
+         output(list);
+         list.clear();
+     &#125; else if (over) &#123;
+         output(list);
+         list.clear();
+     &#125;
+ &#125;
 
-    </header>
-  </article>
+ /**
+  * 批量输出
+  *
+  * @param stringList
+  * @throws Exception
+  */
+ public abstract void output(List&lt;String&gt; stringList) throws Exception;
+</code></pre></li>
+<li><p><strong>ProcessDataByPostgisListeners</strong></p>
+<pre><code> import java.util.List;
 
+ /**
+  * @author: LiMing
+  * @since: 2022/5/30 17:51
+  **/
+ public class ProcessDataByPostgisListeners extends ReaderFileListener &#123;
+     @Override
+     public void output(List&lt;String&gt; stringList) throws Exception &#123;
+         for (String s : stringList) &#123;
+             System.out.println(s);
+         &#125;
+     &#125;
+ &#125;
+</code></pre></li>
+<li><p><strong>BuildData</strong></p>
+<pre><code> import java.io.File;
+ import java.io.FileInputStream;
+ import java.io.IOException;
+ import java.util.concurrent.SynchronousQueue;
+ import java.util.concurrent.ThreadPoolExecutor;
+ import java.util.concurrent.TimeUnit;
 
-      
-        
+ public class BuildData &#123;
+ public static void main(String[] args) throws Exception &#123;
+ File file = new File(&quot;D:\\Users\\TomorrowLi\\Desktop\\log文件\\92020701_out.log.2022-05-23.16.40.15&quot;);
+ FileInputStream fis = null;
+ try &#123;
+     ReadFile readFile = new ReadFile();
+     fis = new FileInputStream(file);
+     int available = fis.available();
+     int maxThreadNum = 5;
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+     //核心线程
+     int corePoolSize=5;
+     //最大线程数
+     int maxnumPoolSize=10;
+     //等待时间
+     long keepAliveTime=1;
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/07/18/javaee_day03_Static/" itemprop="url">
-              
-                <span itemprop="name">javaEE 之 static 关键字的说明</span>
-              
-            </a>
-        
-      </h2>
+     // 线程粗略开始位置
+     int i = available / maxThreadNum;
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-07-18T09:44:26+08:00"
-              content="2021-07-18" >
-          07-18
-        </time>
-      </div>
+     ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(corePoolSize,maxnumPoolSize,keepAliveTime, TimeUnit.MINUTES,new SynchronousQueue&lt;&gt;());
 
-    </header>
-  </article>
+     for (int j = 0; j &lt; maxThreadNum; j++) &#123;
+         // 计算精确开始位置
+         long startNum = j == 0 ? 0 : readFile.getStartNum(file, i * j);
+         long endNum = j + 1 &lt; maxThreadNum ? readFile.getStartNum(file, i * (j + 1)) : -2;
+         // 具体监听实现
+         ReaderFileListener listeners = new ProcessDataByPostgisListeners();
+         listeners.setEncode(&quot;UTF-8&quot;);
+         threadPoolExecutor.submit(new ReadFileThread(listeners, startNum, endNum, file.getPath()));
+     &#125;
 
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/07/18/javaEE_day02_This/" itemprop="url">
-              
-                <span itemprop="name">javaEE 之 this的使用</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-07-18T09:44:26+08:00"
-              content="2021-07-18" >
-          07-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/07/18/javaEE_day01_&&/" itemprop="url">
-              
-                <span itemprop="name">JavaEE 之 &和&& |和||</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-07-18T09:44:26+08:00"
-              content="2021-07-18" >
-          07-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+     threadPoolExecutor.shutdown();
+ &#125; catch (IOException e) &#123;
+     e.printStackTrace();
+ &#125; catch (Exception e) &#123;
+     e.printStackTrace();
+ &#125;
+ &#125;
+  &#125;
+</code></pre></li>
+</ol>
 
       
     </div>
+    
+    
+    
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+    
 
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/weixing.png" alt=" 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/zhifu.jpg" alt=" 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E7%BA%BF%E7%A8%8B%E6%B1%A0/" rel="tag"><i class="fa fa-tag"></i>线程池</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/05/11/%E9%9D%A2%E8%AF%95%E9%A2%98-HashMap/" rel="next" title="HashMap 与 ConcurrentHashMap 的实现原理是怎样的？ConcurrentHashMap 是如何保证线程安全的？">
+                <i class="fa fa-chevron-left"></i> HashMap 与 ConcurrentHashMap 的实现原理是怎样的？ConcurrentHashMap 是如何保证线程安全的？
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
 
 
           </div>
@@ -584,6 +914,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -890,6 +1224,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 

@@ -320,6 +320,288 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/07/18/selenium-taobao/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TomorrowLi's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/07/18/selenium-taobao/" itemprop="url">爬取淘宝美食信息并存储到数据库中</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-07-18T09:44:26+08:00">
+                2021-07-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%88%AC%E8%99%AB/" itemprop="url" rel="index">
+                    <span itemprop="name">爬虫</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  515
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>代码演示：</p>
+<pre><code>import re
+
+import MySQLdb
+from selenium import webdriver
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from pyquery import PyQuery as pq
+broser=webdriver.Chrome()
+
+wait=WebDriverWait(broser, 10)
+def search(table):
+    try:
+        broser.get(&#39;https://www.taobao.com&#39;)
+        inputs = wait.until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, &quot;#q&quot;))
+        )
+        submit = wait.until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, &#39;#J_TSearchForm &gt; div.search-button &gt; button&#39;))
+        )
+        inputs.send_keys(&#39;美食&#39;)
+        submit.click()
+        total = wait.until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR,&#39;#mainsrp-pager &gt; div &gt; div &gt; div &gt; div.total&#39;))
+        )
+        get_product(table)
+        return total.text
+    except TimeoutException:
+        return search(table)
+def next_page(page_number,table):
+    try:
+        inputs = wait.until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, &quot;#mainsrp-pager &gt; div &gt; div &gt; div &gt; div.form &gt; input&quot;))
+        )
+        submit = wait.until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, &quot;#mainsrp-pager &gt; div &gt; div &gt; div &gt; div.form &gt; span.btn.J_Submit&quot;))
+        )
+        inputs.clear()
+        inputs.send_keys(page_number)
+        submit.click()
+        wait.until(
+            EC.text_to_be_present_in_element((By.CSS_SELECTOR, &quot;#mainsrp-pager &gt; div &gt; div &gt; div &gt; ul &gt; li.item.active &gt; span&quot;),str(page_number))
+        )
+        get_product(table)
+    except TimeoutException:
+        next_page(page_number,table)
+def get_product(table):
+    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR,&#39;#mainsrp-itemlist .items .item&#39;)))
+    html=broser.page_source
+    doc=pq(html)
+    items=doc(&#39;#mainsrp-itemlist .items .item&#39;).items()
+    for item in items:
+        product=&#123;
+            &#39;image&#39;:item.find(&#39;.pic .img&#39;).attr(&#39;src&#39;),
+            &#39;price&#39;:item.find(&#39;.price&#39;).text().replace(&#39;\n&#39;,&#39;&#39;),
+            &#39;deal&#39;:item.find(&#39;.deal-cnt&#39;).text()[:-3],
+            &#39;title&#39;:item.find(&#39;.title&#39;).text().replace(&#39;\n&#39;,&#39;&#39;),
+            &#39;shop&#39;:item.find(&#39;.shop&#39;).text(),
+            &#39;location&#39;:item.find(&#39;.location&#39;).text()
+        &#125;
+        print(product)
+        inserttable(table, product[&#39;image&#39;], product[&#39;price&#39;], product[&#39;deal&#39;], product[&#39;title&#39;],product[&#39;shop&#39;],product[&#39;location&#39;])
+#连接数据库 mysql
+def connectDB():
+        host=&quot;localhost&quot;
+        dbName=&quot;test&quot;
+        user=&quot;root&quot;
+        password=&quot;&quot;
+        #此处添加charset=&#39;utf8&#39;是为了在数据库中显示中文，此编码必须与数据库的编码一致
+        db=MySQLdb.connect(host,user,password,dbName,charset=&#39;utf8&#39;)
+        return db
+        cursorDB=db.cursor()
+        return cursorDB
+
+#创建表，SQL语言。CREATE TABLE IF NOT EXISTS 表示：表createTableName不存在时就创建
+def creatTable(createTableName):
+    createTableSql=&quot;CREATE TABLE IF NOT EXISTS &quot;+ createTableName+&quot;(image VARCHAR(255),price VARCHAR(255),deal  VARCHAR(255),title VARCHAR(255),shop VARCHAR(255),location VARCHAR(255))&quot;
+    DB_create=connectDB()
+    print(&#39;链接数据库成功&#39;)
+    cursor_create=DB_create.cursor()
+    cursor_create.execute(createTableSql)
+    DB_create.close()
+    print(&#39;creat table &#39;+createTableName+&#39; successfully&#39;)
+    return createTableName
+#数据插入表中
+def inserttable(insertTable,insertimages,insertprice,insertdeal,inserttitle,insertshop,insertloaction):
+    insertContentSql=&quot;INSERT INTO &quot;+insertTable+&quot;(image,price,deal,title,shop,location)VALUES(%s,%s,%s,%s,%s,%s)&quot;
+#         insertContentSql=&quot;INSERT INTO &quot;+insertTable+&quot;(time,title,text,clicks)VALUES(&quot;+insertTime+&quot; , &quot;+insertTitle+&quot; , &quot;+insertText+&quot; , &quot;+insertClicks+&quot;)&quot;
+
+
+    DB_insert=connectDB()
+    cursor_insert=DB_insert.cursor()
+    cursor_insert.execute(insertContentSql,(insertimages,insertprice,insertdeal,inserttitle,insertshop,insertloaction))
+    DB_insert.commit()
+    DB_insert.close()
+    print (&#39;inert contents to  &#39;+insertTable+&#39; successfully&#39;)
+
+def main():
+    table = creatTable(&#39;yh1&#39;)
+    print(&#39;创建表成功&#39;)
+    total=search(table)
+    total=int(re.compile(&#39;(\d+)&#39;).search(total).group(1))
+    for i in range(2,total+1):
+        next_page(i,table)
+if __name__==&#39;__main__&#39;:
+    main()
+</code></pre><p>结果展示</p>
+<p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/%E6%B7%98%E5%AE%9D%E7%BE%8E%E9%A3%9F.PNG?raw=true" alt="image"></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/07/18/scrapy_python/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2719,199 +3001,6 @@ FORM_DATA = &#123;
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/07/18/javaEE_day13_Servlet/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="TomorrowLi's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/07/18/javaEE_day13_Servlet/" itemprop="url">有关servlet的几种面试题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-07-18T09:44:26+08:00">
-                2021-07-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javaEE/" itemprop="url" rel="index">
-                    <span itemprop="name">javaEE</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  613
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  2
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="1、Post和Get的区别"><a href="#1、Post和Get的区别" class="headerlink" title="1、Post和Get的区别"></a>1、Post和Get的区别</h2><pre><code>Post:
-    请求参数在请求体中
-
-    请求的url的长度没有限制
-
-    较为安全
-Get：
-    亲求参数在请求行中
-
-    请求的url长度没有限制
-
-    相对不安全
-中文乱码问题：
-        * get方式：tomcat 8 已经将get方式乱码问题解决了
-        * post方式：会乱码
-            * 解决：在获取参数前，设置request的编码request.setCharacterEncoding(&quot;utf-8&quot;);
-</code></pre>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2021/07/18/javaEE_day13_Servlet/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-    
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2966,7 +3055,7 @@ Get：
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2977,7 +3066,7 @@ Get：
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2988,7 +3077,7 @@ Get：
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -3126,7 +3215,7 @@ Get：
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共20.6k字</span>
+  <span class="post-count">博客全站共21.9k字</span>
 </div>
 
         
