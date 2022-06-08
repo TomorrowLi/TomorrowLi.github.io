@@ -320,6 +320,252 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/07/18/javaEE_day04_OverLoadAndOverride/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TomorrowLi's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/07/18/javaEE_day04_OverLoadAndOverride/" itemprop="url">javaEE之重载和覆盖重写的区别</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-07-18T09:44:26+08:00">
+                2021-07-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javaEE/" itemprop="url" rel="index">
+                    <span itemprop="name">javaEE</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  598
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="重载"><a href="#重载" class="headerlink" title="重载"></a>重载</h2><h3 id="在使用重载时只能通过不同的参数样式（Overload）"><a href="#在使用重载时只能通过不同的参数样式（Overload）" class="headerlink" title="在使用重载时只能通过不同的参数样式（Overload）"></a>在使用重载时只能通过不同的参数样式（Overload）</h3><h4 id="1、参数的个数不同"><a href="#1、参数的个数不同" class="headerlink" title="1、参数的个数不同"></a>1、参数的个数不同</h4><pre><code>public static void get(int a)&#123;
+
+&#125;
+public static void get(int a, int b)&#123;
+
+&#125;
+</code></pre><h4 id="2、参数的类型不同"><a href="#2、参数的类型不同" class="headerlink" title="2、参数的类型不同"></a>2、参数的类型不同</h4><pre><code>public static void get(int a)&#123;
+
+&#125;
+public static void get(double a)&#123;
+
+&#125;
+</code></pre><h4 id="3、参数的顺序不同"><a href="#3、参数的顺序不同" class="headerlink" title="3、参数的顺序不同"></a>3、参数的顺序不同</h4><pre><code>public static void get(int a,double b)&#123;
+
+&#125;
+public static void get(double a,int b)&#123;
+
+&#125;
+</code></pre><h4 id="4、与参数的返回值类型无关"><a href="#4、与参数的返回值类型无关" class="headerlink" title="4、与参数的返回值类型无关"></a>4、与参数的返回值类型无关</h4><pre><code>public static void get(int a)&#123;
+
+&#125;
+public static int get(int a)&#123;
+
+&#125;
+</code></pre><h4 id="重载的时候，方法名要一样，但是参数类型和个数不一样，返回值类型可以相同也可以不相同。无法以返回型别作为重载函数的区分标准。"><a href="#重载的时候，方法名要一样，但是参数类型和个数不一样，返回值类型可以相同也可以不相同。无法以返回型别作为重载函数的区分标准。" class="headerlink" title="重载的时候，方法名要一样，但是参数类型和个数不一样，返回值类型可以相同也可以不相同。无法以返回型别作为重载函数的区分标准。"></a>重载的时候，方法名要一样，但是参数类型和个数不一样，返回值类型可以相同也可以不相同。无法以返回型别作为重载函数的区分标准。</h4><h2 id="覆盖重写-Override"><a href="#覆盖重写-Override" class="headerlink" title="覆盖重写(Override)"></a>覆盖重写(Override)</h2><h3 id="如果子类父类中出现重名的成员方法，这时的访问是一种特殊情况，叫做方法重写-Override-。"><a href="#如果子类父类中出现重名的成员方法，这时的访问是一种特殊情况，叫做方法重写-Override-。" class="headerlink" title="如果子类父类中出现重名的成员方法，这时的访问是一种特殊情况，叫做方法重写 (Override)。"></a>如果子类父类中出现重名的成员方法，这时的访问是一种特殊情况，叫做方法重写 (Override)。</h3><h4 id="1、覆盖重写必须存在父与子类的继承关系中"><a href="#1、覆盖重写必须存在父与子类的继承关系中" class="headerlink" title="1、覆盖重写必须存在父与子类的继承关系中"></a>1、覆盖重写必须存在父与子类的继承关系中</h4><pre><code>class Fu &#123; 
+    public void show() &#123; 
+         System.out.println(&quot;Fu show&quot;);         
+     &#125;     
+ &#125; 
+class Zi extends Fu &#123; //子类重写了父类的show方法     
+     public void show() &#123;     
+             System.out.println(&quot;Zi show&quot;);       
+       &#125;     
+ &#125;
+ public class ExtendsDemo05&#123; 
+        public static void main(String[] args) &#123;  
+                Zi z = new Zi();  // 子类中有show方法，只执行重写后的show方法     
+                z.show();  // Zi show         
+    &#125;      
+&#125; 
+</code></pre><h4 id="2、方法名必修相同参数也必修相同"><a href="#2、方法名必修相同参数也必修相同" class="headerlink" title="2、方法名必修相同参数也必修相同"></a>2、方法名必修相同参数也必修相同</h4><h4 id="3、访问修饰符的限制一定要大于被重写方法的访问修饰符（public-gt-protected-gt-（default）-gt-private）"><a href="#3、访问修饰符的限制一定要大于被重写方法的访问修饰符（public-gt-protected-gt-（default）-gt-private）" class="headerlink" title="3、访问修饰符的限制一定要大于被重写方法的访问修饰符（public&gt;protected&gt;（default）&gt;private）"></a>3、访问修饰符的限制一定要大于被重写方法的访问修饰符（public&gt;protected&gt;（default）&gt;private）</h4><pre><code>//就是子类的方法的修饰符必须大于父类的修饰
+class Fu &#123; 
+    public void show() &#123; 
+         System.out.println(&quot;Fu show&quot;);         
+     &#125;     
+ &#125; 
+class Zi extends Fu &#123; //子类重写了父类的show方法     
+     protected void show() &#123; //报错    
+             System.out.println(&quot;Zi show&quot;);       
+       &#125;     
+ &#125;
+</code></pre><h4 id="4、重写的应用"><a href="#4、重写的应用" class="headerlink" title="4、重写的应用"></a>4、重写的应用</h4><pre><code>子类可以根据需要，定义特定于自己的行为。既沿袭了父类的功能名称，又根据子类的需要重新实现父类方法，从 而进行扩展增强。比如新的手机增加来电显示头像的功能，代码如下：
+
+
+public class Phone &#123;
+    public void  call()&#123;
+        System.out.println(&quot;打电话&quot;);
+    &#125;
+    public void messige()&#123;
+        System.out.println(&quot;发短信&quot;);
+    &#125;
+    public void show()&#123;
+        System.out.println(&quot;显示号码&quot;);
+    &#125;
+&#125;
+//智能手机
+public class NewPhone extends Phone &#123;
+    public void show()&#123;
+        super.show();//调用父类的show()方法
+        System.out.println(&quot;显示姓名&quot;);
+        System.out.println(&quot;显示头像&quot;);
+    &#125;
+
+&#125;
+</code></pre><h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><h3 id="1-子类方法覆盖父类方法，必须要保证权限大于等于父类权限。"><a href="#1-子类方法覆盖父类方法，必须要保证权限大于等于父类权限。" class="headerlink" title="1.子类方法覆盖父类方法，必须要保证权限大于等于父类权限。"></a>1.子类方法覆盖父类方法，必须要保证权限大于等于父类权限。</h3><h3 id="2-子类方法覆盖父类方法，返回值类型、函数名和参数列表都要一模一样。"><a href="#2-子类方法覆盖父类方法，返回值类型、函数名和参数列表都要一模一样。" class="headerlink" title="2. 子类方法覆盖父类方法，返回值类型、函数名和参数列表都要一模一样。"></a>2. 子类方法覆盖父类方法，返回值类型、函数名和参数列表都要一模一样。</h3>
+          
+        
+      
+    </div>
+    
+    
+    
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/07/18/javaee_day03_Static/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2189,174 +2435,11 @@ IMAGES_STORE=os.path.join(object_url,&#39;image&#39;)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/04/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="TomorrowLi's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/01/04/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-01-04T13:59:22+08:00">
-                2021-01-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  74
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;
-</code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server
-</code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate
-</code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy
-</code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/deployment.html">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-    
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+    <a class="extend prev" rel="prev" href="/page/3/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -2406,7 +2489,7 @@ IMAGES_STORE=os.path.join(object_url,&#39;image&#39;)
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2417,7 +2500,7 @@ IMAGES_STORE=os.path.join(object_url,&#39;image&#39;)
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2428,7 +2511,7 @@ IMAGES_STORE=os.path.join(object_url,&#39;image&#39;)
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

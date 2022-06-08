@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2022-05-31T06:41:27.464Z</updated>
+  <updated>2022-06-08T03:03:42.517Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>jetBrains2020.x破解</title>
+    <link href="http://yoursite.com/2022/06/08/jetBrains%E7%A0%B4%E8%A7%A3%E6%96%B9%E6%B3%95/"/>
+    <id>http://yoursite.com/2022/06/08/jetBrains破解方法/</id>
+    <published>2022-06-08T02:47:18.660Z</published>
+    <updated>2022-06-08T03:03:42.517Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://www.jb51.net/article/198343.htm" title="破解">参考链接</a></p><h2 id="1、破解资料"><a href="#1、破解资料" class="headerlink" title="1、破解资料"></a>1、破解资料</h2><ol><li><p>百度网盘下载</p><p> 地址：<a href="https://pan.baidu.com/s/1jMnfsXYH16n71vs6-WMTEA">https://pan.baidu.com/s/1jMnfsXYH16n71vs6-WMTEA</a><br> 密码：y4b4</p></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;a href=&quot;https://www.jb51.net/article/198343.htm&quot; title=&quot;破解&quot;&gt;参考链接&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;1、破解资料&quot;&gt;&lt;a href=&quot;#1、破解资料&quot; class=&quot;headerlink&quot; title=&quot;1、破
+      
+    
+    </summary>
+    
+      <category term="软件破解" scheme="http://yoursite.com/categories/%E8%BD%AF%E4%BB%B6%E7%A0%B4%E8%A7%A3/"/>
+    
+    
+      <category term="jetBrains" scheme="http://yoursite.com/tags/jetBrains/"/>
+    
+  </entry>
   
   <entry>
     <title>利用线程池解析大文件</title>
@@ -577,37 +603,6 @@ ROBOTSTXT_OBEY = True
       <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
     
       <category term="全国订餐信息" scheme="http://yoursite.com/tags/%E5%85%A8%E5%9B%BD%E8%AE%A2%E9%A4%90%E4%BF%A1%E6%81%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>最新的模拟知乎登陆</title>
-    <link href="http://yoursite.com/2021/07/18/loginZhihu/"/>
-    <id>http://yoursite.com/2021/07/18/loginZhihu/</id>
-    <published>2021-07-18T01:44:26.530Z</published>
-    <updated>2018-05-24T03:12:10.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>&#160;&#160;&#160;&#160;首先我们知道随着知乎页面的不断改版，以前的模拟登陆以不能用了，以下是对知乎改版之后的最新登陆方法</p><p>一、首先我们所需要的库</p><pre><code>import requestsimport timeimport re#用于下载验证码图片import base64#通过 Hmac 算法计算返回签名。实际是几个固定字符串加时间戳import hmacimport hashlibimport jsonimport matplotlib.pyplot as plt#保存cookiefrom http import cookiejar#打开图片from PIL import Image</code></pre><p>二、所需要的头信息</p><pre><code>#所需要的头部信息HEADERS = &#123;&#39;Connection&#39;: &#39;keep-alive&#39;,&#39;Host&#39;: &#39;www.zhihu.com&#39;,&#39;Referer&#39;: &#39;https://www.zhihu.com/&#39;,&#39;User-Agent&#39;: &#39;Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 &#39;              &#39;(KHTML, like Gecko) Chrome/56.0.2924.87 Mobile Safari/537.36&#39;&#125;#登陆使的urlLOGIN_URL = &#39;https://www.zhihu.com/signup&#39;LOGIN_API = &#39;https://www.zhihu.com/api/v3/oauth/sign_in&#39;FORM_DATA = &#123;    #客户端id基本不会改变    &#39;client_id&#39;: &#39;c3cef7c66a1843f8b3a9e6a1e3160e20&#39;,    &#39;grant_type&#39;: &#39;password&#39;,    &#39;source&#39;: &#39;com.zhihu.web&#39;,    &#39;username&#39;: &#39;用户名&#39;,    &#39;password&#39;: &#39;密码&#39;,    # 改为&#39;cn&#39;是倒立汉字验证码    &#39;lang&#39;: &#39;en&#39;,    &#39;ref_source&#39;: &#39;homepage&#39;&#125;</code></pre><p>&#160;&#160;&#160;&#160;要想登陆成功，header里必须还要俩个参数</p><pre><code>#经过大量的验证，这个参数必须有，这个值基本不变&#39;authorization&#39;: &#39;oauth c3cef7c66a1843f8b3a9e6a1e3160e20&#39;,#X-Xsrftoken则是防 Xsrf 跨站的 Token 认证，在Response Headers的Set-Cookie字段中可以找到。所以我们需要先请求一次登录页面，然后用正则把这一段匹配出来。注意需要无 Cookies 请求才会返回 Set-Cookie&#39;X-Xsrftoken&#39;: _xsrf</code></pre><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/set_cookie%E6%8D%95%E8%8E%B7.PNG?raw=true" alt="Set-Cookie"></p><p>&#160;&#160;&#160;&#160;要想登陆成功，form_data也里必须还要俩个参数</p><pre><code>&#39;captcha&#39;: 验证码,&#39;timestamp&#39;: 时间戳,&#39;signature&#39;: 是通过 Hmac 算法对几个固定值和时间戳进行加密</code></pre><p>&#160;&#160;&#160;&#160;timestamp 时间戳，这个很好解决，区别是这里是13位整数，Python 生成的整数部分只有10位，需要额外乘以1000</p><pre><code>timestamp = str(int(time.time()*1000))</code></pre><p>&#160;&#160;&#160;&#160;captcha 验证码，是通过 GET 请求单独的 API 接口返回是否需要验证码（无论是否需要，都要请求一次），如果是 True 则需要再次 PUT 请求获取图片的 base64 编码。</p><pre><code> def _get_captcha(self, headers):    &quot;&quot;&quot;    请求验证码的 API 接口，无论是否需要验证码都需要请求一次    如果需要验证码会返回图片的 base64 编码    根据头部 lang 字段匹配验证码，需要人工输入    :param headers: 带授权信息的请求头部    :return: 验证码的 POST 参数    &quot;&quot;&quot;    lang = headers.get(&#39;lang&#39;, &#39;en&#39;)    if lang == &#39;cn&#39;:        api = &#39;https://www.zhihu.com/api/v3/oauth/captcha?lang=cn&#39;    else:        api = &#39;https://www.zhihu.com/api/v3/oauth/captcha?lang=en&#39;    resp = self.session.get(api, headers=headers)    show_captcha = re.search(r&#39;true&#39;, resp.text)    if show_captcha:        put_resp = self.session.put(api, headers=headers)        img_base64 = re.findall(            r&#39;&quot;img_base64&quot;:&quot;(.+)&quot;&#39;, put_resp.text, re.S)[0].replace(r&#39;\n&#39;, &#39;&#39;)        with open(&#39;./captcha.jpg&#39;, &#39;wb&#39;) as f:            f.write(base64.b64decode(img_base64))        img = Image.open(&#39;./captcha.jpg&#39;)        if lang == &#39;cn&#39;:            plt.imshow(img)            print(&#39;点击所有倒立的汉字，按回车提交&#39;)            points = plt.ginput(7)            capt = json.dumps(&#123;&#39;img_size&#39;: [200, 44],                               &#39;input_points&#39;: [[i[0]/2, i[1]/2] for i in points]&#125;)        else:            img.show()            capt = input(&#39;请输入图片里的验证码：&#39;)        # 这里必须先把参数 POST 验证码接口        self.session.post(api, data=&#123;&#39;input_text&#39;: capt&#125;, headers=headers)        return capt    return &#39;&#39;</code></pre><p>&#160;&#160;&#160;&#160;signature 通过 Crtl+Shift+F 搜索找到是在一个 JS 里生成的，是通过 Hmac 算法对几个固定值和时间戳进行加密，那么只需要在 Python 里也模拟一次这个加密即可。</p><pre><code>def _get_signature(self, timestamp):    &quot;&quot;&quot;    通过 Hmac 算法计算返回签名    实际是几个固定字符串加时间戳    :param timestamp: 时间戳    :return: 签名    &quot;&quot;&quot;    ha = hmac.new(b&#39;d1b964811afb40118a12068ff74a12f4&#39;, digestmod=hashlib.sha1)    grant_type = self.login_data[&#39;grant_type&#39;]    client_id = self.login_data[&#39;client_id&#39;]    source = self.login_data[&#39;source&#39;]    ha.update(bytes((grant_type + client_id + source + timestamp), &#39;utf-8&#39;))    return ha.hexdigest()</code></pre><p>文章出自   <a href="https://zhuanlan.zhihu.com/p/34073256">知乎</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;&amp;#160;&amp;#160;&amp;#160;&amp;#160;首先我们知道随着知乎页面的不断改版，以前的模拟登陆以不能用了，以下是对知乎改版之后的最新登陆方法&lt;/p&gt;
-&lt;p&gt;一、首先我们所需要的库&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;import requests
-import time
-im
-      
-    
-    </summary>
-    
-      <category term="爬虫" scheme="http://yoursite.com/categories/%E7%88%AC%E8%99%AB/"/>
-    
-    
-      <category term="知乎" scheme="http://yoursite.com/tags/%E7%9F%A5%E4%B9%8E/"/>
-    
-      <category term="模拟登陆" scheme="http://yoursite.com/tags/%E6%A8%A1%E6%8B%9F%E7%99%BB%E9%99%86/"/>
     
   </entry>
   
