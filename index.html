@@ -320,6 +320,437 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/06/10/java%E5%A4%9A%E7%BA%BF%E7%A8%8B---%E4%B8%A4%E4%B8%AA%E7%BA%BF%E7%A8%8B%E6%95%B0%E6%8D%AE%E4%BA%A4%E6%8D%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TomorrowLi's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2022/06/10/java%E5%A4%9A%E7%BA%BF%E7%A8%8B---%E4%B8%A4%E4%B8%AA%E7%BA%BF%E7%A8%8B%E6%95%B0%E6%8D%AE%E4%BA%A4%E6%8D%A2/" itemprop="url">java两个线程数据交换</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-06-10T15:30:45+08:00">
+                2022-06-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index">
+                    <span itemprop="name">多线程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  302
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; java.util.concurrent.Exchanger可以用来进行数据交换，或者被称为“数据交换器”。两个线程可以使用Exchanger交换数据。Exchanger（交换者）是一个用于线程间写作的工具类。Exchanger用于进行线程间的数据交换。它提供一个同步点，在这个同步点两个线程可以交换彼此的数据。这两个线程通过exchange()交换数据，如果第一个线程先执行exchange方法，它会一直等待第二个线程也执行exchange()，当连个线程都到达同步点时，这两个线程就可以交换数据，将本线程生产出来的数据传递给对方。</p>
+<pre><code>package com.semaphore;
+
+import java.util.concurrent.Exchanger;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class ExchangerTest &#123;
+
+    private static final Exchanger&lt;String&gt; exgr = new Exchanger&lt;String&gt;();
+
+    private static ExecutorService threadPool = Executors.newFixedThreadPool(2);
+
+    public static void main(String[] args) &#123;
+
+        threadPool.execute(new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                try &#123;
+                    String A = &quot;银行流水A&quot;;// A录入银行流水数据
+                    System.out.println(&quot;本来是&quot; + A + &quot;变成了&quot; + exgr.exchange(A));
+                &#125; catch (InterruptedException e) &#123;
+                &#125;
+            &#125;
+        &#125;);
+
+        threadPool.execute(new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                try &#123;
+                    String B = &quot;银行流水B&quot;;// B录入银行流水数据
+                    System.out.println(&quot;本来是&quot; + B + &quot;变成了&quot; + exgr.exchange(B));
+                &#125; catch (InterruptedException e) &#123;
+                &#125;
+            &#125;
+        &#125;);
+
+        threadPool.shutdown();
+
+    &#125;
+&#125;
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/06/10/java%E5%A4%9A%E7%BA%BF%E7%A8%8B---%E5%A4%9A%E4%B8%AA%E7%BA%BF%E7%A8%8B%E9%A1%BA%E5%BA%8F%E8%AE%BF%E9%97%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TomorrowLi's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2022/06/10/java%E5%A4%9A%E7%BA%BF%E7%A8%8B---%E5%A4%9A%E4%B8%AA%E7%BA%BF%E7%A8%8B%E9%A1%BA%E5%BA%8F%E8%AE%BF%E9%97%AE/" itemprop="url">java多线程如何实现顺序访问</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-06-10T15:08:35+08:00">
+                2022-06-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index">
+                    <span itemprop="name">多线程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  732
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="1、通过join-方法指定顺序"><a href="#1、通过join-方法指定顺序" class="headerlink" title="1、通过join()方法指定顺序"></a>1、通过join()方法指定顺序</h2><p>&#160;&#160;&#160;&#160; 当然，thread的join方法实现多线程顺序执行有两种方式，一种是在子线程内部调用join()方法，另一种是直接在主线程调用join()方法；写法上是主线程上调用join()更直观，谁先执行谁后执行一目了然。子线程内部调用的话，相对的要注意调用的顺序。</p>
+<p>1.子线程内部调用join()</p>
+<pre><code>public class ThreadJoinDemo &#123;
+    public static void main(String[] args) throws InterruptedException &#123;
+        final Thread thread1 = new Thread(new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                System.out.println(&quot;打开冰箱！&quot;);
+            &#125;
+        &#125;);
+
+        final Thread thread2 = new Thread(new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                try &#123;
+                    thread1.join();
+                &#125; catch (InterruptedException e) &#123;
+                    e.printStackTrace();
+                &#125;
+                System.out.println(&quot;拿出一瓶牛奶！&quot;);
+            &#125;
+        &#125;);
+
+        final Thread thread3 = new Thread(new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                try &#123;
+                    thread2.join();
+                &#125; catch (InterruptedException e) &#123;
+                    e.printStackTrace();
+                &#125;
+                System.out.println(&quot;关上冰箱！&quot;);
+            &#125;
+        &#125;);
+
+        //下面三行代码顺序可随意调整，程序运行结果不受影响，因为我们在子线程中通过“join()方法”已经指定了运行顺序（还有一个原因就是之前说的多线程的生命周期中有就绪状态，需要等待cpu调度，start并不意味着运行状态）。
+        thread3.start();
+        thread2.start();
+        thread1.start();
+    &#125;
+&#125;
+</code></pre>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2022/06/10/java%E5%A4%9A%E7%BA%BF%E7%A8%8B---%E5%A4%9A%E4%B8%AA%E7%BA%BF%E7%A8%8B%E9%A1%BA%E5%BA%8F%E8%AE%BF%E9%97%AE/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/06/08/jetBrains%E7%A0%B4%E8%A7%A3%E6%96%B9%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1758,445 +2189,6 @@ if __name__ == &#39;__main__&#39;:
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/07/18/tianyancha/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="TomorrowLi's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/07/18/tianyancha/" itemprop="url">用selenium自动爬取天眼查上的公司信息</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-07-18T09:44:26+08:00">
-                2021-07-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%88%AC%E8%99%AB/" itemprop="url" rel="index">
-                    <span itemprop="name">爬虫</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  644
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  4
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Quict-Start"><a href="#Quict-Start" class="headerlink" title="Quict Start"></a>Quict Start</h2><h3 id="1、需要的库"><a href="#1、需要的库" class="headerlink" title="1、需要的库"></a>1、需要的库</h3><p>re、selenium、pymysql</p>
-<h3 id="2、程序前的准备"><a href="#2、程序前的准备" class="headerlink" title="2、程序前的准备"></a>2、程序前的准备</h3><p>首先在自己的python路径下放入 <a target="_blank" rel="noopener" href="http://npm.taobao.org/mirrors/chromedriver/">chromedriver.exe</a> 选择自己浏览器合适的版本下载</p>
-<h3 id="代码展示"><a href="#代码展示" class="headerlink" title="代码展示"></a>代码展示</h3><pre><code>from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-import re
-import MySQLdb
-host=&#39;localhost&#39;#主机名
-user=&#39;root&#39;#数据库的用户名
-passwd=&#39;&#39;#数据库的密码
-db=&#39;test&#39;#数据库的名字
-conn=MySQLdb.connect(host,user,passwd,db,charset=&#39;utf8&#39;)
-cursor = conn.cursor()
-boser=webdriver.Chrome()
-boser.maximize_window()
-wait=WebDriverWait(boser , 10)
-def getlogin():
-    boser.get(&#39;https://www.tianyancha.com/login&#39;)
-    user = wait.until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, &quot;#web-content &gt; div &gt; div &gt; div &gt; div.position-rel.container.company_container &gt; div &gt; div.in-block.vertical-top.float-right.right_content.mt50.mr5.mb5 &gt; div.module.module1.module2.loginmodule.collapse.in &gt; div.modulein.modulein1.mobile_box.pl30.pr30.f14.collapse.in &gt; div.pb30.position-rel &gt; input&quot;))
-    )
-    password=wait.until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, &#39;#web-content &gt; div &gt; div &gt; div &gt; div.position-rel.container.company_container &gt; div &gt; div.in-block.vertical-top.float-right.right_content.mt50.mr5.mb5 &gt; div.module.module1.module2.loginmodule.collapse.in &gt; div.modulein.modulein1.mobile_box.pl30.pr30.f14.collapse.in &gt; div.pb40.position-rel &gt; input&#39;))
-    )
-    submit = wait.until(
-        EC.element_to_be_clickable((By.CSS_SELECTOR , &#39;#web-content &gt; div &gt; div &gt; div &gt; div.position-rel.container.company_container &gt; div &gt; div.in-block.vertical-top.float-right.right_content.mt50.mr5.mb5 &gt; div.module.module1.module2.loginmodule.collapse.in &gt; div.modulein.modulein1.mobile_box.pl30.pr30.f14.collapse.in &gt; div.c-white.b-c9.pt8.f18.text-center.login_btn&#39;))
-    )
-    user.send_keys(&#39;用户名&#39;)
-    password.send_keys(&#39;密码&#39;)
-    submit.click()
-    getSearch()
-def getSearch():
-    user = wait.until(
-        EC.presence_of_element_located((By.CSS_SELECTOR , &quot;#home-main-search&quot;))
-    )
-    submit = wait.until(
-        EC.element_to_be_clickable((By.CSS_SELECTOR ,
-                                    &#39;#web-content &gt; div &gt; div.mainV3_tab1_enter.position-rel &gt; div.mainv2_tab1.position-rel &gt; div &gt; div.main-tab-outer &gt; div:nth-child(2) &gt; div &gt; div:nth-child(1) &gt; div.input-group.inputV2 &gt; div &gt; span&#39;))
-    )
-    key=&#39;佛山市顺德区&#39;
-    user.send_keys(key)
-    submit.click()
-    html=boser.page_source
-    geturl(html)
-    getUrlNext()
-def getUrlNext():
-    for i in range(2,5):
-        boser.get(r&#39;https://www.tianyancha.com/search/p%s?key=佛山市顺德区&#39;% i)
-        html=boser.page_source
-        geturl(html)
-def geturl(html):
-    try:
-        reg=r&#39;&lt;a href=&quot;.*?&quot; target=&quot;_blank&quot; tyc-event-click=&quot;&quot; tyc-event-ch=&quot;CompanySearch.Company&quot; style=&quot;word-break: break-all;font-weight: 600;&quot; class=&quot;query_name sv-search-company f18 in-block vertical-middle&quot;&gt;&lt;span&gt;(.*?)&lt;/span&gt;&lt;/a&gt;&#39;
-        names=re.findall(reg,html,re.S)
-        reg=r&#39;&lt;a title=&quot;.*?&quot; class=&quot;legalPersonName hover_underline&quot; target=&quot;_blank&quot; href=&quot;.*?&quot;&gt;(.*?)&lt;/a&gt;&#39;
-        daibiao=re.findall(reg,html,re.S)
-        reg=r&#39;&lt;div class=&quot;title overflow-width&quot; style=&quot;border-right: none&quot;&gt;.*?&lt;span title=&quot;.*?&quot;&gt;(.*?)&lt;/span&gt;&lt;/div&gt;&#39;
-        days = re.findall(reg,html,re.S)
-        reg=r&#39;&lt;span class=&quot;sec-c3&quot;&gt;联系电话：&lt;/span&gt;&lt;span class=&quot;overflow-width over-hide vertical-bottom in-block&quot; style=&quot;max-width:500px;&quot;&gt;(.*?)&lt;/span&gt;&#39;
-        phones = re.findall(reg , html , re.S)
-        reg=r&#39;&lt;div class=&quot;add&quot;&gt;&lt;span class=&quot;sec-c3&quot;&gt;.*?&lt;/span&gt;&lt;span&gt;：&lt;/span&gt;&lt;span class=&quot;overflow-width over-hide vertical-bottom in-block&quot; style=&quot;max-width:500px;&quot;&gt;(.*?)&lt;/span&gt;&#39;
-        location=re.findall(reg,html,re.S)
-        for i in range(20):
-            data=&#123;
-                &#39;name&#39;:names[i].replace(&#39;&lt;em&gt;&#39;,&#39;&#39;).replace(&#39;&lt;/em&gt;&#39;,&#39;&#39;),
-                &#39;daibiao&#39;:daibiao[i],
-                &#39;day&#39;:days[i].replace(&#39;&lt;em&gt;&#39;,&#39;&#39;).replace(&#39;&lt;/em&gt;&#39;,&#39;&#39;),
-                &#39;phone&#39;:phones[i].replace(&#39;&lt;em&gt;&#39;,&#39;&#39;).replace(&#39;&lt;/em&gt;&#39;,&#39;&#39;),
-                &#39;location&#39;: location[i].replace(&#39;&lt;em&gt;&#39;, &#39;&#39;).replace(&#39;&lt;/em&gt;&#39;,&#39;&#39;)
-            &#125;
-            print(data)
-            cursor.execute(&quot;insert into tianyancha(name,daibiao,day,phone,location) values(&#39;&#123;&#125;&#39;,&#39;&#123;&#125;&#39;,&#39;&#123;&#125;&#39;,&#39;&#123;&#125;&#39;,&#39;&#123;&#125;&#39;)&quot;.format(data[&#39;name&#39;],data[&#39;daibiao&#39;],data[&#39;day&#39;],data[&#39;phone&#39;],data[&#39;location&#39;]))
-            print(data[&#39;daibiao&#39;],&#39;成功存入数据库&#39;)
-            conn.commit()
-
-    except:
-        return None
-def main():
-    getlogin()
-
-if __name__ == &#39;__main__&#39;:
-    main()
-</code></pre><p>结果展示</p>
-<p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/%E5%A4%A9%E7%9C%BC%E6%9F%A5.PNG?raw=true" alt="image"></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-    
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/07/18/springIOC/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="TomorrowLi's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/07/18/springIOC/" itemprop="url">Spring的IOC</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-07-18T09:44:26+08:00">
-                2021-07-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/spring/" itemprop="url" rel="index">
-                    <span itemprop="name">spring</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  757
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  3
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="1、Spring的IOC"><a href="#1、Spring的IOC" class="headerlink" title="1、Spring的IOC"></a>1、Spring的IOC</h2><h3 id="1-1、实例化-Bean-的三种方式"><a href="#1-1、实例化-Bean-的三种方式" class="headerlink" title="1.1、实例化 Bean 的三种方式"></a>1.1、实例化 Bean 的三种方式</h3><pre><code>第一种方式：使用默认无参构造函数（最为常用）
-
-    &lt;!--在默认情况下：
-    它会根据默认无参构造函数来创建类对象。如果 bean 中没有默认无参构造函数，将会创建失败。
-    &lt;bean id=&quot;accountService&quot; class=&quot;com.itheima.service.impl.AccountServiceImpl&quot;/&gt;
-</code></pre>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2021/07/18/springIOC/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-    
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2251,7 +2243,7 @@ if __name__ == &#39;__main__&#39;:
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2262,7 +2254,7 @@ if __name__ == &#39;__main__&#39;:
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2273,7 +2265,7 @@ if __name__ == &#39;__main__&#39;:
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">37</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2411,7 +2403,7 @@ if __name__ == &#39;__main__&#39;:
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共21.9k字</span>
+  <span class="post-count">博客全站共23.0k字</span>
 </div>
 
         

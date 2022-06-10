@@ -320,6 +320,574 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/07/18/douban/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TomorrowLi's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/07/18/douban/" itemprop="url">豆瓣输入验证码登陆</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-07-18T09:44:26+08:00">
+                2021-07-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%88%AC%E8%99%AB/" itemprop="url" rel="index">
+                    <span itemprop="name">爬虫</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%88%AC%E8%99%AB/%E5%8F%8D%E7%88%AC%E6%96%B9%E5%BC%8F/" itemprop="url" rel="index">
+                    <span itemprop="name">反爬方式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  341
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="首先要登陆豆瓣要必须获取验证码"><a href="#首先要登陆豆瓣要必须获取验证码" class="headerlink" title="首先要登陆豆瓣要必须获取验证码"></a>首先要登陆豆瓣要必须获取验证码</h2><h3 id="1、获取验证码的图片链接下载到本地"><a href="#1、获取验证码的图片链接下载到本地" class="headerlink" title="1、获取验证码的图片链接下载到本地"></a>1、获取验证码的图片链接下载到本地</h3><pre><code>req=r&#39;&lt;img id=&quot;captcha_image&quot; src=&quot;(.*?)&quot; alt=&quot;captcha&quot; class=&quot;captcha_image&quot;/&gt;&#39;
+yanzhenma=re.findall(req,html.text,re.S)
+</code></pre><h3 id="2、手动输入验证码添加到data中"><a href="#2、手动输入验证码添加到data中" class="headerlink" title="2、手动输入验证码添加到data中"></a>2、手动输入验证码添加到data中</h3><pre><code>x=input(&#39;请输入验证码:&#39;)
+data[&#39;captcha-solution&#39;]=x
+data[&#39;captcha-id&#39;]=captcha_id[0]
+</code></pre><h3 id="3、代码演示"><a href="#3、代码演示" class="headerlink" title="3、代码演示"></a>3、代码演示</h3><pre><code>#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+# @Time    : 2018/3/15 20:20
+# @Author  : tomorrowli
+import requests
+import re
+import os
+import time
+import random
+from hashlib import md5
+def geturl():
+    time.sleep(random.randint(2,5))
+    url=&#39;https://www.douban.com/accounts/login&#39;
+    headers=&#123;
+        &#39;User-Agent&#39;:&#39;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36&#39;
+    &#125;
+    data=&#123;
+        &#39;source&#39;:&#39;index_nav&#39;,
+        &#39;form_email&#39;:&#39;用户名&#39;,
+        &#39;form_password&#39;:&#39;密码&#39;,
+    &#125;
+    html=requests.get(url,headers=headers)
+    #print(html.text)
+    req=r&#39;&lt;img id=&quot;captcha_image&quot; src=&quot;(.*?)&quot; alt=&quot;captcha&quot; class=&quot;captcha_image&quot;/&gt;&#39;
+    captcha = r&#39;&lt;input type=&quot;hidden&quot; name=&quot;captcha-id&quot; value=&quot;(.*?)&quot;/&gt;&#39;
+    yanzhenma=re.findall(req,html.text,re.S)
+    if yanzhenma:
+        captcha_id = re.findall(captcha,html.text,re.S)
+        html=requests.get(yanzhenma[0])
+        #可以采用MD5算法给图片随机取一个名字
+        #md5(html.content)
+        file_path = &#39;&#123;0&#125;/&#123;1&#125;.&#123;2&#125;&#39;.format(os.getcwd(), md5(html.content).hexdigest(), &#39;jpg&#39;)
+        if not os.path.exists(file_path):
+            with open(file_path, &#39;wb&#39;) as f:
+                f.write(html.content)
+                f.close()
+        x=input(&#39;请输入验证码:&#39;)
+        data[&#39;captcha-solution&#39;]=x
+        data[&#39;captcha-id&#39;]=captcha_id[0]
+        html = requests.post(url , data=data , headers=headers)
+        print(html.status_code)
+        print(&#39;登陆成功&#39;)
+    else:
+        html=requests.post(url,data=data,headers=headers)
+        print(&#39;登陆成功&#39;)
+
+def main():
+    geturl()
+if __name__ == &#39;__main__&#39;:
+    main()
+</code></pre><p>结果展示</p>
+<p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/%E8%B1%86%E7%93%A3.PNG?raw=true" alt="image"></p>
+<h3 id="4、之后可以从豆瓣上获取信息存到数据库中"><a href="#4、之后可以从豆瓣上获取信息存到数据库中" class="headerlink" title="4、之后可以从豆瓣上获取信息存到数据库中"></a>4、之后可以从豆瓣上获取信息存到数据库中</h3>
+          
+        
+      
+    </div>
+    
+    
+    
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/07/18/crawl_spider_99/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TomorrowLi's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/07/18/crawl_spider_99/" itemprop="url">用scrapy的crawlspider全站爬去数据</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-07-18T09:44:26+08:00">
+                2021-07-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/scrapy/" itemprop="url" rel="index">
+                    <span itemprop="name">scrapy</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  808
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="一、所需要的库"><a href="#一、所需要的库" class="headerlink" title="一、所需要的库"></a>一、所需要的库</h3><pre><code>1、scrapy
+</code></pre><h3 id="二、首先编写一个脚本，运行我们的spider"><a href="#二、首先编写一个脚本，运行我们的spider" class="headerlink" title="二、首先编写一个脚本，运行我们的spider"></a>二、首先编写一个脚本，运行我们的spider</h3><pre><code>mport sys
+import os
+from scrapy.cmdline import execute
+#获取系统文件路径
+print(os.path.dirname(os.path.abspath(__file__)))
+#将文件路加到系统环境下
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+#执行语句
+execute([&#39;scrapy&#39;,&#39;crawl&#39;,&#39;99spider&#39;])
+</code></pre><h3 id="三、编写spider"><a href="#三、编写spider" class="headerlink" title="三、编写spider"></a>三、编写spider</h3><pre><code># -*- coding: utf-8 -*-
+import scrapy
+from scrapy.linkextractors import LinkExtractor
+from scrapy.spiders import CrawlSpider, Rule
+from ..items import jiankangItemLoader , Crawljiankang99Item
+#利用crawlspider全站爬取
+class A99spiderSpider(CrawlSpider):
+    #spider的名字
+    name = &#39;99spider&#39;
+    #spider所允许的域名，只能在这些域名下爬取
+    allowed_domains = [&#39;www.99.com.cn&#39;,
+                       &#39;nv.99.com.cn&#39;,
+                       &#39;ye.99.com.cn&#39;,
+                       &#39;zyk.99.com.cn&#39;,
+                       &#39;jf.99.com.cn&#39;,
+                       &#39;fk.99.com.cn&#39;,
+                       &#39;zx.99.com.cn&#39;,
+                       &#39;bj.99.com.cn&#39;,
+                       &#39;nan.99.com.cn&#39;,
+                       &#39;nan.99.com.cn&#39;,
+                       &#39;jz.99.com.cn&#39;,
+                       &#39;gh.99.com.cn&#39;,
+                       &#39;news.99.com.cn&#39;]
+    deny_domains=[]
+    #spider的初始域名
+    start_urls = [&#39;http://www.99.com.cn/&#39;]
+    #crawl spider的爬取规则
+    rules = (
+        #Rule(LinkExtractor(allow=r&quot;http://.*.99.com.cn/&quot;),follow=True),
+        #allow是允许爬取的页面，deny是当访问到这些页面是自动过滤，不爬取
+        Rule(LinkExtractor(allow=r&#39;.*/\d+.htm&#39;,deny=(r&#39;/jijiu/jjsp/\d+.htm&#39;,r&#39;/jzzn/.*/\d+.htm&#39;,r&#39;/ssbd/jfsp/\d+.htm&#39;
+                                                     ,r&#39;/zhongyiyangshengshipin/.*/.html&#39;,)), callback=&#39;parse_item&#39;, follow=True,),
+    )
+    #利用itemLoader进行对页面的分析
+    def parse_item(self, response):
+        image_url=response.css(&#39;.detail_con img::attr(src)&#39;).extract_first()
+        item_loader=jiankangItemLoader(item=Crawljiankang99Item(),response=response)
+        item_loader.add_css(&#39;title&#39;,&#39;.title_box h1::text&#39;)
+        item_loader.add_value(&#39;url&#39;,response.url)
+        item_loader.add_css(&#39;content&#39;,&#39;.detail_con&#39;)
+        #这里必须传入一个list列表，才能利用ImagesPipeline下载图片
+        item_loader.add_value(&#39;image_url&#39;,[image_url])
+
+        jiankang=item_loader.load_item()
+
+        return jiankang
+</code></pre><h3 id="四、编写item"><a href="#四、编写item" class="headerlink" title="四、编写item"></a>四、编写item</h3><pre><code>import scrapy
+from scrapy.loader import ItemLoader
+from scrapy.loader.processors import TakeFirst , MapCompose
+#remove掉conten的tag标签
+from w3lib.html import remove_tags
+#利用item_loader就必须自定义item
+class jiankangItemLoader(ItemLoader):
+    #自定义item
+    default_output_processor = TakeFirst()
+def return_value(value):
+    return value
+class Crawljiankang99Item(scrapy.Item):
+    # define the fields for your item here like:
+    # name = scrapy.Field()
+    url=scrapy.Field()
+    title=scrapy.Field()
+    #用ImagePipelines所要做的
+    image_url=scrapy.Field(
+        output_processor=MapCompose(return_value)
+    )
+    image_url_path=scrapy.Field()
+    content=scrapy.Field(
+        input_processor=MapCompose(remove_tags)
+    )
+</code></pre><h3 id="五、编写pipelines存储到mysql数据库中"><a href="#五、编写pipelines存储到mysql数据库中" class="headerlink" title="五、编写pipelines存储到mysql数据库中"></a>五、编写pipelines存储到mysql数据库中</h3><pre><code>import MySQLdb
+from twisted.enterprise import adbapi
+import MySQLdb.cursors
+from scrapy.pipelines.images import ImagesPipeline
+#image_url对应有一个path属性是下载的图片的地址，对其获取并存到数据库中
+class jiankangImagePipeline(ImagesPipeline):
+    def item_completed(self, results, item, info):
+        if &#39;image_url&#39; in item:
+            for ok,value in results:
+                image_file_path=value[&#39;path&#39;]
+            item[&#39;image_url_path&#39;]=image_file_path
+        return item
+class Crawljiankang99Pipeline(object):
+    def process_item(self, item, spider):
+        return item
+#使用twisted进行数据的插入
+class MysqlTwistePipline(object):
+    def __init__(self,dbpool):
+        self.dbpool=dbpool
+    #静态获取settings文件的值
+    @classmethod
+    def from_settings(cls,settings):
+        dbparms=dict(
+            #数据库的地址
+            host=settings[&#39;MYSQL_HOST&#39;],
+            #数据库的名字
+            db=settings[&#39;MYSQL_DB&#39;] ,
+            #数据库的用户名
+            user=settings[&#39;MYSQL_USER&#39;] ,
+            #数据库的名密码
+            passwd=settings[&#39;MYSQL_PASSWORD&#39;] ,
+            charset=&#39;utf8&#39;,
+            cursorclass=MySQLdb.cursors.DictCursor,
+            use_unicode=True,
+        )
+        #对数据进行异步操作
+        dbpool=adbapi.ConnectionPool(&#39;MySQLdb&#39;,**dbparms)
+        return cls(dbpool)
+
+    def process_item(self , item , spider):
+        #使用twisted将musql变成异步操作
+        query=self.dbpool.runInteraction(self.do_insert,item)
+        query.addErrback(self.hand_erro)
+    def hand_erro(self,failure):
+        print(failure)
+    #执行sql语句
+    def do_insert(self,cursor,item):
+        url = item[&#39;url&#39;]
+        image_urls = item[&#39;image_url&#39;]
+        image_url = image_urls[0]
+        content = item[&#39;content&#39;]
+        title = item[&#39;title&#39;]
+        image_url_path=item[&#39;image_url_path&#39;]
+        cursor.execute(
+            &#39;insert into jiankang(url,title,image_url,image_url_path,content) values(%s,%s,%s,%s,%s)&#39; ,
+            (url,title,image_url,image_url_path,content))
+</code></pre><h3 id="六、编写settings"><a href="#六、编写settings" class="headerlink" title="六、编写settings"></a>六、编写settings</h3><pre><code>#数据库的配置文件
+MYSQL_HOST=&#39;127.0.0.1&#39;
+MYSQL_USER=&#39;root&#39;
+MYSQL_PASSWORD=&#39;&#39;
+MYSQL_DB=&#39;test&#39;
+
+import os
+#执行pipelines
+ITEM_PIPELINES = &#123;
+    &#39;scrapy.pipelines.images.ImagesPipeline&#39;:1,
+   &#39;Crawljiankang99.pipelines.MysqlTwistePipline&#39;: 4,
+    &#39;Crawljiankang99.pipelines.jiankangImagePipeline&#39;:2,
+&#125;
+#下载的图片链接
+IMAGES_URLS_FIELD=&#39;image_url&#39;
+#获取当前文件的路径
+object_url=os.path.abspath(os.path.dirname(__file__))
+#对应生成名叫image文件的文件夹来存储图片
+IMAGES_STORE=os.path.join(object_url,&#39;image&#39;)
+</code></pre><h3 id="结果如图所示"><a href="#结果如图所示" class="headerlink" title="结果如图所示"></a>结果如图所示</h3><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/%E5%81%A5%E5%BA%B7.jpg?raw=true" alt="jiankang"></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/04/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -524,7 +1092,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -535,7 +1103,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -546,7 +1114,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">37</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -684,7 +1252,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共21.9k字</span>
+  <span class="post-count">博客全站共23.0k字</span>
 </div>
 
         

@@ -4,6 +4,60 @@
   
     
     <entry>
+      <title>java两个线程数据交换</title>
+      <link href="/2022/06/10/java%E5%A4%9A%E7%BA%BF%E7%A8%8B---%E4%B8%A4%E4%B8%AA%E7%BA%BF%E7%A8%8B%E6%95%B0%E6%8D%AE%E4%BA%A4%E6%8D%A2/"/>
+      <url>/2022/06/10/java%E5%A4%9A%E7%BA%BF%E7%A8%8B---%E4%B8%A4%E4%B8%AA%E7%BA%BF%E7%A8%8B%E6%95%B0%E6%8D%AE%E4%BA%A4%E6%8D%A2/</url>
+      
+        <content type="html"><![CDATA[<p>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; java.util.concurrent.Exchanger可以用来进行数据交换，或者被称为“数据交换器”。两个线程可以使用Exchanger交换数据。Exchanger（交换者）是一个用于线程间写作的工具类。Exchanger用于进行线程间的数据交换。它提供一个同步点，在这个同步点两个线程可以交换彼此的数据。这两个线程通过exchange()交换数据，如果第一个线程先执行exchange方法，它会一直等待第二个线程也执行exchange()，当连个线程都到达同步点时，这两个线程就可以交换数据，将本线程生产出来的数据传递给对方。</p><pre><code>package com.semaphore;import java.util.concurrent.Exchanger;import java.util.concurrent.ExecutorService;import java.util.concurrent.Executors;public class ExchangerTest &#123;    private static final Exchanger&lt;String&gt; exgr = new Exchanger&lt;String&gt;();    private static ExecutorService threadPool = Executors.newFixedThreadPool(2);    public static void main(String[] args) &#123;        threadPool.execute(new Runnable() &#123;            @Override            public void run() &#123;                try &#123;                    String A = &quot;银行流水A&quot;;// A录入银行流水数据                    System.out.println(&quot;本来是&quot; + A + &quot;变成了&quot; + exgr.exchange(A));                &#125; catch (InterruptedException e) &#123;                &#125;            &#125;        &#125;);        threadPool.execute(new Runnable() &#123;            @Override            public void run() &#123;                try &#123;                    String B = &quot;银行流水B&quot;;// B录入银行流水数据                    System.out.println(&quot;本来是&quot; + B + &quot;变成了&quot; + exgr.exchange(B));                &#125; catch (InterruptedException e) &#123;                &#125;            &#125;        &#125;);        threadPool.shutdown();    &#125;&#125;</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 多线程 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 多线程 </tag>
+            
+            <tag> 线程数据交换 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>java多线程如何实现顺序访问</title>
+      <link href="/2022/06/10/java%E5%A4%9A%E7%BA%BF%E7%A8%8B---%E5%A4%9A%E4%B8%AA%E7%BA%BF%E7%A8%8B%E9%A1%BA%E5%BA%8F%E8%AE%BF%E9%97%AE/"/>
+      <url>/2022/06/10/java%E5%A4%9A%E7%BA%BF%E7%A8%8B---%E5%A4%9A%E4%B8%AA%E7%BA%BF%E7%A8%8B%E9%A1%BA%E5%BA%8F%E8%AE%BF%E9%97%AE/</url>
+      
+        <content type="html"><![CDATA[<h2 id="1、通过join-方法指定顺序"><a href="#1、通过join-方法指定顺序" class="headerlink" title="1、通过join()方法指定顺序"></a>1、通过join()方法指定顺序</h2><p>&#160;&#160;&#160;&#160; 当然，thread的join方法实现多线程顺序执行有两种方式，一种是在子线程内部调用join()方法，另一种是直接在主线程调用join()方法；写法上是主线程上调用join()更直观，谁先执行谁后执行一目了然。子线程内部调用的话，相对的要注意调用的顺序。</p><p>1.子线程内部调用join()</p><pre><code>public class ThreadJoinDemo &#123;    public static void main(String[] args) throws InterruptedException &#123;        final Thread thread1 = new Thread(new Runnable() &#123;            @Override            public void run() &#123;                System.out.println(&quot;打开冰箱！&quot;);            &#125;        &#125;);        final Thread thread2 = new Thread(new Runnable() &#123;            @Override            public void run() &#123;                try &#123;                    thread1.join();                &#125; catch (InterruptedException e) &#123;                    e.printStackTrace();                &#125;                System.out.println(&quot;拿出一瓶牛奶！&quot;);            &#125;        &#125;);        final Thread thread3 = new Thread(new Runnable() &#123;            @Override            public void run() &#123;                try &#123;                    thread2.join();                &#125; catch (InterruptedException e) &#123;                    e.printStackTrace();                &#125;                System.out.println(&quot;关上冰箱！&quot;);            &#125;        &#125;);        //下面三行代码顺序可随意调整，程序运行结果不受影响，因为我们在子线程中通过“join()方法”已经指定了运行顺序（还有一个原因就是之前说的多线程的生命周期中有就绪状态，需要等待cpu调度，start并不意味着运行状态）。        thread3.start();        thread2.start();        thread1.start();    &#125;&#125;</code></pre><span id="more"></span><p>2.在主线程中通过join()方法指定顺序    </p><pre><code>public class ThreadMainJoinDemo &#123;    public static void main(String[] args) throws InterruptedException &#123;        final Thread thread1 = new Thread(new Runnable() &#123;            @Override            public void run() &#123;                System.out.println(&quot;打开冰箱！&quot;);            &#125;        &#125;);        final Thread thread2 = new Thread(new Runnable() &#123;            @Override            public void run() &#123;                System.out.println(&quot;拿出一瓶牛奶！&quot;);            &#125;        &#125;);        final Thread thread3 = new Thread(new Runnable() &#123;            @Override            public void run() &#123;                System.out.println(&quot;关上冰箱！&quot;);            &#125;        &#125;);        thread1.start();        thread1.join();        thread2.start();        thread2.join();        thread3.start();    &#125;&#125;</code></pre><h2 id="2、使用jdk5推出的线程池Executors创建单例的方法"><a href="#2、使用jdk5推出的线程池Executors创建单例的方法" class="headerlink" title="2、使用jdk5推出的线程池Executors创建单例的方法"></a>2、使用jdk5推出的线程池Executors创建单例的方法</h2><pre><code>public class ThreadPoolDemo &#123;   static ExecutorService executorService = Executors.newSingleThreadExecutor();    public static void main(String[] args) &#123;        final Thread thread1 = new Thread(new Runnable() &#123;            @Override            public void run() &#123;                System.out.println(&quot;打开冰箱！&quot;);            &#125;        &#125;);        final Thread thread2 =new Thread(new Runnable() &#123;            @Override            public void run() &#123;                System.out.println(&quot;拿出一瓶牛奶！&quot;);            &#125;        &#125;);        final Thread thread3 = new Thread(new Runnable() &#123;            @Override            public void run() &#123;                System.out.println(&quot;关上冰箱！&quot;);            &#125;        &#125;);        executorService.submit(thread1);        executorService.submit(thread2);        executorService.submit(thread3);        executorService.shutdown();        //使用完毕记得关闭线程池    &#125;&#125;</code></pre><h2 id="3、CountDownLatch（倒计数）类"><a href="#3、CountDownLatch（倒计数）类" class="headerlink" title="3、CountDownLatch（倒计数）类"></a>3、CountDownLatch（倒计数）类</h2><p>&#160;&#160;&#160;&#160; CountDownLatch类的特点就是可以初始化设置一个state的值，每次调用countDown()方法进行减一，如果state没有减小到0就会被await()方法一直阻塞。利用CountDownLatch方法可以实现和join()方法子线程运用一样的妙处。当然，CountDownLatch类的缺点是state不能重置，只能初始化一次，意思就是减小到0后，就没用了。。。不能加回去。</p><pre><code>public class ThreadCountDownLatchDemo &#123;    private static CountDownLatch countDownLatch1 = new CountDownLatch(1);    private static CountDownLatch countDownLatch2 = new CountDownLatch(1);    public static void main(String[] args) &#123;        final Thread thread1 = new Thread(new Runnable() &#123;            @Override            public void run() &#123;                System.out.println(&quot;打开冰箱！&quot;);                countDownLatch1.countDown();            &#125;        &#125;);        final Thread thread2 = new Thread(new Runnable() &#123;            @Override            public void run() &#123;                try &#123;                    countDownLatch1.await();                    System.out.println(&quot;拿出一瓶牛奶！&quot;);                    countDownLatch2.countDown();                &#125; catch (InterruptedException e) &#123;                    e.printStackTrace();                &#125;            &#125;        &#125;);        final Thread thread3 = new Thread(new Runnable() &#123;            @Override            public void run() &#123;                try &#123;                    countDownLatch2.await();                    System.out.println(&quot;关上冰箱！&quot;);                &#125; catch (InterruptedException e) &#123;                    e.printStackTrace();                &#125;            &#125;        &#125;);        //下面三行代码顺序可随意调整，程序运行结果不受影响        thread3.start();        thread1.start();        thread2.start();    &#125;&#125;</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 多线程 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 多线程 </tag>
+            
+            <tag> 多线程顺序访问 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>jetBrains2020.x破解</title>
       <link href="/2022/06/08/jetBrains%E7%A0%B4%E8%A7%A3%E6%96%B9%E6%B3%95/"/>
       <url>/2022/06/08/jetBrains%E7%A0%B4%E8%A7%A3%E6%96%B9%E6%B3%95/</url>
@@ -21,6 +75,8 @@
         <tags>
             
             <tag> jetBrains </tag>
+            
+            <tag> 破解软件 </tag>
             
         </tags>
       
@@ -486,7 +542,7 @@
       
         <tags>
             
-            <tag> 破解软解 </tag>
+            <tag> 破解软件 </tag>
             
             <tag> 百度 </tag>
             

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2022-06-08T03:53:27.230Z</updated>
+  <updated>2022-06-10T07:39:24.907Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,11 +17,103 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>java两个线程数据交换</title>
+    <link href="http://yoursite.com/2022/06/10/java%E5%A4%9A%E7%BA%BF%E7%A8%8B---%E4%B8%A4%E4%B8%AA%E7%BA%BF%E7%A8%8B%E6%95%B0%E6%8D%AE%E4%BA%A4%E6%8D%A2/"/>
+    <id>http://yoursite.com/2022/06/10/java多线程---两个线程数据交换/</id>
+    <published>2022-06-10T07:30:45.908Z</published>
+    <updated>2022-06-10T07:39:24.907Z</updated>
+    
+    <content type="html"><![CDATA[<p>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; java.util.concurrent.Exchanger可以用来进行数据交换，或者被称为“数据交换器”。两个线程可以使用Exchanger交换数据。Exchanger（交换者）是一个用于线程间写作的工具类。Exchanger用于进行线程间的数据交换。它提供一个同步点，在这个同步点两个线程可以交换彼此的数据。这两个线程通过exchange()交换数据，如果第一个线程先执行exchange方法，它会一直等待第二个线程也执行exchange()，当连个线程都到达同步点时，这两个线程就可以交换数据，将本线程生产出来的数据传递给对方。</p><pre><code>package com.semaphore;import java.util.concurrent.Exchanger;import java.util.concurrent.ExecutorService;import java.util.concurrent.Executors;public class ExchangerTest &#123;    private static final Exchanger&lt;String&gt; exgr = new Exchanger&lt;String&gt;();    private static ExecutorService threadPool = Executors.newFixedThreadPool(2);    public static void main(String[] args) &#123;        threadPool.execute(new Runnable() &#123;            @Override            public void run() &#123;                try &#123;                    String A = &quot;银行流水A&quot;;// A录入银行流水数据                    System.out.println(&quot;本来是&quot; + A + &quot;变成了&quot; + exgr.exchange(A));                &#125; catch (InterruptedException e) &#123;                &#125;            &#125;        &#125;);        threadPool.execute(new Runnable() &#123;            @Override            public void run() &#123;                try &#123;                    String B = &quot;银行流水B&quot;;// B录入银行流水数据                    System.out.println(&quot;本来是&quot; + B + &quot;变成了&quot; + exgr.exchange(B));                &#125; catch (InterruptedException e) &#123;                &#125;            &#125;        &#125;);        threadPool.shutdown();    &#125;&#125;</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160; java.util.concurrent.Exchanger可以用来进行数据交换，或者被称为“数据交换器”。两个线程可以使用Exchanger交换数据。Exchanger（交换
+      
+    
+    </summary>
+    
+      <category term="多线程" scheme="http://yoursite.com/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+    
+      <category term="多线程" scheme="http://yoursite.com/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+      <category term="线程数据交换" scheme="http://yoursite.com/tags/%E7%BA%BF%E7%A8%8B%E6%95%B0%E6%8D%AE%E4%BA%A4%E6%8D%A2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>java多线程如何实现顺序访问</title>
+    <link href="http://yoursite.com/2022/06/10/java%E5%A4%9A%E7%BA%BF%E7%A8%8B---%E5%A4%9A%E4%B8%AA%E7%BA%BF%E7%A8%8B%E9%A1%BA%E5%BA%8F%E8%AE%BF%E9%97%AE/"/>
+    <id>http://yoursite.com/2022/06/10/java多线程---多个线程顺序访问/</id>
+    <published>2022-06-10T07:08:35.028Z</published>
+    <updated>2022-06-10T07:30:22.384Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="1、通过join-方法指定顺序"><a href="#1、通过join-方法指定顺序" class="headerlink" title="1、通过join()方法指定顺序"></a>1、通过join()方法指定顺序</h2><p>&#160;&#160;&#160;&#160; 当然，thread的join方法实现多线程顺序执行有两种方式，一种是在子线程内部调用join()方法，另一种是直接在主线程调用join()方法；写法上是主线程上调用join()更直观，谁先执行谁后执行一目了然。子线程内部调用的话，相对的要注意调用的顺序。</p><p>1.子线程内部调用join()</p><pre><code>public class ThreadJoinDemo &#123;    public static void main(String[] args) throws InterruptedException &#123;        final Thread thread1 = new Thread(new Runnable() &#123;            @Override            public void run() &#123;                System.out.println(&quot;打开冰箱！&quot;);            &#125;        &#125;);        final Thread thread2 = new Thread(new Runnable() &#123;            @Override            public void run() &#123;                try &#123;                    thread1.join();                &#125; catch (InterruptedException e) &#123;                    e.printStackTrace();                &#125;                System.out.println(&quot;拿出一瓶牛奶！&quot;);            &#125;        &#125;);        final Thread thread3 = new Thread(new Runnable() &#123;            @Override            public void run() &#123;                try &#123;                    thread2.join();                &#125; catch (InterruptedException e) &#123;                    e.printStackTrace();                &#125;                System.out.println(&quot;关上冰箱！&quot;);            &#125;        &#125;);        //下面三行代码顺序可随意调整，程序运行结果不受影响，因为我们在子线程中通过“join()方法”已经指定了运行顺序（还有一个原因就是之前说的多线程的生命周期中有就绪状态，需要等待cpu调度，start并不意味着运行状态）。        thread3.start();        thread2.start();        thread1.start();    &#125;&#125;</code></pre><span id="more"></span><p>2.在主线程中通过join()方法指定顺序    </p><pre><code>public class ThreadMainJoinDemo &#123;    public static void main(String[] args) throws InterruptedException &#123;        final Thread thread1 = new Thread(new Runnable() &#123;            @Override            public void run() &#123;                System.out.println(&quot;打开冰箱！&quot;);            &#125;        &#125;);        final Thread thread2 = new Thread(new Runnable() &#123;            @Override            public void run() &#123;                System.out.println(&quot;拿出一瓶牛奶！&quot;);            &#125;        &#125;);        final Thread thread3 = new Thread(new Runnable() &#123;            @Override            public void run() &#123;                System.out.println(&quot;关上冰箱！&quot;);            &#125;        &#125;);        thread1.start();        thread1.join();        thread2.start();        thread2.join();        thread3.start();    &#125;&#125;</code></pre><h2 id="2、使用jdk5推出的线程池Executors创建单例的方法"><a href="#2、使用jdk5推出的线程池Executors创建单例的方法" class="headerlink" title="2、使用jdk5推出的线程池Executors创建单例的方法"></a>2、使用jdk5推出的线程池Executors创建单例的方法</h2><pre><code>public class ThreadPoolDemo &#123;   static ExecutorService executorService = Executors.newSingleThreadExecutor();    public static void main(String[] args) &#123;        final Thread thread1 = new Thread(new Runnable() &#123;            @Override            public void run() &#123;                System.out.println(&quot;打开冰箱！&quot;);            &#125;        &#125;);        final Thread thread2 =new Thread(new Runnable() &#123;            @Override            public void run() &#123;                System.out.println(&quot;拿出一瓶牛奶！&quot;);            &#125;        &#125;);        final Thread thread3 = new Thread(new Runnable() &#123;            @Override            public void run() &#123;                System.out.println(&quot;关上冰箱！&quot;);            &#125;        &#125;);        executorService.submit(thread1);        executorService.submit(thread2);        executorService.submit(thread3);        executorService.shutdown();        //使用完毕记得关闭线程池    &#125;&#125;</code></pre><h2 id="3、CountDownLatch（倒计数）类"><a href="#3、CountDownLatch（倒计数）类" class="headerlink" title="3、CountDownLatch（倒计数）类"></a>3、CountDownLatch（倒计数）类</h2><p>&#160;&#160;&#160;&#160; CountDownLatch类的特点就是可以初始化设置一个state的值，每次调用countDown()方法进行减一，如果state没有减小到0就会被await()方法一直阻塞。利用CountDownLatch方法可以实现和join()方法子线程运用一样的妙处。当然，CountDownLatch类的缺点是state不能重置，只能初始化一次，意思就是减小到0后，就没用了。。。不能加回去。</p><pre><code>public class ThreadCountDownLatchDemo &#123;    private static CountDownLatch countDownLatch1 = new CountDownLatch(1);    private static CountDownLatch countDownLatch2 = new CountDownLatch(1);    public static void main(String[] args) &#123;        final Thread thread1 = new Thread(new Runnable() &#123;            @Override            public void run() &#123;                System.out.println(&quot;打开冰箱！&quot;);                countDownLatch1.countDown();            &#125;        &#125;);        final Thread thread2 = new Thread(new Runnable() &#123;            @Override            public void run() &#123;                try &#123;                    countDownLatch1.await();                    System.out.println(&quot;拿出一瓶牛奶！&quot;);                    countDownLatch2.countDown();                &#125; catch (InterruptedException e) &#123;                    e.printStackTrace();                &#125;            &#125;        &#125;);        final Thread thread3 = new Thread(new Runnable() &#123;            @Override            public void run() &#123;                try &#123;                    countDownLatch2.await();                    System.out.println(&quot;关上冰箱！&quot;);                &#125; catch (InterruptedException e) &#123;                    e.printStackTrace();                &#125;            &#125;        &#125;);        //下面三行代码顺序可随意调整，程序运行结果不受影响        thread3.start();        thread1.start();        thread2.start();    &#125;&#125;</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;1、通过join-方法指定顺序&quot;&gt;&lt;a href=&quot;#1、通过join-方法指定顺序&quot; class=&quot;headerlink&quot; title=&quot;1、通过join()方法指定顺序&quot;&gt;&lt;/a&gt;1、通过join()方法指定顺序&lt;/h2&gt;&lt;p&gt;&amp;#160;&amp;#160;&amp;#160;&amp;#160; 当然，thread的join方法实现多线程顺序执行有两种方式，一种是在子线程内部调用join()方法，另一种是直接在主线程调用join()方法；写法上是主线程上调用join()更直观，谁先执行谁后执行一目了然。子线程内部调用的话，相对的要注意调用的顺序。&lt;/p&gt;
+&lt;p&gt;1.子线程内部调用join()&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public class ThreadJoinDemo &amp;#123;
+    public static void main(String[] args) throws InterruptedException &amp;#123;
+        final Thread thread1 = new Thread(new Runnable() &amp;#123;
+            @Override
+            public void run() &amp;#123;
+                System.out.println(&amp;quot;打开冰箱！&amp;quot;);
+            &amp;#125;
+        &amp;#125;);
+
+        final Thread thread2 = new Thread(new Runnable() &amp;#123;
+            @Override
+            public void run() &amp;#123;
+                try &amp;#123;
+                    thread1.join();
+                &amp;#125; catch (InterruptedException e) &amp;#123;
+                    e.printStackTrace();
+                &amp;#125;
+                System.out.println(&amp;quot;拿出一瓶牛奶！&amp;quot;);
+            &amp;#125;
+        &amp;#125;);
+
+        final Thread thread3 = new Thread(new Runnable() &amp;#123;
+            @Override
+            public void run() &amp;#123;
+                try &amp;#123;
+                    thread2.join();
+                &amp;#125; catch (InterruptedException e) &amp;#123;
+                    e.printStackTrace();
+                &amp;#125;
+                System.out.println(&amp;quot;关上冰箱！&amp;quot;);
+            &amp;#125;
+        &amp;#125;);
+
+        //下面三行代码顺序可随意调整，程序运行结果不受影响，因为我们在子线程中通过“join()方法”已经指定了运行顺序（还有一个原因就是之前说的多线程的生命周期中有就绪状态，需要等待cpu调度，start并不意味着运行状态）。
+        thread3.start();
+        thread2.start();
+        thread1.start();
+    &amp;#125;
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+    
+    </summary>
+    
+      <category term="多线程" scheme="http://yoursite.com/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+    
+      <category term="多线程" scheme="http://yoursite.com/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+      <category term="多线程顺序访问" scheme="http://yoursite.com/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%A1%BA%E5%BA%8F%E8%AE%BF%E9%97%AE/"/>
+    
+  </entry>
+  
+  <entry>
     <title>jetBrains2020.x破解</title>
     <link href="http://yoursite.com/2022/06/08/jetBrains%E7%A0%B4%E8%A7%A3%E6%96%B9%E6%B3%95/"/>
     <id>http://yoursite.com/2022/06/08/jetBrains破解方法/</id>
     <published>2022-06-08T02:47:18.660Z</published>
-    <updated>2022-06-08T03:53:27.230Z</updated>
+    <updated>2022-06-08T03:59:25.611Z</updated>
     
     <content type="html"><![CDATA[<p><a href="https://www.jb51.net/article/198343.htm" title="破解">参考链接</a></p><h2 id="1、破解资料"><a href="#1、破解资料" class="headerlink" title="1、破解资料"></a>1、破解资料</h2><ol><li><p>百度网盘下载</p><p> 地址：<a href="https://pan.baidu.com/s/1jMnfsXYH16n71vs6-WMTEA">https://pan.baidu.com/s/1jMnfsXYH16n71vs6-WMTEA</a><br> 密码：y4b4</p></li></ol>]]></content>
     
@@ -39,6 +131,8 @@
     
     
       <category term="jetBrains" scheme="http://yoursite.com/tags/jetBrains/"/>
+    
+      <category term="破解软件" scheme="http://yoursite.com/tags/%E7%A0%B4%E8%A7%A3%E8%BD%AF%E4%BB%B6/"/>
     
   </entry>
   
@@ -540,69 +634,6 @@ ROBOTSTXT_OBEY = True
       <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
     
       <category term="美女图片" scheme="http://yoursite.com/tags/%E7%BE%8E%E5%A5%B3%E5%9B%BE%E7%89%87/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>百度文库下载和百度云加速下载</title>
-    <link href="http://yoursite.com/2021/07/18/pojie/"/>
-    <id>http://yoursite.com/2021/07/18/pojie/</id>
-    <published>2021-07-18T01:44:26.563Z</published>
-    <updated>2018-07-12T03:03:06.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="一、百度文库、道客巴巴登免费下载"><a href="#一、百度文库、道客巴巴登免费下载" class="headerlink" title="一、百度文库、道客巴巴登免费下载"></a>一、百度文库、道客巴巴登免费下载</h3><p>&#160;&#160;&#160;&#160;1、百度文库下载：首先进入你要下载的文档页面</p><pre><code>例如:https://wenku.baidu.com/view/eeb5d53069eae009591bec34.html?from=search</code></pre><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/baidu.PNG?raw=true" alt="image"></p><p>&#160;&#160;&#160;&#160;2、把图中的链接复制到冰点文库的下载</p><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/baidu1.PNG?raw=true" alt="image"></p><p>&#160;&#160;&#160;&#160;3、文件下载地址：</p><pre><code>链接：https://pan.baidu.com/s/1G0zTlsG61ipGnGfmHPEijw密码: bzjm</code></pre><h3 id="二、百度云加速下载"><a href="#二、百度云加速下载" class="headerlink" title="二、百度云加速下载"></a>二、百度云加速下载</h3><p>&#160;&#160;&#160;&#160;1、首先要登陆你的百度云账号</p><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/baiduyun.PNG?raw=true" alt="image"></p><pre><code>链接：https://pan.baidu.com/s/1Lzm5_8lRPHO0e5r38rl-3A密码: mcc5</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;一、百度文库、道客巴巴登免费下载&quot;&gt;&lt;a href=&quot;#一、百度文库、道客巴巴登免费下载&quot; class=&quot;headerlink&quot; title=&quot;一、百度文库、道客巴巴登免费下载&quot;&gt;&lt;/a&gt;一、百度文库、道客巴巴登免费下载&lt;/h3&gt;&lt;p&gt;&amp;#160;&amp;#160;&amp;#
-      
-    
-    </summary>
-    
-      <category term="破解软件" scheme="http://yoursite.com/categories/%E7%A0%B4%E8%A7%A3%E8%BD%AF%E4%BB%B6/"/>
-    
-    
-      <category term="破解软解" scheme="http://yoursite.com/tags/%E7%A0%B4%E8%A7%A3%E8%BD%AF%E8%A7%A3/"/>
-    
-      <category term="百度" scheme="http://yoursite.com/tags/%E7%99%BE%E5%BA%A6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>对百度糯米、美团、大众点评的数据进行爬取并保存到 mongodb 数据库和mysql数据库</title>
-    <link href="http://yoursite.com/2021/07/18/nuomi-meituan-dazhong/"/>
-    <id>http://yoursite.com/2021/07/18/nuomi-meituan-dazhong/</id>
-    <published>2021-07-18T01:44:26.549Z</published>
-    <updated>2018-04-09T14:31:56.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>一、首先准备我们需要的库</p><pre><code>1、requests//用来请求网页2、json//用来解析json数据，用于把json数据转换为字典3、re//利用正则对字符串查找3、pyquery//利用css查找4、pymongo//存取pymongo5、MySQLdb//存取mysql</code></pre><p>创建一个配置文件config.py用于存储数据库的密码</p><pre><code>MYSQL_HOST=&#39;localhost&#39;MYSQL_USER=&#39;root&#39;MYSQL_PASSWORD=&#39;&#39;MYSQL_DB=&#39;test&#39;MOGO_URL=&#39;localhost&#39;MOGO_DB=&#39;nuomi&#39;MOGO_TABLE=&#39;product&#39;MOGO_DB_M=&#39;meituan&#39;MOGO_TABLE_M=&#39;product&#39;MOGO_DB_D=&#39;dazhong&#39;MOGO_TABLE_D=&#39;product&#39;</code></pre><p>二、百度糯米</p><p>1、获取全国的url</p><pre><code>def get_city():    url=&#39;https://www.nuomi.com/pcindex/main/changecity&#39;    response=requests.get(url)    response.encoding=&#39;utf-8&#39;    doc=pq(response.text)    items=doc(&#39;.city-list .cities li&#39;).items()    for item in items:        product=&#123;            &#39;city&#39;:item.find(&#39;a&#39;).text(),            &#39;url&#39;:&#39;https:&#39;+item.find(&#39;a&#39;).attr(&#39;href&#39;)        &#125;        get_pase(product[&#39;url&#39;],keyword)</code></pre><p>2、通过关键字搜索商品</p><pre><code>def get_pase(url,keyword):    head=&#123;        &#39;k&#39;:keyword,    &#125;    urls=url+&#39;/search?&#39;+urlencode(head)    response=requests.get(urls)    response.encoding = &#39;utf-8&#39;    req=re.findall(&#39;noresult-tip&#39;,response.text)    if req:        print(&#39;抱歉,没有找到你搜索的内容&#39;)    else:        req=r&#39;&lt;a href=&quot;(.*?)&quot; target=&quot;_blank&quot;&gt;&lt;img src=&quot;.*?&quot; class=&quot;shop-infoo-list-item-img&quot; /&gt;&lt;/a&gt;&#39;        url_req=re.findall(req,response.text)        for i in url_req:            url_pase=&#39;https:&#39;+i            get_pase_url(url_pase)        req=r&#39;&lt;a href=&quot;(.*?)&quot; .*? class=&quot;ui-pager-normal&quot; .*?&lt;/a&gt;&#39;        url_next=re.findall(req,response.text)        for i in url_next:            url_pases=url+i            get_pase_url(url_pases)</code></pre><p>3、获取商品页的商品信息</p><pre><code>def get_pase_url(url):    response=requests.get(url)    response.encoding = &#39;utf-8&#39;    doc=pq(response.text)    product=&#123;        &#39;title&#39;:doc(&#39;.shop-box .shop-title&#39;).text(),        &#39;score&#39;:doc(&#39;body &gt; div.main-container &gt; div.shop-box &gt; p &gt; span.score&#39;).text(),        &#39;price&#39;:doc(&#39;.shop-info .price&#39;).text(),        &#39;location&#39;:doc(&#39;.item .detail-shop-address&#39;).text(),        &#39;phone&#39;:doc(&#39;body &gt; div.main-container &gt; div.shop-box &gt; ul &gt; li:nth-child(2) &gt; p&#39;).text(),        &#39;time&#39;:doc(&#39;body &gt; div.main-container &gt; div.shop-box &gt; ul &gt; li:nth-child(3) &gt; p&#39;).text(),        &#39;tuijian&#39;:doc(&#39;body &gt; div.main-container &gt; div.shop-box &gt; ul &gt; li:nth-child(4) &gt; p&#39;).text()    &#125;    print(product)    save_mysql(product)    #save_mongodb(product)</code></pre><p>4、保存到数据库中</p><pre><code>def save_mysql(product):    conn=MySQLdb.connect(MYSQL_HOST,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DB,charset=&#39;utf8&#39;)    cursor = conn.cursor()    cursor.execute(&quot;insert into nuomi(title,score,price,location,phone,time,tuijian) values(&#39;&#123;&#125;&#39;,&#39;&#123;&#125;&#39;,&#39;&#123;&#125;&#39;,&#39;&#123;&#125;&#39;,&#39;&#123;&#125;&#39;,&#39;&#123;&#125;&#39;,&#39;&#123;&#125;&#39;)&quot;.format(product[&#39;title&#39;] , product[&#39;score&#39;] , product[&#39;price&#39;] , product[&#39;location&#39;] , product[&#39;phone&#39;] ,product[&#39;time&#39;] , product[&#39;tuijian&#39;]))    print(&#39;成功存入数据库&#39;,product)def save_mongodb(result):    client=pymongo.MongoClient(MOGO_URL)    db=client[MOGO_DB]    try:        if db[MOGO_TABLE].insert(result):            print(&#39;保存成功&#39;,result)    except Exception:        print(&#39;保存失败&#39;,result)</code></pre><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/%E7%99%BE%E5%BA%A6%E7%B3%AF%E7%B1%B3.jpg?raw=true" alt="image"></p><p>二、美团</p><p>1、获取全国的url</p><pre><code>def get_city():    url=&#39;http://www.meituan.com/changecity/&#39;    response=requests.get(url)    response.encoding=&#39;utf-8&#39;    doc=pq(response.text)    items=doc(&#39;.city-area .cities .city&#39;).items()    for item in items:        product=&#123;            &#39;url&#39;:&#39;http:&#39;+item.attr(&#39;href&#39;),            &#39;city&#39;:item.text()        &#125;        get_url_number(product[&#39;url&#39;])</code></pre><p>2、通过关键字搜索商品</p><pre><code>def get_url_number(url):    try:        response=requests.get(url)        req=r&#39;&#123;&quot;currentCity&quot;:&#123;&quot;id&quot;:(.*?),&quot;name&quot;:&quot;.*?&quot;,&quot;pinyin&quot;:&#39;        number_url=re.findall(req,response.text)        for code in range(0,500,32):            url=&#39;http://apimobile.meituan.com/group/v4/poi/pcsearch/&#123;&#125;?limit=32&amp;offset=&#123;&#125;&amp;q=&#123;&#125;&#39;.format(number_url[0],code,keyword)            response=requests.get(url)            data=json.loads(response.text)            imageUrl=data[&#39;data&#39;][&#39;searchResult&#39;][0][&#39;imageUrl&#39;]            address=data[&#39;data&#39;][&#39;searchResult&#39;][0][&#39;address&#39;]            lowestprice=data[&#39;data&#39;][&#39;searchResult&#39;][0][&#39;lowestprice&#39;]            title=data[&#39;data&#39;][&#39;searchResult&#39;][0][&#39;title&#39;]            url_id=data[&#39;data&#39;][&#39;searchResult&#39;][0][&#39;id&#39;]            product=&#123;                &#39;url_id&#39;:url_id,                &#39;imageUrl&#39;:imageUrl,                &#39;address&#39;:address,                &#39;lowestprice&#39;:lowestprice,                &#39;title&#39;:title            &#125;            save_mysql(product)    except Exception:        return None</code></pre><p>3、保存到数据库中</p><pre><code>def save_mysql(product):    conn=MySQLdb.connect(MYSQL_HOST,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DB,charset=&#39;utf8&#39;)    cursor = conn.cursor()    cursor.execute(&quot;insert into meituan(url_id,imageUrl,address,lowestprice,title) values(&#39;&#123;&#125;&#39;,&#39;&#123;&#125;&#39;,&#39;&#123;&#125;&#39;,&#39;&#123;&#125;&#39;,&#39;&#123;&#125;&#39;)&quot;.format(product[&#39;url_id&#39;], product[&#39;imageUrl&#39;], product[&#39;address&#39;], product[&#39;lowestprice&#39;], product[&#39;title&#39;]))    print(&#39;成功存入数据库&#39;,product)def save_mongodb(result):    client=pymongo.MongoClient(MOGO_URL)    db=client[MOGO_DB_M]    try:        if db[MOGO_TABLE_M].insert(result):            print(&#39;保存成功&#39;,result)    except Exception:        print(&#39;保存失败&#39;,result)</code></pre><p><img src="https://github.com/TomorrowLi/MarkdownImage/blob/master/%E7%BE%8E%E5%9B%A2.jpg?raw=true" alt="image"></p><p>三、大众点评</p><p>1、获取全国的url</p><pre><code>def get_url_city_id():    url = &#39;https://www.dianping.com/ajax/citylist/getAllDomesticCity&#39;    headers = &#123;        &#39;User-Agent&#39;: &#39;Mozilla/5.0(Windows NT 10.0;Win64;x64)AppleWebKit/537.36(KHTML,likeGecko)Chrome/64.0.3282.186Safari/537.36&#39; ,    &#125;    response = requests.get(url , headers=headers)    data=json.loads(response.text)    for i in range(1,35):        url_data=data[&#39;cityMap&#39;][str(i)]        for item in url_data:            product=&#123;                &#39;cityName&#39;:item[&#39;cityName&#39;],                &#39;cityId&#39;:item[&#39;cityId&#39;],                &#39;cityEnName&#39;:item[&#39;cityEnName&#39;]            &#125;            get_url_keyword(product)            break</code></pre><p>2、通过关键字搜索商品</p><pre><code>def get_url_keyword(product):    urls = &#39;https://www.dianping.com/search/keyword/&#123;&#125;/0_%&#123;&#125;&#39;.format(product[&#39;cityId&#39;], keyword)    headers = &#123;        &#39;User-Agent&#39;: &#39;Mozilla/5.0(Windows NT 10.0;Win64;x64)AppleWebKit/537.36(KHTML,likeGecko)Chrome/64.0.3282.186Safari/537.36&#39; ,    &#125;    response = requests.get(urls, headers=headers)    req=r&#39;data-hippo-type=&quot;shop&quot; title=&quot;.*?&quot; target=&quot;_blank&quot; href=&quot;(.*?)&quot;&#39;    data=re.findall(req,response.text)    for url in data:        get_url_data(url)</code></pre><p>3、获取商品页的商品信息</p><pre><code>def get_url_data(url):    headers= &#123;        &#39;User-Agent&#39;: &#39;Mozilla/5.0(Windows NT 10.0;Win64;x64)AppleWebKit/537.36(KHTML,likeGecko)Chrome/64.0.3282.186Safari/537.36&#39; ,        &#39;Host&#39;: &#39;www.dianping.com&#39;,        &#39;Pragma&#39;: &#39;no - cache&#39;,        &#39;Upgrade - Insecure - Requests&#39;: &#39;1&#39;    &#125;    response = requests.get(url,headers=headers)    doc=pq(response.text)    title=doc(&#39;#basic-info &gt; h1&#39;).text().replace(&#39;\n&#39;,&#39;&#39;).replace(&#39;\xa0&#39;,&#39;&#39;)    avgPriceTitle=doc(&#39;#avgPriceTitle&#39;).text()    taste=doc(&#39;#comment_score &gt; span:nth-of-type(1)&#39;).text()    Environmental=doc(&#39;#comment_score &gt; span:nth-of-type(2)&#39;).text()    service=doc(&#39;#comment_score &gt; span:nth-of-type(3)&#39;).text()    street_address=doc(&#39;#basic-info &gt; div.expand-info.address &gt; span.item&#39;).text()    tel=doc(&#39;#basic-info &gt; p &gt; span.item&#39;).text()    info_name=doc(&#39;#basic-info &gt; div.promosearch-wrapper &gt; p &gt; span&#39;).text()    time=doc(&#39;#basic-info &gt; div.other.J-other &gt; p:nth-of-type(1) &gt; span.item&#39;).text()    product=&#123;        &#39;title&#39;:title,        &#39;avgPriceTitle&#39;:avgPriceTitle,        &#39;taste&#39;: taste ,        &#39;Environmental&#39;:Environmental,        &#39;service&#39;: service ,        &#39;street_address&#39;:street_address,        &#39;tel&#39;: tel ,        &#39;info_name&#39;:info_name,        &#39;time&#39;:time    &#125;    save_mysql(product)</code></pre><p>3、保存到数据库中</p><pre><code>def save_mysql(product):    conn=MySQLdb.connect(MYSQL_HOST,MYSQL_USER,MYSQL_PASSWORD,MYSQL_DB,charset=&#39;utf8&#39;)    cursor=conn.cursor()    cursor.execute(&quot;insert into dazhong(title,avgPriceTitle,taste,Environmental,service,street_address,tel,info_name,time) values(&#39;&#123;&#125;&#39;,&#39;&#123;&#125;&#39;,&#39;&#123;&#125;&#39;,&#39;&#123;&#125;&#39;,&#39;&#123;&#125;&#39;,&#39;&#123;&#125;&#39;,&#39;&#123;&#125;&#39;,&#39;&#123;&#125;&#39;,&#39;&#123;&#125;&#39;)&quot;.format(product[&#39;title&#39;],product[&#39;avgPriceTitle&#39;],product[&#39;taste&#39;],product[&#39;Environmental&#39;],product[&#39;service&#39;],product[&#39;street_address&#39;],product[&#39;tel&#39;],product[&#39;info_name&#39;],product[&#39;time&#39;]))    print(&#39;成功存入数据库&#39; , product)def save_mogodb(product):    client=pymongo.MongoClient(MOGO_URL)    db=client[MOGO_DB_D]    try:        if db[MOGO_TABLE_D].insert(product):            print(&#39;保存成功&#39;,product)    except Exception:        print(&#39;保存失败&#39;,product)</code></pre><p>详细的描述可以访问我的Github <a href="https://github.com/TomorrowLi/meituan-nuomi-dazhong.git">TomorrowLi</a> 里面有我的源码</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;一、首先准备我们需要的库&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;1、requests//用来请求网页
-
-2、json//用来解析json数据，用于把json数据转换为字典
-
-3、re//利用正则对字符串查找
-
-3、pyquery//利用css查找
-
-4、pymongo//存取pym
-      
-    
-    </summary>
-    
-      <category term="爬虫" scheme="http://yoursite.com/categories/%E7%88%AC%E8%99%AB/"/>
-    
-    
-      <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
-    
-      <category term="全国订餐信息" scheme="http://yoursite.com/tags/%E5%85%A8%E5%9B%BD%E8%AE%A2%E9%A4%90%E4%BF%A1%E6%81%AF/"/>
     
   </entry>
   
