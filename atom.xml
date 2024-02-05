@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2022-06-10T07:39:24.907Z</updated>
+  <updated>2024-02-05T06:31:03.280Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,24 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hexo部署Git的步骤</title>
+    <link href="http://yoursite.com/2024/02/05/%E9%83%A8%E7%BD%B2Hexo/"/>
+    <id>http://yoursite.com/2024/02/05/部署Hexo/</id>
+    <published>2024-02-05T06:30:03.056Z</published>
+    <updated>2024-02-05T06:31:03.280Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+      <category term="Hexo" scheme="http://yoursite.com/categories/Hexo/"/>
+    
+    
+      <category term="Hexo" scheme="http://yoursite.com/tags/Hexo/"/>
+    
+  </entry>
   
   <entry>
     <title>java两个线程数据交换</title>
@@ -610,30 +628,6 @@ ROBOTSTXT_OBEY = True
     
     
       <category term="python学习" scheme="http://yoursite.com/tags/python%E5%AD%A6%E4%B9%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>今日头条上的美女图片进行爬取</title>
-    <link href="http://yoursite.com/2021/07/18/python-student/"/>
-    <id>http://yoursite.com/2021/07/18/python-student/</id>
-    <published>2021-07-18T01:44:26.587Z</published>
-    <updated>2018-02-28T03:43:48.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>欢迎来到<a href="https://www.python.org/">python</a>!学习。 这是我人生旅途的第一课，非常重要。 我从这个案例中学到的许多关于python爬虫的知识，这是我python爬虫的启蒙。</p><p>#所需要的库<br>requests：用于网页请求</p><p>BeautifulSoup：选择所要的元素</p><p>json：用来解析json数据的库</p><p>re：用于正则表达式的筛选</p><p>代码演示：</p><pre><code>import jsonimport refrom hashlib import md5import osimport requestsfrom urllib.parse import urlencodefrom bs4 import BeautifulSoupfrom config import *from multiprocessing import Pool#对要爬取页面的解析def get_page_index(offset, keyword):    data = &#123;        &#39;offset&#39;: offset,        &#39;format&#39;: &#39;json&#39;,        &#39;keyword&#39;: keyword,        &#39;autoload&#39;: &#39;true&#39;,        &#39;count&#39;: &#39;20&#39;,        &#39;cur_tab&#39;: 3,        &#39;from&#39;:&#39;gallery&#39;    &#125;    url = &#39;https://www.toutiao.com/search_content/?&#39; + urlencode(data)    try:        header = &#123;            &#39;User-Agent&#39;: &#39;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36&#39;        &#125;        response = requests.get(url,headers=header)        if response.status_code == 200:            return response.text        return None    except:        print(&#39;请求索引失败&#39;)        return None#获取所要的数据在json中def prase_get_index(html):    data = json.loads(html)    if data and &#39;data&#39; in data.keys():        for item in data.get(&#39;data&#39;):            yield item.get(&#39;article_url&#39;)#用正则对json数据进行解析def prase_page_urlli(html):    soup = BeautifulSoup(html, &#39;lxml&#39;)    title = soup.select(&#39;title&#39;)[0].get_text()    print(title)    images_pattern= re.compile(&#39;gallery: JSON.parse\((.*?)\)&#39;,re.S)    result=re.search(images_pattern,html)    if result:        data=json.loads(result.group(1))        data=eval(data)        if data and &#39;sub_images&#39;in data.keys():            sub_images=data.get(&#39;sub_images&#39;)            image=[item.get(&#39;url&#39;).replace(&#39;\\&#39;,&#39;&#39;) for item in sub_images]            for images_page in image:                dowload_image(images_page)            return&#123;                &#39;title&#39;:title,                &#39;image&#39;:image            &#125;#对所要下载的图片链接进行访问def get_page_urlli(url):    try:        header = &#123;            &#39;User-Agent&#39;: &#39;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36&#39;        &#125;        response = requests.get(url,headers=header)        if response.status_code == 200:            return response.text        return None    except:        print(&#39;请求失败&#39;,url)        return None#下载图片def dowload_image(url):    print(&quot;正在下载&quot;,url)    try:        header = &#123;            &#39;User-Agent&#39;: &#39;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36&#39;        &#125;        response = requests.get(url,headers=header)        if response.status_code == 200:            save_image(response.content)        return None    except:        print(&#39;请求图片出错&#39;,url)        return None#把图片保存到本地路径下def save_image(content):    file_path=&#39;&#123;0&#125;/&#123;1&#125;.&#123;2&#125;&#39;.format(os.getcwd(),md5(content).hexdigest(),&#39;jpg&#39;)    if not os.path.exists(file_path):        with open(file_path,&#39;wb&#39;) as f:            f.write(content)            f.close()def main(offset):    html = get_page_index(offset, keyword)    for url in prase_get_index(html):        html=get_page_urlli(url)        if html:            result=prase_page_urlli(html)            print(result)if __name__ == &#39;__main__&#39;:    group=[x*20 for x in range(stat,end+1)]    pool=Pool()    pool.map(main,group)</code></pre><p>详细的解释。</p>]]></content>
-    
-    <summary type="html">
-    
-      想要密码,请联系我
-    
-    </summary>
-    
-      <category term="爬虫" scheme="http://yoursite.com/categories/%E7%88%AC%E8%99%AB/"/>
-    
-    
-      <category term="爬虫" scheme="http://yoursite.com/tags/%E7%88%AC%E8%99%AB/"/>
-    
-      <category term="美女图片" scheme="http://yoursite.com/tags/%E7%BE%8E%E5%A5%B3%E5%9B%BE%E7%89%87/"/>
     
   </entry>
   
