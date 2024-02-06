@@ -405,7 +405,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  348
                 </span>
               
 
@@ -444,7 +444,29 @@
       
         
           
-            
+            <h2 id="一-登录自己的github，创建一个仓库。"><a href="#一-登录自己的github，创建一个仓库。" class="headerlink" title="一. 登录自己的github，创建一个仓库。"></a>一. 登录自己的github，创建一个仓库。</h2><p>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; 注意： 如果你希望你的站点能通过 &lt;你的 GitHub 用户名&gt;.github.io 域名访问，你的 repository 应该直接命名为 &lt;你的 GitHub 用户名&gt;.github.io。</p>
+<h2 id="二-安装-（这里我是用管理员身份打开的cmd命令窗口进行的）"><a href="#二-安装-（这里我是用管理员身份打开的cmd命令窗口进行的）" class="headerlink" title="二. 安装 （这里我是用管理员身份打开的cmd命令窗口进行的）"></a>二. 安装 （这里我是用管理员身份打开的cmd命令窗口进行的）</h2><p>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; 注意： 如果你希望你的站点能通过 &lt;你的 GitHub 用户名&gt;.github.io 域名访问，你的 repository 应该直接命名为 &lt;你的 GitHub 用户名&gt;.github.io。</p>
+<pre><code>cnpm install --save hexo-deployer-git
+</code></pre><h2 id="三-修改-config-yml文件"><a href="#三-修改-config-yml文件" class="headerlink" title="三. 修改_config.yml文件"></a>三. 修改_config.yml文件</h2><p>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;  还是去你自己创建的文件夹中找到_config.yml文件，在文件的最后，加入 如下内容</p>
+<pre><code>deploy:
+  type: git
+  repo: 第一步创建的仓库地址
+  branch: master
+</code></pre><p>例如</p>
+<pre><code>deploy:
+  type: git
+  repo: https://github.com/TomorrowLi/TomorrowLi.github.io
+  branch: master
+</code></pre><p>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;   这里注意，type , repo， branch 后面都有一个空格。</p>
+<h2 id="四-推送到github上"><a href="#四-推送到github上" class="headerlink" title="四. 推送到github上"></a>四. 推送到github上</h2><p>将你创建的文件夹推送到github上，首先你肯定得进入到你的文件夹下，如我的是bolg，输入以下命令即可。</p>
+<pre><code>hexo g
+
+hexo d
+</code></pre><p>耐心等待即可。完成后可以到刚刚创建的仓库。</p>
+<p>接下来你就可以通过你的仓库名字直接访问你的个人博客网站。不需要通过localhost:4000访问了。</p>
+<p>如：<a target="_blank" rel="noopener" href="https://tomorrowli.github.io/">https://tomorrowli.github.io/</a></p>
+<p>至此，你就拥有一个自己的博客网站了。快来试试吧。</p>
+
           
         
       
@@ -2377,7 +2399,7 @@ public class ExchangerTest &#123;
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共23.0k字</span>
+  <span class="post-count">博客全站共23.3k字</span>
 </div>
 
         
